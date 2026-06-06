@@ -1,4 +1,4 @@
-OrbitNet/
+﻿OrbitNet/
 │
 ├── OrbitNet.Web/
 │
@@ -8,7 +8,7 @@ OrbitNet/
 │   │   ├── UploadController.cs
 │   │   ├── SimulationController.cs
 │   │   ├── MatrixController.cs
-│   │   ├── SatelliteController.cs
+│   │   ├── SatellitesController.cs
 │   │   ├── ReportController.cs
 │   │   └── LogController.cs
 │   │
