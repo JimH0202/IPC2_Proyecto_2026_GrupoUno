@@ -2,14 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OrbitNet.Controllers;
 
-public class SatellitesController : Controller
+public class LogsController : Controller
 {
     public IActionResult Index()
-    {
-        return View();
-    }
-
-    public IActionResult Details(string id)
     {
         return View();
     }

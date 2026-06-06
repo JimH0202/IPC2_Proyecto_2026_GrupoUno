@@ -1,18 +1,26 @@
-//plantilla compartida para todas las vistas, se llama desde cada vista con @layout
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Orbinet.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />     
+    <title>OrbitNet</title>
+
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
 
+    <nav>
+        <a asp-controller="Home" asp-action="Index">Inicio</a> |
+        <a asp-controller="Upload" asp-action="Index">Carga XML</a> |
+        <a asp-controller="Simulation" asp-action="Dashboard">Simulación</a> |
+        <a asp-controller="Matrix" asp-action="Index">Matriz</a> |
+        <a asp-controller="Satellites" asp-action="Index">Satélites</a> |
+        <a asp-controller="Reports" asp-action="MemoryLayout">Reportes</a> |
+        <a asp-controller="Logs" asp-action="Index">Logs</a>
+    </nav>
 
+    <hr />
 
+    @RenderBody()
 
-
-
-                            
+</body>
+</html>
