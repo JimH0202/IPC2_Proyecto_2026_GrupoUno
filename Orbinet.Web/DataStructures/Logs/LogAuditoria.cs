@@ -1,11 +1,12 @@
 namespace Orbinet.Web.DataStructures.Logs;
 using System;
 using System.Text.RegularExpressions;
+using Orbinet.Web.DataStructures.Interfaces;
 
-public class LogAuditoria : IAbstractCollection
+public class LogAuditoria
 {
-    private NodoLog cabeza;
-    private NodoLog cola;
+    private LogNode? cabeza;
+    private LogNode? cola;
     private int cantidad;
 
     public int Count => cantidad;
@@ -18,12 +19,9 @@ public class LogAuditoria : IAbstractCollection
         cantidad = 0;
     }
 
-    public void EscribirEvento(string gravedad, string mensaje)
+    public void WriteEvent(string severity, string message)
     {
-        NodoLog nuevo = new NodoLog();
-        nuevo.FechaHora = DateTime.Now;
-        nuevo.Gravedad = gravedad;
-        nuevo.Mensaje = mensaje;
+        LogNode nuevo = new LogNode(severity, message);
 
         if (IsEmpty)
         {
@@ -32,27 +30,26 @@ public class LogAuditoria : IAbstractCollection
         }
         else
         {
-            cola.Siguiente = nuevo;
-            nuevo.Anterior = cola;
+            cola!.Next = nuevo;
             cola = nuevo;
         }
         cantidad++;
     }
 
-    public void BuscarPorRegex(string patron)
+    public string SearchLogRegex(string pattern)
     {
-        Regex regex = new Regex(patron);
-        NodoLog actual = cabeza;
+        Regex regex = new Regex(pattern);
+        LogNode? actual = cabeza;
+        string resultado = "";
 
         while (actual != null)
         {
-            if (regex.IsMatch(actual.Mensaje))
+            if (regex.IsMatch(actual.Message))
             {
-                Console.WriteLine(
-                    $"Coincidencia encontrada: {actual.Gravedad} - {actual.Mensaje} ({actual.FechaHora})"
-                );
+                resultado += $"{actual.Timestamp} | {actual.Severity} | {actual.Message}";
             }
-            actual = actual.Siguiente;
+            actual = actual.Next;
         }
+        return resultado;
     }
 }

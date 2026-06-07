@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Orbinet.Web/">
+    <Project Path="Orbinet.Web/IPC2_Proyecto_2026_GrupoUno.csproj" />
+  </Folder>
+  <Project Path="OrbitNet.Tests/OrbitNet.Tests.csproj" />
+</Solution>
