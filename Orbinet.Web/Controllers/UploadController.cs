@@ -1,16 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
+using OrbitNet.Web.Services;
 
-namespace OrbitNet.Controllers;
+namespace OrbitNet.Web.Controllers;
 
 public class UploadController : Controller
 {
     public IActionResult Index()
     {
-        return View();
+        return View(new OrbitNet.Web.Models.ViewModels.UploadViewModel());
     }
 
-    public IActionResult Result()
+    [HttpPost]
+    public IActionResult Result(Microsoft.AspNetCore.Http.IFormFile xmlFile)
     {
-        return View();
+        var model = MockDataService.GetUploadResultViewModel();
+        if (xmlFile != null)
+        {
+            model.FileName = xmlFile.FileName;
+            model.Message = "Archivo recibido y simulado correctamente.";
+        }
+
+        return View(model);
     }
 }

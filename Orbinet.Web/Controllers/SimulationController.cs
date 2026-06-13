@@ -1,11 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
+using OrbitNet.Web.Services;
 
-namespace OrbitNet.Controllers;
+namespace OrbitNet.Web.Controllers;
 
 public class SimulationController : Controller
 {
     public IActionResult Dashboard()
     {
-        return View();
+        var model = MockDataService.GetSimulationViewModel();
+        return View(model);
+    }
+
+    public IActionResult TickResult()
+    {
+        var model = MockDataService.GetSimulationViewModel();
+        return View(model);
     }
 }

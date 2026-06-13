@@ -1,21 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
+using OrbitNet.Web.Services;
 
-namespace OrbitNet.Controllers;
+namespace OrbitNet.Web.Controllers;
 
 public class ReportsController : Controller
 {
     public IActionResult MemoryLayout()
     {
-        return View();
+        var model = MockDataService.GetReportViewModel("MemoryLayout");
+        return View(model);
     }
 
     public IActionResult Routing()
     {
-        return View();
+        var model = MockDataService.GetReportViewModel("Routing");
+        return View(model);
     }
 
     public IActionResult Buffers()
     {
-        return View();
+        var model = MockDataService.GetReportViewModel("Buffers");
+        return View(model);
     }
 }
