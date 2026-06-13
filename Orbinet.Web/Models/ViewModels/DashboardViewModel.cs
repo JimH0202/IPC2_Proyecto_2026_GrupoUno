@@ -18,6 +18,10 @@ public class DashboardViewModel
 
     public string Hemisphere { get; set; } = string.Empty;
 
+    public int Port { get; set; }
+
+    public string RemoteHemisphereUrl { get; set; } = string.Empty;
+
     public bool IsSimulationRunning { get; set; }
 
     public List<SatelliteViewModel> Satellites { get; set; } = new();

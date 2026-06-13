@@ -1,6 +1,113 @@
-﻿OrbitNet/
-│
-├── OrbitNet.Web/
+﻿# OrbitNet - Simulador de Red de Satélites
+
+## 📡 Descripción
+
+OrbitNet es un simulador de constelaciones de satélites de órbita baja y media (LEO/MEO) que modelan la interacción entre satélites y estaciones terrestres receptoras. El sistema representa el tránsito de paquetes de datos críticos entre satélites utilizando enlaces lógicos para buscar rutas de descarga óptimas.
+
+## 🏗️ Arquitectura
+
+El proyecto utiliza una **arquitectura distribuida con dos instancias simultáneas**:
+
+- **Instancia 1 - Hemisferio Norte**: Puerto 5000
+  - Constelación de satélites polares y ecuatoriales del norte
+  - Acceso: http://localhost:5000
+
+- **Instancia 2 - Hemisferio Sur**: Puerto 5001
+  - Constelación de satélites polares y ecuatoriales del sur
+  - Acceso: http://localhost:5001
+
+Cuando un paquete ingresa a una constelación pero su destino está en la otra, el sistema realiza un **salto HTTP síncrono** mediante POST seguro hacia la instancia hermana.
+
+## 🚀 Ejecución
+
+### Requisitos
+- .NET 10.0 SDK instalado
+- Dos terminales (PowerShell, Bash, o similar)
+- Navegador web
+
+### Paso 1: Compilar el proyecto
+
+```bash
+cd Orbinet.Web
+dotnet build
+```
+
+### Paso 2: Ejecutar Hemisferio Norte (Terminal 1)
+
+```bash
+# Con puerto por defecto (5000)
+dotnet run
+
+# O explícitamente:
+set ASPNETCORE_PORT=5000
+dotnet run
+```
+
+### Paso 3: Ejecutar Hemisferio Sur (Terminal 2 - Nueva)
+
+```bash
+cd Orbinet.Web
+set ASPNETCORE_PORT=5001
+dotnet run
+```
+
+**En PowerShell:**
+```powershell
+$env:ASPNETCORE_PORT = "5001"
+dotnet run
+```
+
+### Paso 4: Acceder desde el navegador
+
+Abre dos ventanas/pestañas:
+- [Hemisferio Norte](http://localhost:5000)
+- [Hemisferio Sur](http://localhost:5001)
+
+## 📂 Estructura del Proyecto
+
+```
+Orbinet.Web/
+├── Controllers/           # Controladores MVC y API
+├── Models/                # Modelos y ViewModels
+├── Services/              # Servicios de negocio
+├── DataStructures/        # Estructuras de datos especializadas
+├── Views/                 # Vistas Razor
+├── wwwroot/              # Archivos estáticos (CSS, JS)
+├── Middleware/           # Middleware personalizado
+├── Graphviz/             # Generadores de diagramas
+├── appsettings.json      # Configuración por defecto
+├── appsettings.North.json # Configuración Hemisferio Norte
+└── appsettings.South.json # Configuración Hemisferio Sur
+```
+
+## 🎮 Funcionalidades Principales
+
+- **Dashboard**: Métricas en tiempo real de la constelación
+- **Gestión de Satélites**: Listado y detalles de satélites
+- **Carga de Configuración**: Ingesta de archivos XML
+- **Reportes**: Visualización de rutas y análisis
+- **Logs de Auditoría**: Registro de eventos del sistema
+
+## 🔧 Configuración
+
+Los puertos se configuran mediante variables de entorno:
+- `ASPNETCORE_PORT=5000` (Hemisferio Norte)
+- `ASPNETCORE_PORT=5001` (Hemisferio Sur)
+
+## 📊 Tecnologías Utilizadas
+
+- **.NET 10.0** - Framework principal
+- **ASP.NET Core MVC** - Patrón web
+- **Razor Views** - Motor de plantillas
+- **C# 13** - Lenguaje de programación
+
+## 📝 Notas de Desarrollo
+
+Durante el desarrollo, la aplicación usa `MockDataService.cs` que proporciona datos de prueba. Estos se reemplazarán con datos reales en futuras versiones.
+
+## 👥 Equipo
+
+Proyecto IPC2 - Grupo Uno (2026)
 │
 │   ├── Controllers/
 │   │
