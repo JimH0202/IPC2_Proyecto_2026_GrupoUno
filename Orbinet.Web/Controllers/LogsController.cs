@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
+using OrbitNet.Web.Services;
 
-namespace OrbitNet.Controllers;
+namespace OrbitNet.Web.Controllers;
 
 public class LogsController : Controller
 {
     public IActionResult Index()
     {
-        return View();
+        var model = MockDataService.GetLogEntries();
+        return View(model);
     }
 }

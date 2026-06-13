@@ -1,16 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
+using OrbitNet.Web.Services;
 
-namespace OrbitNet.Controllers;
+namespace OrbitNet.Web.Controllers;
 
 public class SatellitesController : Controller
 {
     public IActionResult Index()
     {
-        return View();
+        var model = MockDataService.GetSatelliteList();
+        return View(model);
     }
 
     public IActionResult Details(string id)
     {
-        return View();
+        var model = MockDataService.GetSatelliteDetails(id);
+        return View(model);
     }
 }

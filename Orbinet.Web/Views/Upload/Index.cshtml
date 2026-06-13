@@ -1,7 +1,10 @@
 @model OrbitNet.Web.Models.ViewModels.UploadViewModel
 
 <h1>Cargar archivo XML</h1>
-<form method="post" enctype="multipart/form-data">
-    <input type="file" name="xmlFile" />
+<form asp-action="Result" asp-controller="Upload" method="post" enctype="multipart/form-data">
+    <div>
+        <label for="xmlFile">Archivo XML</label>
+        <input type="file" id="xmlFile" name="xmlFile" />
+    </div>
     <button type="submit">Subir</button>
 </form>
