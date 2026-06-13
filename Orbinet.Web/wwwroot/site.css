@@ -11,8 +11,57 @@ nav {
 nav a {
     margin-right: 15px;
     text-decoration: none;
+    color: #1f4f8f;
 }
 
 h1 {
     color: #1f4f8f;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+thead th {
+    background-color: #f0f4f8;
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+    background-color: #fafafa;
+}
+
+a.action-card {
+    display: inline-block;
+    padding: 10px 16px;
+    margin-right: 10px;
+    border-radius: 6px;
+    background-color: #1f4f8f;
+    color: white;
+    text-decoration: none;
+}
+
+a.action-card:hover {
+    background-color: #163a63;
+}
+
+.action-links {
+    margin-bottom: 20px;
+}
+
+a {
+    color: #1f4f8f;
+}
+
+a:hover {
+    text-decoration: underline;
 }

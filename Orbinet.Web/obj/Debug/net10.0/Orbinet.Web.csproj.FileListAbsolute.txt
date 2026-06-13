@@ -31,7 +31,6 @@ C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\tmk9szx8t8-{0}-5ipweew5fc-5ipweew5fc.gz
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\afx207ei8i-{0}-5ipweew5fc-5ipweew5fc.gz
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\6ukgub8m89-{0}-5ipweew5fc-5ipweew5fc.gz
-C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\1b50e30v50-{0}-tmk2on6a49-tmk2on6a49.gz
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\staticwebassets.build.json
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\staticwebassets.build.json.cache
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\staticwebassets.development.json
@@ -42,3 +41,4 @@ C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\Orbinet.Web.pdb
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\Orbinet.Web.genruntimeconfig.cache
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\ref\Orbinet.Web.dll
+C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\1b50e30v50-{0}-gseyf469ru-gseyf469ru.gz

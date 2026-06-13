@@ -1,10 +1,14 @@
 @model OrbitNet.Web.Models.ViewModels.SatelliteViewModel
 
-<h1>Detalle de SatÈlite</h1>
+<h1>Detalle de Sat√©lite</h1>
+<p><a asp-controller="Satellites" asp-action="Index">‚Üê Volver a la lista de sat√©lites</a></p>
+
 <p><strong>Nombre:</strong> @Model.Name</p>
-<p><strong>”rbita:</strong> @Model.OrbitId</p>
+<p><strong>√ìrbita:</strong> @Model.OrbitId</p>
 <p><strong>Tipo:</strong> @Model.Type</p>
-<p><strong>PosiciÛn:</strong> (@Model.X, @Model.Y)</p>
-<p><strong>Activo:</strong> @(Model.IsActive ? "SÌ" : "No")</p>
+<p><strong>Posici√≥n:</strong> (@Model.X, @Model.Y)</p>
+<p><strong>Activo:</strong> @(Model.IsActive ? "S√≠" : "No")</p>
 <p><strong>Mensajes enviados:</strong> @Model.MessagesSent</p>
 <p><strong>Mensajes recibidos:</strong> @Model.MessagesReceived</p>
+
+<p><a asp-controller="Home" asp-action="Index">‚Üê Volver al dashboard</a></p>
