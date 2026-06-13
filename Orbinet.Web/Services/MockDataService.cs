@@ -93,13 +93,27 @@ public static class MockDataService
             SvgContent = "<svg width='380' height='220' xmlns='http://www.w3.org/2000/svg'><rect width='380' height='220' fill='#f1f3f5' stroke='#ced4da'/><text x='20' y='40' font-family='Arial' font-size='16'>Reporte de " + reportName + "</text></svg>"
         };
 
-        return reportName switch
+        switch (reportName)
         {
-            "MemoryLayout" => model with { Title = "Mapa de memoria", Description = "Representación de la estructura de memoria del sistema." },
-            "Routing" => model with { Title = "Ruta de relés", Description = "Vista del enrutamiento de mensajes entre satélites y antenas." },
-            "Buffers" => model with { Title = "Capacidad de buffers", Description = "Detalle de ocupación y capacidad de los buffers." },
-            _ => model with { Title = "Reporte genérico", Description = "Reporte de sistema de ejemplo." }
-        };
+            case "MemoryLayout":
+                model.Title = "Mapa de memoria";
+                model.Description = "Representación de la estructura de memoria del sistema.";
+                break;
+            case "Routing":
+                model.Title = "Ruta de relés";
+                model.Description = "Vista del enrutamiento de mensajes entre satélites y antenas.";
+                break;
+            case "Buffers":
+                model.Title = "Capacidad de buffers";
+                model.Description = "Detalle de ocupación y capacidad de los buffers.";
+                break;
+            default:
+                model.Title = "Reporte genérico";
+                model.Description = "Reporte de sistema de ejemplo.";
+                break;
+        }
+
+        return model;
     }
 
     public static List<LogViewModel> GetLogEntries()
