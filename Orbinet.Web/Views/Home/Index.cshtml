@@ -1,22 +1,21 @@
-namespace OrbitNet.Models.ViewModels;
+@model OrbitNet.Web.Models.ViewModels.DashboardViewModel
 
-public class DashboardViewModel
-{
-    public int CurrentTick { get; set; }
+<h1>OrbitNet Dashboard</h1>
 
-    public int ActiveSatellites { get; set; }
+<hr />
 
-    public int InactiveSatellites { get; set; }
+<p><strong>Tick Actual:</strong> @Model.CurrentTick</p>
 
-    public int PendingMessages { get; set; }
+<p><strong>Satélites Activos:</strong> @Model.ActiveSatellites</p>
 
-    public int ProcessedMessages { get; set; }
+<p><strong>Satélites Inactivos:</strong> @Model.InactiveSatellites</p>
 
-    public int TotalAntennas { get; set; }
+<p><strong>Mensajes Pendientes:</strong> @Model.PendingMessages</p>
 
-    public string Hemisphere { get; set; } = string.Empty;
+<p><strong>Mensajes Procesados:</strong> @Model.ProcessedMessages</p>
 
-    public bool IsSimulationRunning { get; set; }
-}
+<p><strong>Antenas:</strong> @Model.TotalAntennas</p>
 
-<h1>OrbitNet</h1>
+<p><strong>Hemisferio:</strong> @Model.Hemisphere</p>
+
+<p><strong>Simulación:</strong> @(Model.IsSimulationRunning ? "Activa" : "Detenida")</p>

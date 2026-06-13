@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace OrbitNet.Web.Models.ViewModels;
 
 public class SimulationViewModel
@@ -12,5 +14,3 @@ public class SimulationViewModel
 
     public List<SatelliteViewModel> Satellites { get; set; } = new();
 }
-
-<h1>Dashboard de Simulación</h1>

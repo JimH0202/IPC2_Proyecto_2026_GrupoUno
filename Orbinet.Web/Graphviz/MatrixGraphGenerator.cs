@@ -1,5 +1,4 @@
 namespace OrbitNet.Web.Services.Graphviz;
-
-public class DotCompiler
+public class matrixGraphGenerator
 {
 }
