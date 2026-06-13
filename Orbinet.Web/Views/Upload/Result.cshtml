@@ -1,18 +1,13 @@
-namespace OrbitNet.Models.ViewModels;
+@model OrbitNet.Web.Models.ViewModels.UploadViewModel
 
-public class UploadViewModel
+<h1>Resultado de la carga</h1>
+<p>@Model.Message</p>
+@if (Model.Errors?.Any() == true)
 {
-    public string FileName { get; set; } = string.Empty;
-
-    public bool Success { get; set; }
-
-    public string Message { get; set; } = string.Empty;
-
-    public int SatellitesLoaded { get; set; }
-
-    public int AntennasLoaded { get; set; }
-
-    public int PolarOrbitsLoaded { get; set; }
-
-    public List<string> Errors { get; set; } = new();
+    <ul>
+    @foreach (var error in Model.Errors)
+    {
+        <li>@error</li>
+    }
+    </ul>
 }

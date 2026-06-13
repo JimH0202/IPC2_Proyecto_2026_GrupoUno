@@ -1,16 +1,28 @@
-namespace OrbitNet.Web.Models.ViewModels;
+@model OrbitNet.Web.Models.ViewModels.SimulationViewModel
 
-public class SimulationViewModel
-{
-    public int CurrentTick { get; set; }
-
-    public int ActiveSatellites { get; set; }
-
-    public int PendingMessages { get; set; }
-
-    public int ProcessedMessages { get; set; }
-
-    public List<SatelliteViewModel> Satellites { get; set; } = new();
-}
-
-<h1>Dashboard de SimulaciÃ³n</h1>
+<h1>Dashboard de Simulación</h1>
+<p>Tick actual: @Model.CurrentTick</p>
+<p>Satélites activos: @Model.ActiveSatellites</p>
+<p>Mensajes pendientes: @Model.PendingMessages</p>
+<p>Mensajes procesados: @Model.ProcessedMessages</p>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Órbita</th>
+            <th>Activo</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var sat in Model.Satellites)
+    {
+        <tr>
+            <td>@sat.Id</td>
+            <td>@sat.Name</td>
+            <td>@sat.OrbitId</td>
+            <td>@(sat.IsActive ? "Sí" : "No")</td>
+        </tr>
+    }
+    </tbody>
+</table>

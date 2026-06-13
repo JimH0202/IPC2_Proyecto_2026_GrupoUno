@@ -1,22 +1,10 @@
-namespace OrbitNet.Models.ViewModels;
+@model OrbitNet.Web.Models.ViewModels.SatelliteViewModel
 
-public class SatelliteViewModel
-{
-    public string Id { get; set; } = string.Empty;
-
-    public string Name { get; set; } = string.Empty;
-
-    public string OrbitId { get; set; } = string.Empty;
-
-    public string Type { get; set; } = string.Empty;
-
-    public int X { get; set; }
-
-    public int Y { get; set; }
-
-    public bool IsActive { get; set; }
-
-    public int MessagesSent { get; set; }
-
-    public int MessagesReceived { get; set; }
-}
+<h1>Detalle de Satélite</h1>
+<p><strong>Nombre:</strong> @Model.Name</p>
+<p><strong>Órbita:</strong> @Model.OrbitId</p>
+<p><strong>Tipo:</strong> @Model.Type</p>
+<p><strong>Posición:</strong> (@Model.X, @Model.Y)</p>
+<p><strong>Activo:</strong> @(Model.IsActive ? "Sí" : "No")</p>
+<p><strong>Mensajes enviados:</strong> @Model.MessagesSent</p>
+<p><strong>Mensajes recibidos:</strong> @Model.MessagesReceived</p>

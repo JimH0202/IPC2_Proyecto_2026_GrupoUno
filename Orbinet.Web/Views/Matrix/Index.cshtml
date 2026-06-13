@@ -1,14 +1,7 @@
-namespace OrbitNet.Models.ViewModels;
-
-public class MatrixViewModel
-{
-    public string SvgContent { get; set; } = string.Empty;
-
-    public int Rows { get; set; }
-
-    public int Columns { get; set; }
-
-    public int OccupiedNodes { get; set; }
-}
+@model OrbitNet.Web.Models.ViewModels.MatrixViewModel
 
 <h1>Matriz Dispersa</h1>
+<p>Filas: @Model.Rows</p>
+<p>Columnas: @Model.Columns</p>
+<p>Nodos ocupados: @Model.OccupiedNodes</p>
+<div>@Html.Raw(Model.SvgContent)</div>

@@ -1,14 +1,6 @@
-namespace OrbitNet.Models.ViewModels;
+@model OrbitNet.Web.Models.ViewModels.SimulationViewModel
 
-public class SimulationViewModel
-{
-    public int CurrentTick { get; set; }
-
-    public int ActiveSatellites { get; set; }
-
-    public int PendingMessages { get; set; }
-
-    public int ProcessedMessages { get; set; }
-
-    public List<SatelliteViewModel> Satellites { get; set; } = new();
-}
+<h1>Resultado del Tick</h1>
+<p>Tick actual: @Model.CurrentTick</p>
+<p>Mensajes procesados: @Model.ProcessedMessages</p>
+<p>Satélites activos: @Model.ActiveSatellites</p>

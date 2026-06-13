@@ -1,22 +1,32 @@
-namespace OrbitNet.Models.ViewModels;
+@model List<OrbitNet.Web.Models.ViewModels.SatelliteViewModel>
 
-public class SatelliteViewModel
-{
-    public string Id { get; set; } = string.Empty;
-
-    public string Name { get; set; } = string.Empty;
-
-    public string OrbitId { get; set; } = string.Empty;
-
-    public string Type { get; set; } = string.Empty;
-
-    public int X { get; set; }
-
-    public int Y { get; set; }
-
-    public bool IsActive { get; set; }
-
-    public int MessagesSent { get; set; }
-
-    public int MessagesReceived { get; set; }
-}
+<h1>Lista de Satélites</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Órbita</th>
+            <th>Tipo</th>
+            <th>Activo</th>
+            <th>Mensajes enviados</th>
+            <th>Mensajes recibidos</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var sat in Model)
+    {
+        <tr>
+            <td>@sat.Id</td>
+            <td>@sat.Name</td>
+            <td>@sat.OrbitId</td>
+            <td>@sat.Type</td>
+            <td>@(sat.IsActive ? "Sí" : "No")</td>
+            <td>@sat.MessagesSent</td>
+            <td>@sat.MessagesReceived</td>
+            <td><a asp-action="Details" asp-route-id="@sat.Id">Ver</a></td>
+        </tr>
+    }
+    </tbody>
+</table>

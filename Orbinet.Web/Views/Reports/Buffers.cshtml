@@ -1,12 +1,6 @@
-namespace OrbitNet.Models.ViewModels;
+@model OrbitNet.Web.Models.ViewModels.ReportViewModel
 
-public class ReportViewModel
-{
-    public string Title { get; set; } = string.Empty;
-
-    public string Description { get; set; } = string.Empty;
-
-    public string SvgContent { get; set; } = string.Empty;
-
-    public DateTime GeneratedAt { get; set; }
-}
+<h1>@Model.Title</h1>
+<p>@Model.Description</p>
+<p><small>Generado: @Model.GeneratedAt</small></p>
+<pre>@Model.SvgContent</pre>
