@@ -6,7 +6,7 @@ namespace OrbitNet.Tests.MatrixTests;
 public class MatrixNodeTests
 {
     [Fact]
-    public void Constructor_DebeCrearMatrixNodeCorrectamente() // Verificar que el constructor de MatrixNode inicializa correctamente sus propiedades
+    public void Constructor() // Verificar que el constructor de MatrixNode inicializa correctamente sus propiedades
     {
         MatrixNode node = new MatrixNode(1, 2, "SAT-ECU-0001", "10.0.0.1");
 

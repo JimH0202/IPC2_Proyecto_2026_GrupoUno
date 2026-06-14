@@ -6,7 +6,7 @@ namespace OrbitNet.Tests.MatrixTests;
 public class HeaderNodeTests
 {
     [Fact]
-    public void Constructor_DebeCrearHeaderNodeCorrectamente() // Verificar que el constructor de HeaderNode inicializa correctamente sus propiedades
+    public void Constructor() // Verificar que el constructor de HeaderNode inicializa correctamente sus propiedades
     {
         HeaderNode header = new HeaderNode(5);
 

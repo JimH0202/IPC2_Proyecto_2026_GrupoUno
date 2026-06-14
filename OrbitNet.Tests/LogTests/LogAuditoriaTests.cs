@@ -5,7 +5,7 @@ using Xunit;
 public class LogAuditoriaTests
 {
     [Fact]
-    public void WriteEvent_InsertaNodoCorrectamente()
+    public void WriteEvent()
     {
         var log = new LogAuditoria();
 
@@ -16,7 +16,7 @@ public class LogAuditoriaTests
     }
 
     [Fact]
-    public void SearchLogRegex_EncuentraCoincidencia()
+    public void SearchLogRegex()
     {
         var log = new LogAuditoria();
         log.WriteEvent("ERROR", "Fallo en satelite");
@@ -30,7 +30,7 @@ public class LogAuditoriaTests
     }
 
     [Fact]
-    public void Clear_VaciaElLogCorrectamente()
+    public void Clear()
     {
         var log = new LogAuditoria();
         log.WriteEvent("INFO", "Sistema iniciado");
