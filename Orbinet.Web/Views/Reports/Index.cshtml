@@ -1,0 +1,33 @@
+@{
+    ViewData["Title"] = "Reportes";
+}
+
+<div class="page-header">
+    <div>
+        <h1>Reportes del Sistema</h1>
+        <p class="report-description">Accede a los análisis visuales de memoria, buffers y enrutamiento de la constelación.</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+    </div>
+</div>
+
+<div class="reports-grid">
+    <div class="report-card">
+        <h3>Diseño de Memoria</h3>
+        <p>Visualiza el diseño de la memoria y la distribución de estructuras de datos en el sistema.</p>
+        <a asp-controller="Reports" asp-action="MemoryLayout" class="action-card">Ver reporte</a>
+    </div>
+
+    <div class="report-card">
+        <h3>Buffers</h3>
+        <p>Análisis visual de los buffers de comunicación y colas de mensajes del sistema.</p>
+        <a asp-controller="Reports" asp-action="Buffers" class="action-card">Ver reporte</a>
+    </div>
+
+    <div class="report-card">
+        <h3>Enrutamiento</h3>
+        <p>Diagrama de rutas de comunicación entre satélites y antenas en la constelación.</p>
+        <a asp-controller="Reports" asp-action="Routing" class="action-card">Ver reporte</a>
+    </div>
+</div>

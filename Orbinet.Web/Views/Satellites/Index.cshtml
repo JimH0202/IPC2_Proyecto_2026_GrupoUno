@@ -1,7 +1,14 @@
 @model List<OrbitNet.Web.Models.ViewModels.SatelliteViewModel>
 
-<h1>Lista de Satélites</h1>
-<p><a asp-controller="Home" asp-action="Index">← Volver al dashboard</a></p>
+<div class="page-header">
+    <div>
+        <h1>Lista de Satélites</h1>
+        <p class="report-description">Revisa el inventario de satélites, su estado y el tráfico de mensajes.</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+    </div>
+</div>
 
 <table>
     <thead>
@@ -27,7 +34,7 @@
             <td>@(sat.IsActive ? "Sí" : "No")</td>
             <td>@sat.MessagesSent</td>
             <td>@sat.MessagesReceived</td>
-            <td><a asp-action="Details" asp-route-id="@sat.Id">Ver detalles</a></td>
+            <td><a asp-action="Details" asp-route-id="@sat.Id" class="btn btn-primary">Ver detalles</a></td>
         </tr>
     }
     </tbody>

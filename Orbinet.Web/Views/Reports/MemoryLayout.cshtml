@@ -1,6 +1,21 @@
 @model OrbitNet.Web.Models.ViewModels.ReportViewModel
 
-<h1>@Model.Title</h1>
-<p>@Model.Description</p>
-<p><small>Generado: @Model.GeneratedAt</small></p>
-<div>@Html.Raw(Model.SvgContent)</div>
+<div class="page-header">
+    <div>
+        <h1>@Model.Title</h1>
+        <p class="report-description">@Model.Description</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Reports" asp-action="Index" class="btn btn-secondary">Volver a reportes</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Inicio</a>
+    </div>
+</div>
+
+<div class="report-header">
+    <p class="report-description">@Model.Description</p>
+    <p class="report-date">Generado: @Model.GeneratedAt.ToString("g")</p>
+</div>
+
+<div class="svg-container">
+    @Html.Raw(Model.SvgContent)
+</div>

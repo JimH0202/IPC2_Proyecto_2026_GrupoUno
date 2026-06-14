@@ -5,6 +5,11 @@ namespace OrbitNet.Web.Controllers;
 
 public class ReportsController : Controller
 {
+    public IActionResult Index()
+    {
+        return View();
+    }
+
     public IActionResult MemoryLayout()
     {
         var model = MockDataService.GetReportViewModel("MemoryLayout");

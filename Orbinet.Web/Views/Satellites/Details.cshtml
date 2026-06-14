@@ -1,7 +1,15 @@
 @model OrbitNet.Web.Models.ViewModels.SatelliteViewModel
 
-<h1>Detalle de Satélite</h1>
-<p><a asp-controller="Satellites" asp-action="Index">← Volver a la lista de satélites</a></p>
+<div class="page-header">
+    <div>
+        <h1>Detalle de Satélite</h1>
+        <p class="report-description">Información completa del satélite seleccionado y su actividad reciente.</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Satellites" asp-action="Index" class="btn btn-primary">Volver a la lista</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+    </div>
+</div>
 
 <p><strong>Nombre:</strong> @Model.Name</p>
 <p><strong>Órbita:</strong> @Model.OrbitId</p>
@@ -11,4 +19,3 @@
 <p><strong>Mensajes enviados:</strong> @Model.MessagesSent</p>
 <p><strong>Mensajes recibidos:</strong> @Model.MessagesReceived</p>
 
-<p><a asp-controller="Home" asp-action="Index">← Volver al dashboard</a></p>

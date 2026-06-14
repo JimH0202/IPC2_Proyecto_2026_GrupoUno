@@ -4,23 +4,29 @@
     <meta charset="utf-8" />
     <title>OrbitNet</title>
 
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/site.css" asp-append-version="true" />
 </head>
 <body>
+    <div class="app-shell">
+        <header class="app-header">
+            <div class="brand">
+                <h1>OrbitNet</h1>
+                <p>Gestión de satélites, simulación y reportes</p>
+            </div>
+            <nav class="top-nav">
+                <a asp-controller="Home" asp-action="Index" class="nav-item">Inicio</a>
+                <a asp-controller="Upload" asp-action="Index" class="nav-item">Carga XML</a>
+                <a asp-controller="Simulation" asp-action="Dashboard" class="nav-item">Simulación</a>
+                <a asp-controller="Matrix" asp-action="Index" class="nav-item">Matriz</a>
+                <a asp-controller="Satellites" asp-action="Index" class="nav-item">Satélites</a>
+                <a asp-controller="Reports" asp-action="MemoryLayout" class="nav-item">Reportes</a>
+                <a asp-controller="Logs" asp-action="Index" class="nav-item">Logs</a>
+            </nav>
+        </header>
 
-    <nav>
-        <a asp-controller="Home" asp-action="Index">Inicio</a> |
-        <a asp-controller="Upload" asp-action="Index">Carga XML</a> |
-        <a asp-controller="Simulation" asp-action="Dashboard">Simulación</a> |
-        <a asp-controller="Matrix" asp-action="Index">Matriz</a> |
-        <a asp-controller="Satellites" asp-action="Index">Satélites</a> |
-        <a asp-controller="Reports" asp-action="MemoryLayout">Reportes</a> |
-        <a asp-controller="Logs" asp-action="Index">Logs</a>
-    </nav>
-
-    <hr />
-
-    @RenderBody()
-
+        <main class="page-content">
+            @RenderBody()
+        </main>
+    </div>
 </body>
 </html>

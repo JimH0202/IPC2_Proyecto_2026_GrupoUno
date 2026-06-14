@@ -1,5 +1,17 @@
 @model OrbitNet.Web.Models.ViewModels.DashboardViewModel
 
+<div class="page-header">
+    <div>
+        <h1>Dashboard</h1>
+        <p class="report-description">Controla el estado de la constelación, operaciones y métricas del hemisferio.</p>
+    </div>
+    <div class="page-actions">
+        <a href="@Url.Action("Index", "Satellites")" class="action-card">Ver satélites</a>
+        <a href="@Url.Action("Dashboard", "Simulation")" class="action-card">Ir a simulación</a>
+        <a href="@Url.Action("MemoryLayout", "Reports")" class="action-card">Ver reportes</a>
+    </div>
+</div>
+
 <div style="background-color: @(Model.Hemisphere == "South" ? "#e8f4f8" : "#f0e8f8"); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid @(Model.Hemisphere == "South" ? "#0078d4" : "#8764b8");">
     <h2 style="margin: 0; color: @(Model.Hemisphere == "South" ? "#0078d4" : "#8764b8");">
         OrbitNet - Hemisferio @Model.Hemisphere
@@ -7,12 +19,6 @@
     <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">
         @(Model.Hemisphere == "North" ? "Constelación del Hemisferio Norte • Puerto 5000" : "Constelación del Hemisferio Sur • Puerto 5001")
     </p>
-</div>
-
-<div class="action-links">
-    <a asp-controller="Satellites" asp-action="Index" class="action-card">Ver satélites</a>
-    <a asp-controller="Simulation" asp-action="Dashboard" class="action-card">Ir a simulación</a>
-    <a asp-controller="Reports" asp-action="MemoryLayout" class="action-card">Ver reportes</a>
 </div>
 
 <h3>Estado del Sistema</h3>

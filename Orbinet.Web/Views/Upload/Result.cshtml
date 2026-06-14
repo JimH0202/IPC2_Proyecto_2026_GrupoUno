@@ -1,13 +1,47 @@
 @model OrbitNet.Web.Models.ViewModels.UploadViewModel
 
-<h1>Resultado de la carga</h1>
-<p>@Model.Message</p>
+<div class="page-header">
+    <div>
+        <h1>Resultado de la carga</h1>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Upload" asp-action="Index" class="btn btn-primary">Subir otro archivo</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+    </div>
+</div>
+
+<div class="result-box @(Model.Success ? "success" : "error")">
+    <h2>@Model.Message</h2>
+    <p><strong>Archivo:</strong> @Model.FileName</p>
+</div>
+
+@if (Model.Success)
+{
+    <div class="stats-grid">
+        <div class="stat-card">
+            <strong>Satélites cargados</strong>
+            <p class="stat-value">@Model.SatellitesLoaded</p>
+        </div>
+        <div class="stat-card">
+            <strong>Antenas cargadas</strong>
+            <p class="stat-value">@Model.AntennasLoaded</p>
+        </div>
+        <div class="stat-card">
+            <strong>Órbitas polares cargadas</strong>
+            <p class="stat-value">@Model.PolarOrbitsLoaded</p>
+        </div>
+    </div>
+}
+
 @if (Model.Errors?.Any() == true)
 {
-    <ul>
-    @foreach (var error in Model.Errors)
-    {
-        <li>@error</li>
-    }
-    </ul>
+    <div class="error-section">
+        <h3>Errores encontrados:</h3>
+        <ul>
+        @foreach (var error in Model.Errors)
+        {
+            <li>@error</li>
+        }
+        </ul>
+    </div>
 }

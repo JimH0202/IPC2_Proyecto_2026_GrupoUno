@@ -1,10 +1,25 @@
 @model OrbitNet.Web.Models.ViewModels.UploadViewModel
 
-<h1>Cargar archivo XML</h1>
-<form asp-action="Result" asp-controller="Upload" method="post" enctype="multipart/form-data">
+<div class="page-header">
     <div>
-        <label for="xmlFile">Archivo XML</label>
-        <input type="file" id="xmlFile" name="xmlFile" />
+        <h1>Cargar archivo XML</h1>
+        <p class="report-description">Selecciona un archivo de configuración XML para cargar satélites, antenas y órbitas.</p>
     </div>
-    <button type="submit">Subir</button>
+    <div class="page-actions">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+    </div>
+</div>
+
+<form asp-action="Result" asp-controller="Upload" method="post" enctype="multipart/form-data" class="upload-form">
+    <div class="form-group">
+        <label for="xmlFile">Archivo XML de configuración:</label>
+        <input type="file" id="xmlFile" name="xmlFile" accept=".xml" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Subir archivo</button>
 </form>
+
+<div class="info-box">
+    <h3>Instrucciones</h3>
+    <p>Selecciona un archivo XML con la configuración de satélites, órbitas y antenas.</p>
+    <p>El sistema procesará el archivo y lo cargará en la constelación actual.</p>
+</div>

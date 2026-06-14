@@ -1,6 +1,51 @@
 @model OrbitNet.Web.Models.ViewModels.SimulationViewModel
 
-<h1>Resultado del Tick</h1>
-<p>Tick actual: @Model.CurrentTick</p>
-<p>Mensajes procesados: @Model.ProcessedMessages</p>
-<p>Sat�lites activos: @Model.ActiveSatellites</p>
+<div class="page-header">
+    <div>
+        <h1>Resultado del tick</h1>
+        <p class="report-description">Resumen del sistema y estado de los satélites tras la última ejecución.</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Simulation" asp-action="Dashboard" class="btn btn-primary">Volver a dashboard</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Inicio</a>
+    </div>
+</div>
+
+<div class="tick-result-box">
+    <div class="result-item">
+        <strong>Tick actual:</strong> @Model.CurrentTick
+    </div>
+    <div class="result-item">
+        <strong>Mensajes procesados en este tick:</strong> <span class="highlight">@Model.ProcessedMessages</span>
+    </div>
+    <div class="result-item">
+        <strong>Satélites activos:</strong> @Model.ActiveSatellites
+    </div>
+    <div class="result-item">
+        <strong>Mensajes pendientes:</strong> @Model.PendingMessages
+    </div>
+</div>
+
+<h3>Estado de satélites después del tick</h3>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Órbita</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var sat in Model.Satellites)
+    {
+        <tr>
+            <td>@sat.Id</td>
+            <td>@sat.Name</td>
+            <td>@sat.OrbitId</td>
+            <td>@(sat.IsActive ? "Activo" : "Inactivo")</td>
+        </tr>
+    }
+    </tbody>
+</table>
+

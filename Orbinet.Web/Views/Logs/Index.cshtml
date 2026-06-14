@@ -1,6 +1,19 @@
 @model List<OrbitNet.Web.Models.ViewModels.LogViewModel>
 
-<h1>Registros del sistema</h1>
+<div class="page-header">
+    <div>
+        <h1>Registros del sistema</h1>
+        <p class="report-description">Consulta los eventos recientes y revisa el historial de operaciones en OrbitNet.</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+    </div>
+</div>
+
+<div class="log-summary">
+    <p>Total de registros: <strong>@Model.Count</strong></p>
+</div>
+
 <table>
     <thead>
         <tr>
@@ -15,7 +28,7 @@
     {
         <tr>
             <td>@log.Timestamp.ToString("g")</td>
-            <td>@log.Level</td>
+            <td><span class="log-level log-@log.Level.ToLower()">@log.Level</span></td>
             <td>@log.Event</td>
             <td>@log.Details</td>
         </tr>
