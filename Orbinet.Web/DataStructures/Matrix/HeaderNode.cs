@@ -12,7 +12,6 @@ public class HeaderNode
     public HeaderNode(int index)
     {
         Index = index;
-
         Previous = null;
         Next = null;
         Access = null;
