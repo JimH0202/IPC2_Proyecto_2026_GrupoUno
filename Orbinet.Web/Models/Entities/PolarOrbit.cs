@@ -1,6 +1,4 @@
-public class Satellite {
+public class PolarOrbit{
     public string Id { get; set; }
-    public string Name { get; set; }
-    public string Ip { get; set; }
-    
+    public Satellite[] Satellites { get; set; }
 }

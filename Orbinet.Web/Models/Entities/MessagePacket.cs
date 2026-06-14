@@ -1,6 +1,8 @@
+using System.Text;
 using System.Text.Json.Serialization;
 
-public class MessagePacket {
+public class MessagePacket
+{
     [JsonPropertyName("codigo_hex")]
     public string CodHex { get; set; }
 
@@ -15,5 +17,4 @@ public class MessagePacket {
 
     [JsonPropertyName("contenido")]
     public string Content { get; set; }
-
-} 
+}
