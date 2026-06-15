@@ -1,0 +1,30 @@
+@model OrbitNet.Web.Models.ViewModels.MatrixViewModel
+
+<div class="page-header">
+    <div>
+        <h1>Matriz Dispersa</h1>
+        <p class="report-description">Visualiza la estructura y ocupación de la matriz dispersa del sistema.</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+    </div>
+</div>
+
+<div class="matrix-stats">
+    <div class="stat-card">
+        <strong>Filas</strong>
+        <p class="stat-value">@Model.Rows</p>
+    </div>
+    <div class="stat-card">
+        <strong>Columnas</strong>
+        <p class="stat-value">@Model.Columns</p>
+    </div>
+    <div class="stat-card">
+        <strong>Nodos ocupados</strong>
+        <p class="stat-value">@Model.OccupiedNodes</p>
+    </div>
+</div>
+
+<div class="svg-container">
+    @Html.Raw(Model.SvgContent)
+</div>

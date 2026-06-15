@@ -1,0 +1,37 @@
+@model List<OrbitNet.Web.Models.ViewModels.LogViewModel>
+
+<div class="page-header">
+    <div>
+        <h1>Registros del sistema</h1>
+        <p class="report-description">Consulta los eventos recientes y revisa el historial de operaciones en OrbitNet.</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+    </div>
+</div>
+
+<div class="log-summary">
+    <p>Total de registros: <strong>@Model.Count</strong></p>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Nivel</th>
+            <th>Evento</th>
+            <th>Detalles</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var log in Model)
+    {
+        <tr>
+            <td>@log.Timestamp.ToString("g")</td>
+            <td><span class="log-level log-@log.Level.ToLower()">@log.Level</span></td>
+            <td>@log.Event</td>
+            <td>@log.Details</td>
+        </tr>
+    }
+    </tbody>
+</table>

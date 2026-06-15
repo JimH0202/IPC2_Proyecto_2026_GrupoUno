@@ -1,0 +1,41 @@
+@model List<OrbitNet.Web.Models.ViewModels.SatelliteViewModel>
+
+<div class="page-header">
+    <div>
+        <h1>Lista de Satélites</h1>
+        <p class="report-description">Revisa el inventario de satélites, su estado y el tráfico de mensajes.</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+    </div>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Órbita</th>
+            <th>Tipo</th>
+            <th>Activo</th>
+            <th>Mensajes enviados</th>
+            <th>Mensajes recibidos</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var sat in Model)
+    {
+        <tr>
+            <td>@sat.Id</td>
+            <td>@sat.Name</td>
+            <td>@sat.OrbitId</td>
+            <td>@sat.Type</td>
+            <td>@(sat.IsActive ? "Sí" : "No")</td>
+            <td>@sat.MessagesSent</td>
+            <td>@sat.MessagesReceived</td>
+            <td><a asp-action="Details" asp-route-id="@sat.Id" class="btn btn-primary">Ver detalles</a></td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,16 @@
+using System.Collections.Generic;
+
+namespace OrbitNet.Web.Models.ViewModels;
+
+public class SimulationViewModel
+{
+    public int CurrentTick { get; set; }
+
+    public int ActiveSatellites { get; set; }
+
+    public int PendingMessages { get; set; }
+
+    public int ProcessedMessages { get; set; }
+
+    public List<SatelliteViewModel> Satellites { get; set; } = new();
+}
