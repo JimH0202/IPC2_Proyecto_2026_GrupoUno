@@ -1,8 +1,7 @@
 namespace Orbinet.Web.DataStructures.Interfaces;
-
-public interface IMatrix
+public interface IAbstractColletion
 {
     int Count { get; }
-    bool IsEmpty { get; }
     void Clear();
+    bool IsEmpty{get;}
 }
