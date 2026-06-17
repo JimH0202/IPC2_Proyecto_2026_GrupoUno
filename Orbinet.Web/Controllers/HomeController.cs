@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-namespace Orbinet.Web.Controllers;
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using Orbinet.Web.Models;
-
-public class HomeController : Controller
-{
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-=======
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using OrbitNet.Web.Configuration;
@@ -44,6 +21,5 @@ public class HomeController : Controller
         model.Port = _settings.Port;
         model.RemoteHemisphereUrl = _settings.RemoteHemisphereUrl;
         return View(model);
->>>>>>> origin/frontend-y-reportes
     }
 }

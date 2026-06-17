@@ -1,4 +1,10 @@
-<<<<<<< HEAD
+// 3. Configuración del Pipeline HTTP (Rutas y Seguridad)
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using OrbitNet.Web.Configuration;
+using OrbitNet.Web.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // 1. Configuraciones compartidas (MVC + API)
@@ -14,15 +20,6 @@ builder.Services.AddSingleton<RelayHttpService>();
 builder.Services.AddSingleton<TickProcessor>();
 
 var app = builder.Build();
-
-// 3. Configuración del Pipeline HTTP (Rutas y Seguridad)
-=======
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using OrbitNet.Web.Configuration;
-
-var builder = WebApplication.CreateBuilder(args);
 
 var portEnv = Environment.GetEnvironmentVariable("ASPNETCORE_PORT");
 var port = string.IsNullOrWhiteSpace(portEnv) ? "5000" : portEnv;
@@ -42,16 +39,11 @@ builder.Services.Configure<AppInstanceSettings>(builder.Configuration.GetSection
 
 builder.WebHost.UseUrls($"http://localhost:{port}");
 
-var app = builder.Build();
-
->>>>>>> origin/frontend-y-reportes
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
-
-<<<<<<< HEAD
 app.UseHttpsRedirection();
 app.UseRouting();
 
@@ -66,14 +58,3 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 app.Run();
-=======
-app.UseStaticFiles();
-app.UseRouting();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.Run();
- 
->>>>>>> origin/frontend-y-reportes
