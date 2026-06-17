@@ -8,19 +8,19 @@
     "net10.0": []
   },
   "packageFolders": {
-    "C:\\Users\\jimhu\\.nuget\\packages\\": {}
+    "C:\\Users\\Rudin López\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jimhu\\Desktop\\IPC2_Proyecto_2026_GrupoUno\\Orbinet.Web\\Orbinet.Web.csproj",
-      "projectName": "Orbinet.Web",
-      "projectPath": "C:\\Users\\jimhu\\Desktop\\IPC2_Proyecto_2026_GrupoUno\\Orbinet.Web\\Orbinet.Web.csproj",
-      "packagesPath": "C:\\Users\\jimhu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jimhu\\Desktop\\IPC2_Proyecto_2026_GrupoUno\\Orbinet.Web\\obj\\",
+      "projectUniqueName": "C:\\Users\\Rudin López\\Documents\\USAC\\Ingenieria\\Vacaciones Junio 2026\\ProyectosLab\\IPC2_Proyecto_2026_GrupoUno\\Orbinet.Web\\IPC2_Proyecto_2026_GrupoUno.csproj",
+      "projectName": "IPC2_Proyecto_2026_GrupoUno",
+      "projectPath": "C:\\Users\\Rudin López\\Documents\\USAC\\Ingenieria\\Vacaciones Junio 2026\\ProyectosLab\\IPC2_Proyecto_2026_GrupoUno\\Orbinet.Web\\IPC2_Proyecto_2026_GrupoUno.csproj",
+      "packagesPath": "C:\\Users\\Rudin López\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Rudin López\\Documents\\USAC\\Ingenieria\\Vacaciones Junio 2026\\ProyectosLab\\IPC2_Proyecto_2026_GrupoUno\\Orbinet.Web\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\jimhu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Rudin López\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
