@@ -1,4 +1,4 @@
-namespace OrbitNet.Web.Configuration;
+namespace Orbinet.Web.Configuration;
 
 public class AppInstanceSettings
 {

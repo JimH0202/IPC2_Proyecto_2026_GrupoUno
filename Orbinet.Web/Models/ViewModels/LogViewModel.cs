@@ -1,6 +1,6 @@
 using System;
 
-namespace OrbitNet.Web.Models.ViewModels;
+namespace Orbinet.Web.Models.ViewModels;
 
 public class LogViewModel
 {

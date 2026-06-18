@@ -1,4 +1,4 @@
-namespace OrbitNet.Web.Services.Graphviz;
+namespace Orbinet.Web.Services.Graphviz;
 public class BufferGraphGenerator
 {
 }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace OrbitNet.Web.Models.ViewModels;
+namespace Orbinet.Web.Models.ViewModels;
 
 public class SimulationViewModel
 {

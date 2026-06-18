@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OrbitNet.Web.Configuration;
-using OrbitNet.Web.Services;
+using Orbinet.Web.Configuration;
+using Orbinet.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

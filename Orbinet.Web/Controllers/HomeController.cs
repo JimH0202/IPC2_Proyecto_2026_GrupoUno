@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using OrbitNet.Web.Configuration;
-using OrbitNet.Web.Services;
+using Orbinet.Web.Configuration;
+using Orbinet.Web.Services;
 
-namespace OrbitNet.Web.Controllers;
+namespace Orbinet.Web.Controllers;
 
 public class HomeController : Controller
 {

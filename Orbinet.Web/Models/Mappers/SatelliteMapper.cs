@@ -22,7 +22,7 @@
 //presentación, permitiendo que el modelo de vista se adapte a las necesidades específicas de la interfaz 
 //de usuario sin afectar el modelo de datos subyacente.
 
-namespace OrbitNet.Web.Models.Mappers;
+namespace Orbinet.Web.Models.Mappers;
 
 public static class SatelliteMapper
 {

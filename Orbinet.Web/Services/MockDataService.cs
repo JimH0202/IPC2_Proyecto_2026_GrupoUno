@@ -1,6 +1,6 @@
-using OrbitNet.Web.Models.ViewModels;
+using Orbinet.Web.Models.ViewModels;
 
-namespace OrbitNet.Web.Services;
+namespace Orbinet.Web.Services;
 
 public static class MockDataService
 {
