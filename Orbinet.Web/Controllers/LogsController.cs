@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using OrbitNet.Web.Services;
+using Orbinet.Web.Services;
 
-namespace OrbitNet.Web.Controllers;
+namespace Orbinet.Web.Controllers;
 
 public class LogsController : Controller
 {

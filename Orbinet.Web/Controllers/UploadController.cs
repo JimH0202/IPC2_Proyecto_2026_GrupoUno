@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using OrbitNet.Web.Services;
+using Orbinet.Web.Services;
 
-namespace OrbitNet.Web.Controllers;
+namespace Orbinet.Web.Controllers;
 
 public class UploadController : Controller
 {
     public IActionResult Index()
     {
-        return View(new OrbitNet.Web.Models.ViewModels.UploadViewModel());
+        return View(new Orbinet.Web.Models.ViewModels.UploadViewModel());
     }
 
     [HttpPost]
