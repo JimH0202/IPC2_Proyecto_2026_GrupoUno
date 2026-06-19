@@ -31,9 +31,7 @@ builder.Services.AddHttpClient(); // Requisito para comunicación entre puertos
 
 // 2. Inyección de tus servicios y configuraciones del sistema
 // IMPORTANTE: Verifica que tu appsettings.json use "SystemConfiguration" en lugar de "AppInstance"
-builder.Services.Configure<AppInstanceSettings>(builder.Configuration.GetSection("SystemConfiguration"));
-builder.Services.AddSingleton<OrbitNetStore>();
-builder.Services.AddSingleton<BasicAuthService>();
+builder.Services.Configure<AppInstanceSettings>(builder.Configuration.GetSection("AppInstance"));
 builder.Services.AddSingleton<XmlIngestService>();
 builder.Services.AddSingleton<RelayHttpService>();
 builder.Services.AddSingleton<TickProcessor>();
