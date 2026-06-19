@@ -1,5 +1,6 @@
 namespace Orbinet.Web.Configuration;
 
+/// Configuración de la instancia de simulación cargada desde el appsettings.
 public class AppInstanceSettings
 {
     public string Hemisphere { get; set; } = "North";

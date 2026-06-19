@@ -1,57 +1,62 @@
 using Microsoft.Extensions.Options;
-using Orbinet.Web.Configuration;
+using Orbinet.Web.Configuration;                  // Para encontrar AppInstanceSettings
+using Orbinet.Web.Services.Communication;          // Para encontrar RelayHttpService
+using Orbinet.Web.Models.Entities;                 // Para encontrar MessagePacket
 
-public class TickProcessor
+namespace Orbinet.Web.Services.SimulationEngine
 {
-    private readonly OrbitNetStore _store;
-    private readonly RelayHttpService _relayHttpService;
-    private readonly AppInstanceSettings _settings;
-
-    public TickProcessor(
-        OrbitNetStore store,
-        RelayHttpService relayHttpService,
-        IOptions<AppInstanceSettings> settings)
+    public class TickProcessor
     {
-        _store = store;
-        _relayHttpService = relayHttpService;
-        _settings = settings.Value;
-    }
+        private readonly OrbitNetStore _store;
+        private readonly RelayHttpService _relayHttpService;
+        private readonly AppInstanceSettings _settings;
 
-    public SimulationStepResponse AvanzarSimulacion(int ticks)
-    {
-        if (ticks < 1)
+        public TickProcessor(
+            OrbitNetStore store,
+            RelayHttpService relayHttpService,
+            IOptions<AppInstanceSettings> settings)
         {
-            ticks = 1;
+            _store = store;
+            _relayHttpService = relayHttpService;
+            _settings = settings.Value;
         }
 
-        _store.CurrentTick += ticks;
-        _store.EventsProcessed += ticks;
-        _store.LogicalJumps += ticks / 2;
-
-        return new SimulationStepResponse
+        public SimulationStepResponse AvanzarSimulacion(int ticks)
         {
-            Status = "Simulated",
-            CurrentTick = _store.CurrentTick,
-            EventsProcessed = _store.EventsProcessed,
-            Details = "Orbitas rotadas exitosamente. Se ejecutaron " + _store.LogicalJumps + " saltos logicos."
-        };
-    }
+            if (ticks < 1)
+            {
+                ticks = 1;
+            }
 
-    public async Task<bool> IntentarRelayCrossPortAsync(MessagePacket paquete)
-    {
-        bool esDestinoSur = paquete.DestinationIp == "10.0.0.90";
-        bool esDestinoNorte = paquete.DestinationIp == "10.0.0.50";
+            _store.CurrentTick += ticks;
+            _store.EventsProcessed += ticks;
+            _store.LogicalJumps += ticks / 2;
 
-        if (_settings.Hemisphere == "North" && esDestinoSur)
-        {
-            return await _relayHttpService.EnviarPaqueteAlHemisferioHermanoAsync(paquete);
+            return new SimulationStepResponse
+            {
+                Status = "Simulated",
+                CurrentTick = _store.CurrentTick,
+                EventsProcessed = _store.EventsProcessed,
+                Details = "Orbitas rotadas exitosamente. Se ejecutaron " + _store.LogicalJumps + " saltos logicos."
+            };
         }
 
-        if (_settings.Hemisphere == "South" && esDestinoNorte)
+        public async Task<bool> IntentarRelayCrossPortAsync(MessagePacket paquete)
         {
-            return await _relayHttpService.EnviarPaqueteAlHemisferioHermanoAsync(paquete);
-        }
+            bool esDestinoSur = paquete.DestinationIp == "10.0.0.90";
+            bool esDestinoNorte = paquete.DestinationIp == "10.0.0.50";
 
-        return false;
+            if (_settings.Hemisphere == "North" && esDestinoSur)
+            {
+                return await _relayHttpService.EnviarPaqueteAlHemisferioHermanoAsync(paquete);
+            }
+
+            if (_settings.Hemisphere == "South" && esDestinoNorte)
+            {
+                return await _relayHttpService.EnviarPaqueteAlHemisferioHermanoAsync(paquete);
+            }
+
+            return false;
+        }
     }
 }
