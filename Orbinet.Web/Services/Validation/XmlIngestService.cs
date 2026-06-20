@@ -1,5 +1,7 @@
 using System.Text.RegularExpressions;
 using System.Xml;
+using Orbinet.Web.Models.Entities; // Para asegurar la comunicación con la raíz de tus modelos
+using Orbinet.Web.DataStructures.Interfaces; // Para asegurar que IMessageBuffer se encuentra 
 
 public class XmlIngestResult
 {

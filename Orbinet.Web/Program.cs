@@ -6,6 +6,7 @@ using Orbinet.Web.Configuration;
 using Orbinet.Web.Services;
 using Orbinet.Web.Services.Communication;     // Para que encuentre RelayHttpService
 using Orbinet.Web.Services.SimulationEngine;  // Para que encuentre TickProcessor
+using Orbinet.Web.Models.Entities; // Para asegurar la comunicación con la raíz de tus modelos y entidades
 
 var builder = WebApplication.CreateBuilder(args);
 

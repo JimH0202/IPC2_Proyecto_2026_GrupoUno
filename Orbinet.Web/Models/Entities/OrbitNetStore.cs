@@ -1,4 +1,5 @@
 using Orbinet.Web.DataStructures.Matrix;
+      
 // NOTA: Si las antenas se guardan en el AVL, aquí se importa su namespace corporativo
 
 namespace Orbinet.Web.Models.Entities
