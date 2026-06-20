@@ -7,7 +7,7 @@
     </div>
     <div class="page-actions">
         <a asp-controller="Reports" asp-action="Index" class="btn btn-secondary">Volver a reportes</a>
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Inicio</a>
+        <a asp-controller="Reports" asp-action="ExportSvg" asp-route-report="MemoryLayout" class="btn btn-primary">Exportar SVG</a>
     </div>
 </div>
 
@@ -17,5 +17,14 @@
 </div>
 
 <div class="svg-container">
-    @Html.Raw(Model.SvgContent)
+    <div class="svg-wrapper">
+        @if (!string.IsNullOrWhiteSpace(Model.SvgContent))
+        {
+            @Html.Raw(Model.SvgContent)
+        }
+        else
+        {
+            <div class="result-box">No hay contenido SVG disponible.</div>
+        }
+    </div>
 </div>

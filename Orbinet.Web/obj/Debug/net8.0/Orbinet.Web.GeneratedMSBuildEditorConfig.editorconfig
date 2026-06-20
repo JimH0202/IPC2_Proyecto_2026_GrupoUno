@@ -38,6 +38,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0c1xCdWZmZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/jimhu/Desktop/IPC2_Proyecto_2026_GrupoUno/Orbinet.Web/Views/Reports/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/jimhu/Desktop/IPC2_Proyecto_2026_GrupoUno/Orbinet.Web/Views/Reports/MemoryLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0c1xNZW1vcnlMYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -84,4 +88,12 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/jimhu/Desktop/IPC2_Proyecto_2026_GrupoUno/Orbinet.Web/Views/Upload/Result.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXBsb2FkXFJlc3VsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/jimhu/Desktop/IPC2_Proyecto_2026_GrupoUno/Orbinet.Web/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/jimhu/Desktop/IPC2_Proyecto_2026_GrupoUno/Orbinet.Web/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

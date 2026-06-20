@@ -1,4 +1,4 @@
-namespace Orbinet.Web.Models;
+namespace OrbitNet.Web.Models;
 
 public class ErrorViewModel
 {

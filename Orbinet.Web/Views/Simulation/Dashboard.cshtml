@@ -4,54 +4,70 @@
         <p class="report-description">Supervisa ticks, satélites activos y mensajes en cola para la simulación.</p>
     </div>
     <div class="page-actions">
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver</a>
     </div>
 </div>
 
-<div class="simulation-metrics">
-    <div class="metric-box">
-        <span class="metric-label">Tick actual:</span>
-        <span class="metric-value">@Model.CurrentTick</span>
+<div class="stats-grid">
+    <div class="stat-card">
+        <strong>Tick Actual</strong>
+        <p class="stat-value">@Model.CurrentTick</p>
     </div>
-    <div class="metric-box">
-        <span class="metric-label">Satélites activos:</span>
-        <span class="metric-value">@Model.ActiveSatellites</span>
+    <div class="stat-card">
+        <strong>Satélites Activos</strong>
+        <p class="stat-value">@Model.ActiveSatellites</p>
     </div>
-    <div class="metric-box">
-        <span class="metric-label">Mensajes pendientes:</span>
-        <span class="metric-value">@Model.PendingMessages</span>
+    <div class="stat-card">
+        <strong>Mensajes Pendientes</strong>
+        <p class="stat-value">@Model.PendingMessages</p>
     </div>
-    <div class="metric-box">
-        <span class="metric-label">Mensajes procesados:</span>
-        <span class="metric-value">@Model.ProcessedMessages</span>
+    <div class="stat-card">
+        <strong>Mensajes Procesados</strong>
+        <p class="stat-value">@Model.ProcessedMessages</p>
     </div>
 </div>
 
-<h3>Satélites activos</h3>
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>orbita</th>
-            <th>Activo</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var sat in Model.Satellites)
-    {
-        <tr>
-            <td>@sat.Id</td>
-            <td>@sat.Name</td>
-            <td>@sat.OrbitId</td>
-            <td>@(sat.IsActive ? "Si" : "No")</td>
-        </tr>
-    }
-    </tbody>
-</table>
-
-<div class="simulation-controls">
-    <form asp-action="TickResult" method="post" style="display:inline;">
-        <button type="submit" class="btn btn-primary">Ejecutar siguiente tick</button>
+<div class="simulation-controls" style="display:flex;gap:10px;margin-top:18px;">
+    <form asp-action="TickResult" method="post">
+        <button type="submit" class="btn btn-primary">Ejecutar 1 Tick</button>
     </form>
+
+    <form asp-action="ExecuteTicks" method="post">
+        <input type="hidden" name="count" value="10" />
+        <button type="submit" class="btn btn-primary">Ejecutar 10 Ticks</button>
+    </form>
+
+    <form asp-action="ExecuteTicks" method="post">
+        <input type="hidden" name="count" value="100" />
+        <button type="submit" class="btn btn-primary">Ejecutar 100 Ticks</button>
+    </form>
+
+    <form asp-action="StopSimulation" method="post">
+        <button type="submit" class="btn btn-secondary">Detener Simulación</button>
+    </form>
+</div>
+
+<h3 style="margin-top:24px;">Satélites activos</h3>
+<div class="tick-result-box">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Órbita</th>
+                <th>Activo</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var sat in Model.Satellites)
+        {
+            <tr>
+                <td>@sat.Id</td>
+                <td>@sat.Name</td>
+                <td>@sat.OrbitId</td>
+                <td>@(sat.IsActive ? "Sí" : "No")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
 </div>
