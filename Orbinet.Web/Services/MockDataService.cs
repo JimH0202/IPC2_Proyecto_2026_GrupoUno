@@ -1,7 +1,6 @@
 using Orbinet.Web.Models.ViewModels;
 
-namespace Orbinet.Web.Services{
-
+namespace Orbinet.Web.Services;
     public static class MockDataService
     {
         public static DashboardViewModel GetDashboardViewModel()
@@ -126,4 +125,3 @@ namespace Orbinet.Web.Services{
             };
         }
     }
-}

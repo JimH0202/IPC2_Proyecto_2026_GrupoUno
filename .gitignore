@@ -1,7 +1,4 @@
-﻿bin/
-obj/
-<<<<<<< HEAD
-.vs/
-
-=======
->>>>>>> 452abdccb2b6bae569baa59b62b404df87697bd5
+﻿Orbinet.Web/bin
+OrbitNet.Tests/bin
+Orbinet.Web/obj
+OrbitNet.Tests/obj
