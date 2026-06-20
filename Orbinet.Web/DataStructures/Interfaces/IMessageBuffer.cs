@@ -1,8 +1,16 @@
-namespace Orbinet.Web.DataStructures.Interfaces
+namespace Orbinet.Web.DataStructures.Interfaces;
+
+using Orbinet.Web.Models.Entities;
+
+public interface IMessageBuffer : IAbstractCollection
 {
-    /// Contrato planificado para el buffer que gestionará los paquetes de mensajes.
-    public interface IMessageBuffer : IAbstractColletion
-    {
-        // Por el momento lo dejé vacio, no se si esto también lo hace el encargado de simulación o si lo hace el encargado de la estructura de datos, pero por ahora lo dejo así.
-    }
+    void Enqueue(MessagePacket packet);
+
+    MessagePacket? Dequeue();
+
+    MessagePacket? Peek();
+
+    MessagePacket? SearchByHexCode(string hexCode);
+
+    string TraverseInOrder();
 }

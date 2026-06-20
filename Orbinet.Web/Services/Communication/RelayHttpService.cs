@@ -1,7 +1,7 @@
 using System.Net.Http.Json;
 using Microsoft.Extensions.Options;
 using Orbinet.Web.Configuration;
-using Orbinet.Web.Models.Entities; // Para encontrar MessagePacket
+using Orbinet.Web.Models.Entities;
 
 namespace Orbinet.Web.Services.Communication{
     public class RelayHttpService
