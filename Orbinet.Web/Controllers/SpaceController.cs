@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Orbinet.Web.Models.Entities;
 
 [ApiController]
 [Route("api/v1/space")]

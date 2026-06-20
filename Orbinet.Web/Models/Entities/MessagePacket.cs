@@ -1,20 +1,25 @@
 using System.Text;
 using System.Text.Json.Serialization;
 
-public class MessagePacket
+namespace Orbinet.Web.Models.Entities
 {
-    [JsonPropertyName("codigo_hex")]
-    public string CodHex { get; set; }
+    
+    public class MessagePacket
+    {
+        [JsonPropertyName("codigo_hex")]
+        public string CodHex { get; set; }
 
-    [JsonPropertyName("emisor_id")]
-    public string SenderId { get; set; }
+        [JsonPropertyName("emisor_id")]
+        public string SenderId { get; set; }
 
-    [JsonPropertyName("destino_ip")]
-    public string DestinationIp { get; set; }
+        [JsonPropertyName("destino_ip")]
+        public string DestinationIp { get; set; }
 
-    [JsonPropertyName("prioridad")]
-    public int Priority { get; set; }
+        [JsonPropertyName("prioridad")]
+        public int Priority { get; set; }
 
-    [JsonPropertyName("contenido")]
-    public string Content { get; set; }
+        [JsonPropertyName("contenido")]
+        public string Content { get; set; }
+    }
 }
+

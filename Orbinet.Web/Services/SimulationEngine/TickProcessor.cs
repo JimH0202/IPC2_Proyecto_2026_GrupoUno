@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Options;
 using Orbinet.Web.Configuration;
+using Orbinet.Web.Models.Entities;
 
 public class TickProcessor
 {

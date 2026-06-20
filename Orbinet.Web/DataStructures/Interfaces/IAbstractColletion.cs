@@ -1,5 +1,5 @@
 namespace Orbinet.Web.DataStructures.Interfaces;
-public interface IAbstractColletion
+public interface IAbstractCollection
 {
     int Count { get; }
     void Clear();

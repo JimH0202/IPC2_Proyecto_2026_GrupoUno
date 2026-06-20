@@ -1,6 +1,7 @@
 using System.Net.Http.Json;
 using Microsoft.Extensions.Options;
 using Orbinet.Web.Configuration;
+using Orbinet.Web.Models.Entities;
 
 public class RelayHttpService
 {
