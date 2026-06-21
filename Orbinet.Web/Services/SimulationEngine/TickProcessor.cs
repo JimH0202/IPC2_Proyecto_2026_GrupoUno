@@ -41,6 +41,15 @@ namespace Orbinet.Web.Services.SimulationEngine
             };
         }
 
+        public bool RequiereRelayCrossPort(MessagePacket paquete)
+        {
+            bool esDestinoSur = paquete.DestinationIp == "10.0.0.90";
+            bool esDestinoNorte = paquete.DestinationIp == "10.0.0.50";
+
+            return (_settings.Hemisphere == "North" && esDestinoSur)
+                || (_settings.Hemisphere == "South" && esDestinoNorte);
+        }
+
         public async Task<bool> IntentarRelayCrossPortAsync(MessagePacket paquete)
         {
             bool esDestinoSur = paquete.DestinationIp == "10.0.0.90";

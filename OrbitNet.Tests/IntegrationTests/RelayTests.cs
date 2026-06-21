@@ -46,18 +46,27 @@ public class RelayTests : IClassFixture<WebApplicationFactory<Program>>
     public async Task PostRelay_SinBasicAuth_Retorna401()
     {
         HttpClient client = _factory.CreateClient();
-        var paquete = new
-        {
-            codigo_hex = "A19F",
-            emisor_id = "SAT-ECU-0012",
-            destino_ip = "10.0.0.50",
-            prioridad = 5,
-            contenido = "Prueba sin auth"
-        };
+        await CargarConfiguracionAsync(client);
+        var paquete = CrearPaqueteRelay("10.0.0.50");
 
         HttpResponseMessage response = await client.PostAsJsonAsync("/api/v1/space/relay", paquete);
 
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task PostRelay_SinConfig_Retorna400()
+    {
+        using WebApplicationFactory<Program> factoryLimpia = new WebApplicationFactory<Program>();
+        HttpClient client = factoryLimpia.CreateClient();
+        client.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Basic", "b3JiaXRuZXRfYWRtaW46VVNBQ19FQ1lTXzIwMjY=");
+
+        HttpResponseMessage response = await client.PostAsJsonAsync("/api/v1/space/relay", CrearPaqueteRelay("10.0.0.50"));
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        string json = await response.Content.ReadAsStringAsync();
+        Assert.Contains("CONFIG_NOT_LOADED", json);
     }
 
     [Fact]
@@ -67,27 +76,36 @@ public class RelayTests : IClassFixture<WebApplicationFactory<Program>>
         client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Basic", "b3JiaXRuZXRfYWRtaW46VVNBQ19FQ1lTXzIwMjY=");
 
-        var paquete = new
-        {
-            codigo_hex = "A19F",
-            emisor_id = "SAT-ECU-0012",
-            destino_ip = "10.0.0.50",
-            prioridad = 5,
-            contenido = "Prueba con auth"
-        };
+        await CargarConfiguracionAsync(client);
 
-        HttpResponseMessage response = await client.PostAsJsonAsync("/api/v1/space/relay", paquete);
+        HttpResponseMessage response = await client.PostAsJsonAsync("/api/v1/space/relay", CrearPaqueteRelay("10.0.0.50"));
 
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        string json = await response.Content.ReadAsStringAsync();
+        Assert.Contains("\"status\":\"Routed\"", json.Replace(" ", ""));
+        Assert.Contains("queue_occupancy_percentage", json);
+    }
+
+    [Fact]
+    public async Task PostSimulationStep_SinConfig_Retorna400()
+    {
+        using WebApplicationFactory<Program> factoryLimpia = new WebApplicationFactory<Program>();
+        HttpClient client = factoryLimpia.CreateClient();
+
+        HttpResponseMessage response = await client.PostAsJsonAsync("/api/v1/space/simulation/step", new { ticks = 2 });
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        string json = await response.Content.ReadAsStringAsync();
+        Assert.Contains("CONFIG_NOT_LOADED", json);
     }
 
     [Fact]
     public async Task PostSimulationStep_Retorna200()
     {
         HttpClient client = _factory.CreateClient();
-        var body = new { ticks = 2 };
+        await CargarConfiguracionAsync(client);
 
-        HttpResponseMessage response = await client.PostAsJsonAsync("/api/v1/space/simulation/step", body);
+        HttpResponseMessage response = await client.PostAsJsonAsync("/api/v1/space/simulation/step", new { ticks = 2 });
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         string json = await response.Content.ReadAsStringAsync();
@@ -136,6 +154,25 @@ public class RelayTests : IClassFixture<WebApplicationFactory<Program>>
         Assert.Equal("http://localhost:5001/api/v1/space/relay", urlRecibida);
         Assert.StartsWith("Basic ", authRecibida);
         Assert.True(basicAuth.EsCabeceraValida(authRecibida!));
+    }
+
+    private static object CrearPaqueteRelay(string destinoIp)
+    {
+        return new
+        {
+            codigo_hex = "A19F",
+            emisor_id = "SAT-ECU-0012",
+            destino_ip = destinoIp,
+            prioridad = 5,
+            contenido = "Prueba relay API"
+        };
+    }
+
+    private static async Task CargarConfiguracionAsync(HttpClient client)
+    {
+        string xml = File.ReadAllText(ObtenerRutaXml("Cargaexitosa1_CNorte_5000.xml"));
+        HttpResponseMessage response = await client.PostAsJsonAsync("/api/v1/space/config", new { xml_data = xml });
+        response.EnsureSuccessStatusCode();
     }
 
     private static string ObtenerRutaXml(string nombreArchivo)

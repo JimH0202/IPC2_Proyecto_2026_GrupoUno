@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Orbinet.Web.Models.Entities;                // Para que encuentre MessagePacket
-using Orbinet.Web.Services.SimulationEngine;       // Para que encuentre TickProcessor
-
+using Orbinet.Web.Models.Entities;
+using Orbinet.Web.Services.SimulationEngine;
 
 namespace Orbinet.Web.Controllers
 {
@@ -20,8 +19,8 @@ namespace Orbinet.Web.Controllers
             TickProcessor tickProcessor,
             OrbitNetStore store)
         {
-            _xmlIngestService = xmlIngestService; 
-            _basicAuthService = basicAuthService; 
+            _xmlIngestService = xmlIngestService;
+            _basicAuthService = basicAuthService;
             _tickProcessor = tickProcessor;
             _store = store;
         }
@@ -49,10 +48,10 @@ namespace Orbinet.Web.Controllers
             });
         }
 
-        [HttpPost("relay")] 
-        public IActionResult RecibirRelay([FromBody] MessagePacket paquete) 
+        [HttpPost("relay")]
+        public async Task<IActionResult> RecibirRelay([FromBody] MessagePacket paquete)
         {
-            string authHeader = Request.Headers.Authorization.FirstOrDefault();
+            string? authHeader = Request.Headers.Authorization.FirstOrDefault();
 
             if (!_basicAuthService.EsCabeceraValida(authHeader))
             {
@@ -63,19 +62,61 @@ namespace Orbinet.Web.Controllers
                 });
             }
 
-            _store.QueueOccupancyPercentage = 40.0;
+            if (!_store.ConfigLoaded)
+            {
+                return BadRequest(new ConfigErrorResponse
+                {
+                    Status = "Error",
+                    ErrorCode = "CONFIG_NOT_LOADED",
+                    Details = "Debe cargar la configuracion XML con POST /api/v1/space/config antes de enviar relay."
+                });
+            }
 
-            return StatusCode(201, new RelaySuccessResponse 
+            if (_tickProcessor.RequiereRelayCrossPort(paquete))
+            {
+                bool enviado = await _tickProcessor.IntentarRelayCrossPortAsync(paquete);
+
+                if (!enviado)
+                {
+                    return StatusCode(502, new ConfigErrorResponse
+                    {
+                        Status = "Error",
+                        ErrorCode = "RELAY_FORWARD_FAILED",
+                        Details = "No se pudo reenviar el paquete al hemisferio hermano. Verifique que la otra instancia este activa."
+                    });
+                }
+
+                return StatusCode(201, new RelaySuccessResponse
+                {
+                    Status = "Forwarded",
+                    Message = "Paquete reenviado al hemisferio hermano via HTTP (puerto " + paquete.DestinationIp + ").",
+                    QueueOccupancyPercentage = _store.CalcularOcupacionCola()
+                });
+            }
+
+            _store.EncolarPaquete(paquete);
+
+            return StatusCode(201, new RelaySuccessResponse
             {
                 Status = "Routed",
                 Message = "Mensaje insertado con exito en el buffer de prioridad del satelite receptor " + _store.ReceptorSatelliteId + ".",
-                QueueOccupancyPercentage = _store.QueueOccupancyPercentage 
+                QueueOccupancyPercentage = _store.QueueOccupancyPercentage
             });
         }
 
         [HttpPost("simulation/step")]
         public IActionResult AvanzarSimulacion([FromBody] SimulationStepRequestDto request)
         {
+            if (!_store.ConfigLoaded)
+            {
+                return BadRequest(new ConfigErrorResponse
+                {
+                    Status = "Error",
+                    ErrorCode = "CONFIG_NOT_LOADED",
+                    Details = "Debe cargar la configuracion XML con POST /api/v1/space/config antes de avanzar la simulacion."
+                });
+            }
+
             SimulationStepResponse response = _tickProcessor.AvanzarSimulacion(request.Ticks);
             return Ok(response);
         }
