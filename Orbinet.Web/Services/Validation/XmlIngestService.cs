@@ -31,7 +31,22 @@ public class XmlIngestService
 
         XmlDocument doc = new XmlDocument();
         doc.XmlResolver = null;
-        doc.LoadXml(xmlContent);
+
+        try
+        {
+            XmlReaderSettings settings = new XmlReaderSettings
+            {
+                DtdProcessing = DtdProcessing.Prohibit,
+                XmlResolver = null
+            };
+            using StringReader stringReader = new StringReader(xmlContent);
+            using XmlReader reader = XmlReader.Create(stringReader, settings);
+            doc.Load(reader);
+        }
+        catch (XmlException ex)
+        {
+            return CrearError("XML_SCHEMA_VIOLATION", "XML malformado o invalido: " + ex.Message);
+        }
 
         int nodos = 0;
 

@@ -29,7 +29,7 @@ public class RedSatelitalPlano : IMatrix
 
         MatrixNode? current = rowHeader.Access;
 
-        while(current != null)
+        while(current != null) 
         {
             if(current.Column == column)
             {

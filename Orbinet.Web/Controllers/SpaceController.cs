@@ -20,8 +20,8 @@ namespace Orbinet.Web.Controllers
             TickProcessor tickProcessor,
             OrbitNetStore store)
         {
-            _xmlIngestService = xmlIngestService;
-            _basicAuthService = basicAuthService;
+            _xmlIngestService = xmlIngestService; 
+            _basicAuthService = basicAuthService; 
             _tickProcessor = tickProcessor;
             _store = store;
         }
@@ -49,8 +49,8 @@ namespace Orbinet.Web.Controllers
             });
         }
 
-        [HttpPost("relay")]
-        public IActionResult RecibirRelay([FromBody] MessagePacket paquete)
+        [HttpPost("relay")] 
+        public IActionResult RecibirRelay([FromBody] MessagePacket paquete) 
         {
             string authHeader = Request.Headers.Authorization.FirstOrDefault();
 
@@ -65,11 +65,11 @@ namespace Orbinet.Web.Controllers
 
             _store.QueueOccupancyPercentage = 40.0;
 
-            return StatusCode(201, new RelaySuccessResponse
+            return StatusCode(201, new RelaySuccessResponse 
             {
                 Status = "Routed",
                 Message = "Mensaje insertado con exito en el buffer de prioridad del satelite receptor " + _store.ReceptorSatelliteId + ".",
-                QueueOccupancyPercentage = _store.QueueOccupancyPercentage
+                QueueOccupancyPercentage = _store.QueueOccupancyPercentage 
             });
         }
 

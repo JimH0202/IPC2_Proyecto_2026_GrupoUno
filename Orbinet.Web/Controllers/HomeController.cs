@@ -9,9 +9,9 @@ namespace Orbinet.Web.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly AppInstanceSettings _settings;
+    private readonly AppInstanceSettings _settings; 
 
-    public HomeController(IOptions<AppInstanceSettings> settings)
+    public HomeController(IOptions<AppInstanceSettings> settings) 
     {
         _settings = settings.Value;
     }
