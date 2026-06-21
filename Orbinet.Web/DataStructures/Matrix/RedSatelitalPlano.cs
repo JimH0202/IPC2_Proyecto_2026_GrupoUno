@@ -263,4 +263,22 @@ public class RedSatelitalPlano : IMatrix
             }
         }
     }
+
+    // Metodos publicos para obtener los encabezados de filas y columnas
+        public HeaderNode? GetRowHeader(int row)
+    {
+        return SearchHeader(rowHeaders, row);
+    }
+
+    // El metodo GetColumnHeader devuelve el nodo de encabezado de columna correspondiente al indice dado o null si no existe
+    public HeaderNode? GetColumnHeader(int column)
+    {
+        return SearchHeader(columnHeaders, column);
+    }
+
+    // El metodo GetFirstRowHeader devuelve el primer nodo de encabezado de fila para permitir iterar sobre las filas de la matriz
+    public HeaderNode? GetFirstRowHeader()
+    {
+        return rowHeaders;
+    }
 }
