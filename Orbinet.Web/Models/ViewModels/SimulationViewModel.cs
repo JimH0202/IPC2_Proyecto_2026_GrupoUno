@@ -12,5 +12,7 @@ public class SimulationViewModel
 
     public int ProcessedMessages { get; set; }
 
+    public bool IsSimulationRunning { get; set; }
+
     public List<SatelliteViewModel> Satellites { get; set; } = new();
 }

@@ -1,3 +1,5 @@
+using System.Globalization;
+using System.Linq;
 using OrbitNet.Web.Models.ViewModels;
 
 namespace OrbitNet.Web.Services;
@@ -14,20 +16,31 @@ public static class MockDataService
             PendingMessages = 15,
             ProcessedMessages = 450,
             TotalAntennas = 6,
-            Hemisphere = "Norte",
+            Hemisphere = "North",
             IsSimulationRunning = true,
             Satellites = GetSatelliteList()
         };
     }
 
-    public static SimulationViewModel GetSimulationViewModel()
+    private static bool IsSpanishCulture()
+    {
+        return CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.StartsWith("es", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string Localize(string english, string spanish)
+    {
+        return IsSpanishCulture() ? spanish : english;
+    }
+
+    public static SimulationViewModel GetSimulationViewModel(int additionalTicks = 0, bool isRunning = true)
     {
         return new SimulationViewModel
         {
-            CurrentTick = 150,
+            CurrentTick = 150 + additionalTicks,
             ActiveSatellites = 28,
             PendingMessages = 15,
             ProcessedMessages = 450,
+            IsSimulationRunning = isRunning,
             Satellites = GetSatelliteList()
         };
     }
@@ -47,7 +60,7 @@ public static class MockDataService
         return GetSatelliteList().FirstOrDefault(s => s.Id == id) ?? new SatelliteViewModel
         {
             Id = id,
-            Name = "Satélite desconocido",
+            Name = Localize("Unknown satellite", "Satélite desconocido"),
             OrbitId = "N/A",
             Type = "N/A",
             X = 0,
@@ -64,7 +77,7 @@ public static class MockDataService
         {
             FileName = "configuracion_norte.xml",
             Success = true,
-            Message = "Carga completada con éxito.",
+            Message = Localize("Upload completed successfully.", "Carga completada con éxito."),
             SatellitesLoaded = 6,
             AntennasLoaded = 2,
             PolarOrbitsLoaded = 3,
@@ -89,29 +102,30 @@ public static class MockDataService
     {
         var model = new ReportViewModel
         {
-            GeneratedAt = DateTime.Now,
-            SvgContent = "<svg width='380' height='220' xmlns='http://www.w3.org/2000/svg'><rect width='380' height='220' fill='#f1f3f5' stroke='#ced4da'/><text x='20' y='40' font-family='Arial' font-size='16'>Reporte de " + reportName + "</text></svg>"
+            GeneratedAt = DateTime.Now
         };
 
         switch (reportName)
         {
             case "MemoryLayout":
-                model.Title = "Mapa de memoria";
-                model.Description = "Representación de la estructura de memoria del sistema.";
+                model.Title = Localize("Memory Layout", "Mapa de memoria");
+                model.Description = Localize("Representation of the system memory structure.", "Representación de la estructura de memoria del sistema.");
                 break;
             case "Routing":
-                model.Title = "Ruta de relés";
-                model.Description = "Vista del enrutamiento de mensajes entre satélites y antenas.";
+                model.Title = Localize("Relay Routing", "Ruta de relés");
+                model.Description = Localize("Message routing view between satellites and antennas.", "Vista del enrutamiento de mensajes entre satélites y antenas.");
                 break;
             case "Buffers":
-                model.Title = "Capacidad de buffers";
-                model.Description = "Detalle de ocupación y capacidad de los buffers.";
+                model.Title = Localize("Buffer Capacity", "Capacidad de buffers");
+                model.Description = Localize("Occupancy and capacity details for buffers.", "Detalle de ocupación y capacidad de los buffers.");
                 break;
             default:
-                model.Title = "Reporte genérico";
-                model.Description = "Reporte de sistema de ejemplo.";
+                model.Title = Localize("Generic Report", "Reporte genérico");
+                model.Description = Localize("Example system report.", "Reporte de sistema de ejemplo.");
                 break;
         }
+
+        model.SvgContent = $"<svg width='380' height='220' xmlns='http://www.w3.org/2000/svg'><rect width='380' height='220' fill='#f1f3f5' stroke='#ced4da'/><text x='20' y='40' font-family='Arial' font-size='16'>{Localize("Report of ", "Reporte de ")}{model.Title}</text></svg>";
 
         return model;
     }
@@ -120,9 +134,9 @@ public static class MockDataService
     {
         return new List<LogViewModel>
         {
-            new () { Timestamp = DateTime.Now.AddMinutes(-12), Level = "Info", Event = "Inicio de simulación", Details = "El motor de simulación inició correctamente." },
-            new () { Timestamp = DateTime.Now.AddMinutes(-8), Level = "Warning", Event = "Retraso en mensaje", Details = "El paquete SAT-002 se demoró 4s en el buffer." },
-            new () { Timestamp = DateTime.Now.AddMinutes(-2), Level = "Info", Event = "Mensaje procesado", Details = "Se procesaron 5 mensajes en el último tick." }
+            new () { Timestamp = DateTime.Now.AddMinutes(-12), Level = "Info", Event = Localize("Simulation started", "Inicio de simulación"), Details = Localize("The simulation engine started successfully.", "El motor de simulación inició correctamente.") },
+            new () { Timestamp = DateTime.Now.AddMinutes(-8), Level = "Warning", Event = Localize("Message delay", "Retraso en mensaje"), Details = Localize("Packet SAT-002 was held 4s in the buffer.", "El paquete SAT-002 se demoró 4s en el buffer.") },
+            new () { Timestamp = DateTime.Now.AddMinutes(-2), Level = "Info", Event = Localize("Message processed", "Mensaje procesado"), Details = Localize("Five messages were processed in the last tick.", "Se procesaron 5 mensajes en el último tick.") }
         };
     }
 
@@ -152,11 +166,11 @@ public static class MockDataService
         {
             routes = new[]
             {
-                new { id = "R001", source = "SAT-001", destination = "ANT-N1", hops = 1, status = "activa", packets = 42 },
-                new { id = "R002", source = "SAT-002", destination = "ANT-N2", hops = 2, status = "activa", packets = 28 },
-                new { id = "R003", source = "SAT-003", destination = "ANT-N3", hops = 1, status = "inactiva", packets = 0 },
-                new { id = "R004", source = "ANT-N1", destination = "SAT-001", hops = 1, status = "activa", packets = 38 },
-                new { id = "R005", source = "ANT-N2", destination = "SAT-002", hops = 2, status = "activa", packets = 30 }
+                new { id = "R001", source = "SAT-001", destination = "ANT-N1", hops = 1, status = Localize("active", "activa"), packets = 42 },
+                new { id = "R002", source = "SAT-002", destination = "ANT-N2", hops = 2, status = Localize("active", "activa"), packets = 28 },
+                new { id = "R003", source = "SAT-003", destination = "ANT-N3", hops = 1, status = Localize("inactive", "inactiva"), packets = 0 },
+                new { id = "R004", source = "ANT-N1", destination = "SAT-001", hops = 1, status = Localize("active", "activa"), packets = 38 },
+                new { id = "R005", source = "ANT-N2", destination = "SAT-002", hops = 2, status = Localize("active", "activa"), packets = 30 }
             },
             totalRoutes = 5,
             activeRoutes = 4
@@ -170,11 +184,11 @@ public static class MockDataService
         {
             buffers = new[]
             {
-                new { id = "BUF-001", satellite = "SAT-001", capacity = 100, occupied = 78, occupancyPercent = 78, status = "alto" },
-                new { id = "BUF-002", satellite = "SAT-002", capacity = 100, occupied = 45, occupancyPercent = 45, status = "medio" },
-                new { id = "BUF-003", satellite = "SAT-003", capacity = 100, occupied = 92, occupancyPercent = 92, status = "critico" },
-                new { id = "BUF-004", satellite = "SAT-004", capacity = 100, occupied = 23, occupancyPercent = 23, status = "bajo" },
-                new { id = "BUF-005", satellite = "SAT-005", capacity = 100, occupied = 67, occupancyPercent = 67, status = "medio" }
+                new { id = "BUF-001", satellite = "SAT-001", capacity = 100, occupied = 78, occupancyPercent = 78, status = Localize("high", "alto") },
+                new { id = "BUF-002", satellite = "SAT-002", capacity = 100, occupied = 45, occupancyPercent = 45, status = Localize("medium", "medio") },
+                new { id = "BUF-003", satellite = "SAT-003", capacity = 100, occupied = 92, occupancyPercent = 92, status = Localize("critical", "critico") },
+                new { id = "BUF-004", satellite = "SAT-004", capacity = 100, occupied = 23, occupancyPercent = 23, status = Localize("low", "bajo") },
+                new { id = "BUF-005", satellite = "SAT-005", capacity = 100, occupied = 67, occupancyPercent = 67, status = Localize("medium", "medio") }
             },
             totalBuffers = 5,
             averageOccupancy = 61

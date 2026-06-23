@@ -1,27 +1,27 @@
 @model dynamic
 @{
-    ViewData["Title"] = "Error";
+    ViewData["Title"] = Localizer["ErrorTitle"];
 }
 
 <div class="page-header">
     <div>
-        <h1>Error</h1>
-        <p class="report-description">Ocurrió un error al procesar su solicitud. Revisa la información del pedido y vuelve a intentarlo.</p>
+        <h1>@Localizer["ErrorTitle"]</h1>
+        <p class="report-description">@Localizer["ErrorDescription"]</p>
     </div>
     <div class="page-actions">
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["BackToDashboard"]</a>
     </div>
 </div>
 
 <div class="section-card">
-    <h3>Detalles del error</h3>
-    <p class="report-description">Si el problema persiste, revisa la traza del servidor o contacta al administrador.</p>
+    <h3>@Localizer["ErrorDetailsTitle"]</h3>
+    <p class="report-description">@Localizer["ErrorContactAdmin"]</p>
 
     @if (Model?.ShowRequestId == true)
     {
         <div class="detail-list">
             <div>
-                <dt>Request ID</dt>
+                <dt>@Localizer["RequestId"]</dt>
                 <dd><code>@Model.RequestId</code></dd>
             </div>
         </div>

@@ -6,14 +6,14 @@
         <p class="report-description">@Model.Description</p>
     </div>
     <div class="page-actions">
-        <a asp-controller="Reports" asp-action="Index" class="btn btn-secondary">Volver a reportes</a>
-        <a asp-controller="Reports" asp-action="ExportSvg" asp-route-report="MemoryLayout" class="btn btn-primary">Exportar SVG</a>
+        <a asp-controller="Reports" asp-action="Index" class="btn btn-secondary">@Localizer["BackToReports"]</a>
+        <a asp-controller="Reports" asp-action="ExportSvg" asp-route-report="MemoryLayout" class="btn btn-primary">@Localizer["ExportSvg"]</a>
     </div>
 </div>
 
 <div class="report-summary">
     <p class="report-description">@Model.Description</p>
-    <p class="report-date">Generado: @Model.GeneratedAt.ToString("g")</p>
+    <p class="report-date">@Localizer["Generated"] @Model.GeneratedAt.ToString("g")</p>
 </div>
 
 <div class="svg-container">
@@ -24,7 +24,7 @@
         }
         else
         {
-            <div class="result-box">No hay contenido SVG disponible.</div>
+            <div class="result-box">@Localizer["NoSvgContent"]</div>
         }
     </div>
 </div>

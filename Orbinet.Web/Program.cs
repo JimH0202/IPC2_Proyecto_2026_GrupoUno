@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OrbitNet.Web.Configuration;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,13 +19,33 @@ if (string.IsNullOrWhiteSpace(hemisphere))
 var hemisphereSettingsFile = $"appsettings.{hemisphere}.json";
 builder.Configuration.AddJsonFile(hemisphereSettingsFile, optional: true, reloadOnChange: true);
 
-builder.Services.AddControllersWithViews();
+// Add localization services
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+builder.Services.AddControllersWithViews()
+    .AddDataAnnotationsLocalization()
+    .AddViewLocalization();
 
 builder.Services.Configure<AppInstanceSettings>(builder.Configuration.GetSection("SystemConfiguration"));
 
 builder.WebHost.UseUrls($"http://localhost:{port}");
 
 var app = builder.Build();
+
+// Configure localization
+var supportedCultures = new[] { "es", "en" };
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture("es")
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+// Add providers for localization (order matters - first match wins)
+localizationOptions.RequestCultureProviders.Clear();
+localizationOptions.RequestCultureProviders.Add(new Microsoft.AspNetCore.Localization.CookieRequestCultureProvider { CookieName = ".AspNetCore.Culture" });
+localizationOptions.RequestCultureProviders.Add(new Microsoft.AspNetCore.Localization.QueryStringRequestCultureProvider());
+localizationOptions.RequestCultureProviders.Add(new Microsoft.AspNetCore.Localization.AcceptLanguageHeaderRequestCultureProvider());
+
+app.UseRequestLocalization(localizationOptions);
 
 if (!app.Environment.IsDevelopment())
 {

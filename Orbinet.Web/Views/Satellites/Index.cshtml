@@ -2,27 +2,27 @@
 
 <div class="page-header">
     <div>
-        <h1>Lista de Satélites</h1>
-        <p class="report-description">Revisa el inventario de satélites, su estado y el tráfico de mensajes.</p>
+        <h1>@Localizer["SatelliteList"]</h1>
+        <p class="report-description">@Localizer["SatelliteListDescription"]</p>
     </div>
     <div class="page-actions">
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["BackToDashboard"]</a>
     </div>
 </div>
 
 <div class="section-card">
-    <h3>Inventario de Satélites</h3>
+    <h3>@Localizer["InventoryOfSatellites"]</h3>
     <table>
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Órbita</th>
-            <th>Tipo</th>
-            <th>Activo</th>
-            <th>Mensajes enviados</th>
-            <th>Mensajes recibidos</th>
-            <th>Acciones</th>
+            <th>@Localizer["Id"]</th>
+            <th>@Localizer["Name"]</th>
+            <th>@Localizer["Orbit"]</th>
+            <th>@Localizer["Type"]</th>
+            <th>@Localizer["Active"]</th>
+            <th>@Localizer["MessagesSent"]</th>
+            <th>@Localizer["MessagesReceived"]</th>
+            <th>@Localizer["Actions"]</th>
         </tr>
     </thead>
     <tbody>
@@ -33,10 +33,10 @@
             <td>@sat.Name</td>
             <td>@sat.OrbitId</td>
             <td>@sat.Type</td>
-            <td>@(sat.IsActive ? "Sí" : "No")</td>
+            <td>@(sat.IsActive ? Localizer["Yes"] : Localizer["No"])</td>
             <td>@sat.MessagesSent</td>
             <td>@sat.MessagesReceived</td>
-            <td><a asp-action="Details" asp-route-id="@sat.Id" class="btn btn-primary">Ver detalles</a></td>
+            <td><a asp-action="Details" asp-route-id="@sat.Id" class="btn btn-primary">@Localizer["ViewDetails"]</a></td>
         </tr>
     }
     </tbody>
