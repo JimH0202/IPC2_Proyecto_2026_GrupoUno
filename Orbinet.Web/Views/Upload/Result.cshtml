@@ -17,25 +17,28 @@
 
 @if (Model.Success)
 {
-    <div class="stats-grid">
-        <div class="stat-card">
-            <strong>Satélites cargados</strong>
-            <p class="stat-value">@Model.SatellitesLoaded</p>
-        </div>
-        <div class="stat-card">
-            <strong>Antenas cargadas</strong>
-            <p class="stat-value">@Model.AntennasLoaded</p>
-        </div>
-        <div class="stat-card">
-            <strong>Órbitas polares cargadas</strong>
-            <p class="stat-value">@Model.PolarOrbitsLoaded</p>
+    <div class="section-card">
+        <h3>Estadísticas de carga</h3>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <strong>Satélites cargados</strong>
+                <p class="stat-value">@Model.SatellitesLoaded</p>
+            </div>
+            <div class="stat-card">
+                <strong>Antenas cargadas</strong>
+                <p class="stat-value">@Model.AntennasLoaded</p>
+            </div>
+            <div class="stat-card">
+                <strong>Órbitas polares cargadas</strong>
+                <p class="stat-value">@Model.PolarOrbitsLoaded</p>
+            </div>
         </div>
     </div>
 }
 
 @if (Model.Errors?.Any() == true)
 {
-    <div class="error-section">
+    <div class="section-card error-section">
         <h3>Errores encontrados:</h3>
         <ul>
         @foreach (var error in Model.Errors)

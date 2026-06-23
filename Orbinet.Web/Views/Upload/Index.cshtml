@@ -10,13 +10,16 @@
     </div>
 </div>
 
-<form asp-action="Result" asp-controller="Upload" method="post" enctype="multipart/form-data" class="upload-form">
-    <div class="form-group">
-        <label for="xmlFile">Archivo XML de configuración:</label>
-        <input type="file" id="xmlFile" name="xmlFile" accept=".xml" required />
-    </div>
-    <button type="submit" class="btn btn-primary">Subir archivo</button>
-</form>
+<div class="section-card">
+    <h3>Subir archivo XML</h3>
+    <form asp-action="Result" asp-controller="Upload" method="post" enctype="multipart/form-data" class="upload-form">
+        <div class="form-group">
+            <label for="xmlFile">Archivo XML de configuración:</label>
+            <input type="file" id="xmlFile" name="xmlFile" accept=".xml" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Subir archivo</button>
+    </form>
+</div>
 
 <div class="info-box">
     <h3>Instrucciones</h3>

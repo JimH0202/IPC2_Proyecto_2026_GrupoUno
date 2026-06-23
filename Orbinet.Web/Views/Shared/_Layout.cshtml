@@ -8,20 +8,21 @@
     <link rel="stylesheet" href="~/site.css" asp-append-version="true" />
 </head>
 <body>
+    @{ var activeController = ViewContext.RouteData.Values["controller"]?.ToString(); var activeAction = ViewContext.RouteData.Values["action"]?.ToString(); }
     <div class="app-shell">
         <aside class="sidebar">
             <div class="sidebar-brand">
                 <h1>OrbitNet</h1>
             </div>
             <nav class="sidebar-nav">
-                <a asp-controller="Home" asp-action="Index" class="sidebar-link">Dashboard</a>
-                <a asp-controller="Upload" asp-action="Index" class="sidebar-link">Carga XML</a>
-                <a asp-controller="Simulation" asp-action="Dashboard" class="sidebar-link">Simulación</a>
-                <a asp-controller="Matrix" asp-action="Index" class="sidebar-link">Matriz</a>
-                <a asp-controller="Satellites" asp-action="Index" class="sidebar-link">Satélites</a>
-                <a asp-controller="Reports" asp-action="Index" class="sidebar-link">Reportes</a>
-                <a asp-controller="Logs" asp-action="Index" class="sidebar-link">Logs</a>
-                <a asp-controller="Configuration" asp-action="Index" class="sidebar-link">Configuración</a>
+                <a asp-controller="Home" asp-action="Index" class="sidebar-link @(activeController == "Home" ? "active" : "")">Dashboard</a>
+                <a asp-controller="Upload" asp-action="Index" class="sidebar-link @(activeController == "Upload" ? "active" : "")">Carga XML</a>
+                <a asp-controller="Simulation" asp-action="Dashboard" class="sidebar-link @(activeController == "Simulation" ? "active" : "")">Simulación</a>
+                <a asp-controller="Matrix" asp-action="Index" class="sidebar-link @(activeController == "Matrix" ? "active" : "")">Matriz</a>
+                <a asp-controller="Satellites" asp-action="Index" class="sidebar-link @(activeController == "Satellites" ? "active" : "")">Satélites</a>
+                <a asp-controller="Reports" asp-action="Index" class="sidebar-link @(activeController == "Reports" ? "active" : "")">Reportes</a>
+                <a asp-controller="Logs" asp-action="Index" class="sidebar-link @(activeController == "Logs" ? "active" : "")">Logs</a>
+                <a asp-controller="Configuration" asp-action="Index" class="sidebar-link @(activeController == "Configuration" ? "active" : "")">Configuración</a>
             </nav>
             <div class="sidebar-footer">
                 <a asp-controller="Home" asp-action="Index" class="lang-link">ES</a>

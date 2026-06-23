@@ -31,6 +31,18 @@ public class ConfigErrorResponse
     public string Details { get; set; }
 }
 
+public class RelayRequestDto
+{
+    [JsonPropertyName("from_satellite")]
+    public string FromSatellite { get; set; }
+
+    [JsonPropertyName("to_antenna")]
+    public string ToAntenna { get; set; }
+
+    [JsonPropertyName("packet_data")]
+    public string PacketData { get; set; }
+}
+
 public class RelaySuccessResponse
 {
     [JsonPropertyName("status")]

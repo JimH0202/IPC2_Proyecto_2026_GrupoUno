@@ -125,4 +125,93 @@ public static class MockDataService
             new () { Timestamp = DateTime.Now.AddMinutes(-2), Level = "Info", Event = "Mensaje procesado", Details = "Se procesaron 5 mensajes en el último tick." }
         };
     }
+
+    // Datos para dashboard - Matriz dispersa con puntos
+    public static object GetMatrixData()
+    {
+        return new
+        {
+            rows = 10,
+            columns = 12,
+            occupiedNodes = 14,
+            nodes = new[] 
+            {
+                new { x = 20, y = 30 }, new { x = 50, y = 45 }, new { x = 80, y = 20 },
+                new { x = 120, y = 60 }, new { x = 150, y = 40 }, new { x = 180, y = 70 },
+                new { x = 220, y = 35 }, new { x = 250, y = 55 }, new { x = 280, y = 25 },
+                new { x = 310, y = 65 }, new { x = 340, y = 45 }, new { x = 360, y = 50 },
+                new { x = 390, y = 30 }, new { x = 420, y = 60 }
+            }
+        };
+    }
+
+    // Datos para rutas/relés
+    public static object GetRoutesData()
+    {
+        return new
+        {
+            routes = new[]
+            {
+                new { id = "R001", source = "SAT-001", destination = "ANT-N1", hops = 1, status = "activa", packets = 42 },
+                new { id = "R002", source = "SAT-002", destination = "ANT-N2", hops = 2, status = "activa", packets = 28 },
+                new { id = "R003", source = "SAT-003", destination = "ANT-N3", hops = 1, status = "inactiva", packets = 0 },
+                new { id = "R004", source = "ANT-N1", destination = "SAT-001", hops = 1, status = "activa", packets = 38 },
+                new { id = "R005", source = "ANT-N2", destination = "SAT-002", hops = 2, status = "activa", packets = 30 }
+            },
+            totalRoutes = 5,
+            activeRoutes = 4
+        };
+    }
+
+    // Datos para buffers (ABB)
+    public static object GetBuffersData()
+    {
+        return new
+        {
+            buffers = new[]
+            {
+                new { id = "BUF-001", satellite = "SAT-001", capacity = 100, occupied = 78, occupancyPercent = 78, status = "alto" },
+                new { id = "BUF-002", satellite = "SAT-002", capacity = 100, occupied = 45, occupancyPercent = 45, status = "medio" },
+                new { id = "BUF-003", satellite = "SAT-003", capacity = 100, occupied = 92, occupancyPercent = 92, status = "critico" },
+                new { id = "BUF-004", satellite = "SAT-004", capacity = 100, occupied = 23, occupancyPercent = 23, status = "bajo" },
+                new { id = "BUF-005", satellite = "SAT-005", capacity = 100, occupied = 67, occupancyPercent = 67, status = "medio" }
+            },
+            totalBuffers = 5,
+            averageOccupancy = 61
+        };
+    }
+
+    // Datos para reporte de memoria AVL
+    public static object GetMemoryReportData()
+    {
+        return new
+        {
+            title = "Estructura de Memoria (AVL)",
+            nodes = new[]
+            {
+                new { id = "1", value = 50, balance = 0, children = new int[] { 2, 3 } },
+                new { id = "2", value = 30, balance = 0, children = new int[] { 4, 5 } },
+                new { id = "3", value = 70, balance = 0, children = new int[] { } },
+                new { id = "4", value = 20, balance = 0, children = new int[] { } },
+                new { id = "5", value = 40, balance = 0, children = new int[] { } }
+            },
+            totalNodes = 5,
+            height = 3
+        };
+    }
+
+    // Datos simulados de actualización en tiempo real
+    public static object GetLiveSimulationData()
+    {
+        var random = new Random();
+        return new
+        {
+            tick = 150 + random.Next(10),
+            activeSatellites = 28,
+            messagesPerTick = random.Next(5, 15),
+            processedThisTick = random.Next(20, 60),
+            avgLatency = random.Next(100, 500),
+            timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+        };
+    }
 }

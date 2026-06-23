@@ -2,14 +2,31 @@
 @{
     ViewData["Title"] = "Error";
 }
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
-@if (Model?.ShowRequestId == true)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
-}
+
+<div class="page-header">
+    <div>
+        <h1>Error</h1>
+        <p class="report-description">Ocurrió un error al procesar su solicitud. Revisa la información del pedido y vuelve a intentarlo.</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+    </div>
+</div>
+
+<div class="section-card">
+    <h3>Detalles del error</h3>
+    <p class="report-description">Si el problema persiste, revisa la traza del servidor o contacta al administrador.</p>
+
+    @if (Model?.ShowRequestId == true)
+    {
+        <div class="detail-list">
+            <div>
+                <dt>Request ID</dt>
+                <dd><code>@Model.RequestId</code></dd>
+            </div>
+        </div>
+    }
+</div>
 
 
 

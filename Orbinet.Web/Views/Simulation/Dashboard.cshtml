@@ -27,28 +27,32 @@
     </div>
 </div>
 
-<div class="simulation-controls" style="display:flex;gap:10px;margin-top:18px;">
-    <form asp-action="TickResult" method="post">
-        <button type="submit" class="btn btn-primary">Ejecutar 1 Tick</button>
-    </form>
+<div class="section-card">
+    <h3>Controles de simulación</h3>
+    <div class="simulation-controls">
+        <form asp-action="TickResult" method="post">
+            <button type="submit" class="btn btn-primary">Ejecutar 1 Tick</button>
+        </form>
 
-    <form asp-action="ExecuteTicks" method="post">
-        <input type="hidden" name="count" value="10" />
-        <button type="submit" class="btn btn-primary">Ejecutar 10 Ticks</button>
-    </form>
+        <form asp-action="ExecuteTicks" method="post">
+            <input type="hidden" name="count" value="10" />
+            <button type="submit" class="btn btn-primary">Ejecutar 10 Ticks</button>
+        </form>
 
-    <form asp-action="ExecuteTicks" method="post">
-        <input type="hidden" name="count" value="100" />
-        <button type="submit" class="btn btn-primary">Ejecutar 100 Ticks</button>
-    </form>
+        <form asp-action="ExecuteTicks" method="post">
+            <input type="hidden" name="count" value="100" />
+            <button type="submit" class="btn btn-primary">Ejecutar 100 Ticks</button>
+        </form>
 
-    <form asp-action="StopSimulation" method="post">
-        <button type="submit" class="btn btn-secondary">Detener Simulación</button>
-    </form>
+        <form asp-action="StopSimulation" method="post">
+            <button type="submit" class="btn btn-secondary">Detener Simulación</button>
+        </form>
+    </div>
 </div>
 
-<h3 style="margin-top:24px;">Satélites activos</h3>
-<div class="tick-result-box">
+<div class="section-card">
+    <h3>Satélites activos</h3>
+    <div class="tick-result-box">
     <table>
         <thead>
             <tr>
@@ -70,4 +74,5 @@
         }
         </tbody>
     </table>
+    </div>
 </div>

@@ -11,23 +11,24 @@
     </div>
 </div>
 
-<div class="tick-result-box">
-    <div class="result-item">
-        <strong>Tick actual:</strong> @Model.CurrentTick
+<div class="section-card">
+    <div class="tick-result-box">
+        <div class="result-item">
+            <strong>Tick actual:</strong> @Model.CurrentTick
+        </div>
+        <div class="result-item">
+            <strong>Mensajes procesados en este tick:</strong> <span class="highlight">@Model.ProcessedMessages</span>
+        </div>
+        <div class="result-item">
+            <strong>Satélites activos:</strong> @Model.ActiveSatellites
+        </div>
+        <div class="result-item">
+            <strong>Mensajes pendientes:</strong> @Model.PendingMessages
+        </div>
     </div>
-    <div class="result-item">
-        <strong>Mensajes procesados en este tick:</strong> <span class="highlight">@Model.ProcessedMessages</span>
-    </div>
-    <div class="result-item">
-        <strong>Satélites activos:</strong> @Model.ActiveSatellites
-    </div>
-    <div class="result-item">
-        <strong>Mensajes pendientes:</strong> @Model.PendingMessages
-    </div>
-</div>
 
-<h3>Estado de satélites después del tick</h3>
-<table>
+    <h3 style="margin-top: 28px;">Estado de satélites después del tick</h3>
+    <table>
     <thead>
         <tr>
             <th>ID</th>

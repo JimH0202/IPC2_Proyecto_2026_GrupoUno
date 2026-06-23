@@ -14,15 +14,17 @@
     <p>Total de registros: <strong>@Model.Count</strong></p>
 </div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Fecha</th>
-            <th>Nivel</th>
-            <th>Evento</th>
-            <th>Detalles</th>
-        </tr>
-    </thead>
+<div class="section-card">
+    <h3>Últimos registros</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Nivel</th>
+                <th>Evento</th>
+                <th>Detalles</th>
+            </tr>
+        </thead>
     <tbody>
     @foreach (var log in Model)
     {
@@ -35,3 +37,4 @@
     }
     </tbody>
 </table>
+</div>

@@ -11,11 +11,43 @@
     </div>
 </div>
 
-<p><strong>Nombre:</strong> @Model.Name</p>
-<p><strong>Órbita:</strong> @Model.OrbitId</p>
-<p><strong>Tipo:</strong> @Model.Type</p>
-<p><strong>Posición:</strong> (@Model.X, @Model.Y)</p>
-<p><strong>Activo:</strong> @(Model.IsActive ? "Sí" : "No")</p>
-<p><strong>Mensajes enviados:</strong> @Model.MessagesSent</p>
-<p><strong>Mensajes recibidos:</strong> @Model.MessagesReceived</p>
+<div class="section-card">
+    <h3>Resumen del satélite</h3>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <strong>Nombre</strong>
+            <p class="stat-value">@Model.Name</p>
+        </div>
+        <div class="stat-card">
+            <strong>Órbita</strong>
+            <p class="stat-value">@Model.OrbitId</p>
+        </div>
+        <div class="stat-card">
+            <strong>Tipo</strong>
+            <p class="stat-value">@Model.Type</p>
+        </div>
+        <div class="stat-card">
+            <strong>Activo</strong>
+            <p class="stat-value">@(Model.IsActive ? "Sí" : "No")</p>
+        </div>
+    </div>
+</div>
+
+<div class="section-card">
+    <h3>Actividad</h3>
+    <div class="detail-list">
+        <div>
+            <dt>Posición</dt>
+            <dd>(@Model.X, @Model.Y)</dd>
+        </div>
+        <div>
+            <dt>Mensajes enviados</dt>
+            <dd>@Model.MessagesSent</dd>
+        </div>
+        <div>
+            <dt>Mensajes recibidos</dt>
+            <dd>@Model.MessagesReceived</dd>
+        </div>
+    </div>
+</div>
 
