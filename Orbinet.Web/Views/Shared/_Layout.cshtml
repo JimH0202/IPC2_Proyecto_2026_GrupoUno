@@ -8,12 +8,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@Localizer["AppTitle"]</title>
 
-    <link rel="stylesheet" href="~/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/site.css" />
+    <link rel="stylesheet" href="~/layout.css" />
+    <link rel="stylesheet" href="~/sidebar.css" />
+    <link rel="stylesheet" href="~/topbar.css" />
+    <link rel="stylesheet" href="~/cards.css" />
+    <link rel="stylesheet" href="~/buttons.css" />
+    <link rel="stylesheet" href="~/tables.css" />
+    <link rel="stylesheet" href="~/badges.css" />
+    <link rel="stylesheet" href="~/reports.css" />
 </head>
 <body>
     @{ var activeController = ViewContext.RouteData.Values["controller"]?.ToString(); var activeAction = ViewContext.RouteData.Values["action"]?.ToString(); }
     <div class="app-shell">
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-brand">
                 <h1>@Localizer["AppTitle"]</h1>
             </div>
@@ -23,7 +31,20 @@
                 <a asp-controller="Simulation" asp-action="Dashboard" class="sidebar-link @(activeController == "Simulation" ? "active" : "")">@Localizer["Simulation"]</a>
                 <a asp-controller="Matrix" asp-action="Index" class="sidebar-link @(activeController == "Matrix" ? "active" : "")">@Localizer["Matrix"]</a>
                 <a asp-controller="Satellites" asp-action="Index" class="sidebar-link @(activeController == "Satellites" ? "active" : "")">@Localizer["Satellites"]</a>
-                <a asp-controller="Reports" asp-action="Index" class="sidebar-link @(activeController == "Reports" ? "active" : "")">@Localizer["Reports"]</a>
+                
+                <div class="sidebar-menu-group">
+                    <button class="sidebar-link sidebar-menu-toggle @(activeController == "Reports" ? "active" : "")" type="button">
+                        @Localizer["Reports"]
+                        <span class="menu-arrow">›</span>
+                    </button>
+                    <div class="sidebar-submenu">
+                        <a asp-controller="Reports" asp-action="Index" class="sidebar-sublink">@Localizer["ReportPageTitle"]</a>
+                        <a asp-controller="Reports" asp-action="MemoryLayout" class="sidebar-sublink">@Localizer["ReportCardMemory"]</a>
+                        <a asp-controller="Reports" asp-action="Routing" class="sidebar-sublink">@Localizer["ReportCardRouting"]</a>
+                        <a asp-controller="Reports" asp-action="Buffers" class="sidebar-sublink">@Localizer["ReportCardBuffers"]</a>
+                    </div>
+                </div>
+
                 <a asp-controller="Logs" asp-action="Index" class="sidebar-link @(activeController == "Logs" ? "active" : "")">@Localizer["Logs"]</a>
                 <a asp-controller="Configuration" asp-action="Index" class="sidebar-link @(activeController == "Configuration" ? "active" : "")">@Localizer["Configuration"]</a>
             </nav>
@@ -36,8 +57,17 @@
 
         <div class="content-area">
             <header class="topbar">
-                <button class="menu-toggle" aria-label="Toggle menu">☰</button>
-                <div class="topbar-title">@Localizer["AppTitle"]</div>
+                <div class="topbar-left">
+                    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">☰</button>
+                    <div class="topbar-title">@Localizer["AppTitle"]</div>
+                </div>
+                <div class="topbar-right">
+                    <div class="lang-buttons">
+                        <a asp-controller="Home" asp-action="SetLanguage" asp-route-culture="es" asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)" class="topbar-lang-btn">ES</a>
+                        <span class="sep">|</span>
+                        <a asp-controller="Home" asp-action="SetLanguage" asp-route-culture="en" asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)" class="topbar-lang-btn">EN</a>
+                    </div>
+                </div>
             </header>
 
             <main class="page-content">
@@ -46,5 +76,18 @@
         </div>
     </div>
 
-</body>
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+            document.querySelector('.content-area').classList.toggle('expanded');
+        });
+        
+        document.querySelectorAll('.sidebar-menu-toggle').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const submenu = this.nextElementSibling;
+                submenu.classList.toggle('show');
+            });
+        });
+    </script></body>
 </html>

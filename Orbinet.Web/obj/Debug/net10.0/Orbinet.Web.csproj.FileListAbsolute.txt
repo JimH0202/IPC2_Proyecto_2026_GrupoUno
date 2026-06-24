@@ -26,11 +26,6 @@ C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\scopedcss\bundle\Orbinet.Web.styles.css
-C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\dk9by0kbjd-{0}-5ipweew5fc-5ipweew5fc.gz
-C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\tmk9szx8t8-{0}-5ipweew5fc-5ipweew5fc.gz
-C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\afx207ei8i-{0}-5ipweew5fc-5ipweew5fc.gz
-C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\6ukgub8m89-{0}-5ipweew5fc-5ipweew5fc.gz
-C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\1b50e30v50-{0}-hj4cml3ccf-hj4cml3ccf.gz
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\staticwebassets.build.json
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\staticwebassets.build.json.cache
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\staticwebassets.development.json
@@ -43,3 +38,12 @@ C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\ref\Orbinet.Web.dll
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\Orbinet.Web.Resources.OrbitNet.Web.Controllers.SharedResource.resources
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\Orbinet.Web.Resources.OrbitNet.Web.Controllers.SharedResource.es.resources
+C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\5pbd861aov-{0}-f9zum3hs2t-f9zum3hs2t.gz
+C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\1b50e30v50-{0}-e62emrvcat-e62emrvcat.gz
+C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\uyu7tk6phm-{0}-ddn8e3supj-ddn8e3supj.gz
+C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\6ukgub8m89-{0}-simrtj8808-simrtj8808.gz
+C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\6p1y2ioq6m-{0}-fjmn7zmztu-fjmn7zmztu.gz
+C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\up6w1rfc8b-{0}-skk37rm2q4-skk37rm2q4.gz
+C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\hpf3bzbnwu-{0}-2wuj3osgoj-2wuj3osgoj.gz
+C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\kneccg3vyz-{0}-c638v8fwk0-c638v8fwk0.gz
+C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\b8chfr7bwm-{0}-mobjt4tc0p-mobjt4tc0p.gz

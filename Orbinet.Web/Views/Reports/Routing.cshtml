@@ -9,38 +9,21 @@
         <p class="report-description">@Model.Description</p>
     </div>
     <div class="page-actions">
-        <a asp-controller="Reports" asp-action="Index" class="btn btn-secondary">@Localizer["BackToReports"]</a>
         <a asp-controller="Reports" asp-action="ExportSvg" asp-route-report="@reportKey" class="btn btn-primary">@Localizer["ExportSvg"]</a>
     </div>
 </div>
 
-<div class="report-summary">
-    <p class="report-description">@Model.Description</p>
-    <p class="report-date">@Localizer["Generated"] @Model.GeneratedAt.ToString("g")</p>
-</div>
-
-@if (Model.Metadata?.Count > 0)
-{
-    <div class="report-metadata">
-        <dl>
-            @foreach (var entry in Model.Metadata)
+<div class="report-view-card">
+    <div class="report-svg-card routing-svg-card">
+        <div class="svg-wrapper">
+            @if (!string.IsNullOrWhiteSpace(Model.SvgContent))
             {
-                <dt>@entry.Key</dt>
-                <dd>@entry.Value</dd>
+                @Html.Raw(Model.SvgContent)
             }
-        </dl>
-    </div>
-}
-
-<div class="svg-container">
-    <div class="svg-wrapper">
-        @if (!string.IsNullOrWhiteSpace(Model.SvgContent))
-        {
-            @Html.Raw(Model.SvgContent)
-        }
-        else
-        {
-            <div class="result-box">@Localizer["NoSvgContent"]</div>
-        }
+            else
+            {
+                <div class="result-box">@Localizer["NoSvgContent"]</div>
+            }
+        </div>
     </div>
 </div>
