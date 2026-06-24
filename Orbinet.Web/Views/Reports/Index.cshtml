@@ -20,6 +20,12 @@
     </div>
 
     <div class="report-card">
+        <h3>@Localizer["ReportCardMatrix"]</h3>
+        <p>@Localizer["ReportCardMatrixDescription"]</p>
+        <a asp-controller="Reports" asp-action="Matrix" class="action-card">@Localizer["ViewReport"]</a>
+    </div>
+
+    <div class="report-card">
         <h3>@Localizer["ReportCardBuffers"]</h3>
         <p>@Localizer["ReportCardBuffersDescription"]</p>
         <a asp-controller="Reports" asp-action="Buffers" class="action-card">@Localizer["ViewReport"]</a>

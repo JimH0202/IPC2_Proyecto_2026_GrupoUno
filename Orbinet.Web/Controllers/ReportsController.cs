@@ -45,6 +45,17 @@ public class ReportsController : Controller
         return View(model);
     }
 
+    public IActionResult Matrix()
+    {
+        var model = MockDataService.GetReportViewModel("Matrix");
+        if (model != null && !string.IsNullOrWhiteSpace(model.SvgContent))
+        {
+            model.SvgContent = DotCompiler.SanitizeSvg(model.SvgContent);
+        }
+
+        return View("MemoryLayout", model);
+    }
+
     public IActionResult ExportSvg(string report)
     {
         if (string.IsNullOrWhiteSpace(report)) return BadRequest();

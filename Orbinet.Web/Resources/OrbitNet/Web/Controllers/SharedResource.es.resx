@@ -230,6 +230,12 @@
   <data name="ReportCardRoutingDescription">
     <value>Diagrama de rutas de comunicación entre satélites y antenas en la constelación.</value>
   </data>
+  <data name="ReportCardMatrix">
+    <value>Matriz dispersa</value>
+  </data>
+  <data name="ReportCardMatrixDescription">
+    <value>Visualiza la ocupación de la matriz dispersa y la distribución espacial de los elementos almacenados.</value>
+  </data>
   <data name="ViewReport">
     <value>Ver reporte</value>
   </data>

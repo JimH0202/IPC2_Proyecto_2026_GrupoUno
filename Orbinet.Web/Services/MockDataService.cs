@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Linq;
 using OrbitNet.Web.Models.ViewModels;
+using OrbitNet.Web.Services.Graphviz;
 
 namespace OrbitNet.Web.Services;
 
@@ -87,15 +88,39 @@ public static class MockDataService
 
     public static MatrixViewModel GetMatrixViewModel()
     {
-        const string svg = "<svg width='360' height='200' xmlns='http://www.w3.org/2000/svg'><rect width='360' height='200' fill='#f8f9fa' stroke='#ddd' /><text x='20' y='40' font-family='Arial' font-size='18'>Matriz dispersa de ejemplo</text></svg>";
+        var report = GetSparseMatrixReportData();
+        var dot = MatrixGraphGenerator.BuildDot(report);
+        var svg = DotCompiler.CompileDotToSvg(dot) ?? GetPlaceholderMatrixSvg();
 
         return new MatrixViewModel
         {
-            Rows = 10,
-            Columns = 12,
-            OccupiedNodes = 14,
+            Rows = report.Rows,
+            Columns = report.Columns,
+            OccupiedNodes = report.Cells.Count,
             SvgContent = svg
         };
+    }
+
+    public static SparseMatrixReportData GetSparseMatrixReportData()
+    {
+        return new SparseMatrixReportData
+        {
+            Rows = 6,
+            Columns = 6,
+            Cells = new List<SparseMatrixCell>
+            {
+                new() { Row = 1, Column = 2, SatelliteId = "SAT-001", Capacity = 100, Occupied = 78, OccupancyPercent = 78, Messages = "M001,M008" },
+                new() { Row = 1, Column = 4, SatelliteId = "SAT-002", Capacity = 100, Occupied = 45, OccupancyPercent = 45, Messages = "M002" },
+                new() { Row = 2, Column = 1, SatelliteId = "SAT-003", Capacity = 100, Occupied = 92, OccupancyPercent = 92, Messages = "M003,M004,M007" },
+                new() { Row = 3, Column = 5, SatelliteId = "SAT-004", Capacity = 100, Occupied = 23, OccupancyPercent = 23, Messages = "" },
+                new() { Row = 4, Column = 3, SatelliteId = "SAT-005", Capacity = 100, Occupied = 67, OccupancyPercent = 67, Messages = "M005" }
+            }
+        };
+    }
+
+    private static string GetPlaceholderMatrixSvg()
+    {
+        return "<svg width='520' height='260' xmlns='http://www.w3.org/2000/svg'><rect width='520' height='260' fill='#f8f9fa' stroke='#ddd' /><text x='20' y='40' font-family='Arial' font-size='18'>Matriz dispersa de ejemplo</text></svg>";
     }
 
     public static ReportViewModel GetReportViewModel(string reportName)
@@ -108,26 +133,62 @@ public static class MockDataService
         switch (reportName)
         {
             case "MemoryLayout":
+            {
                 model.Title = Localize("Memory Layout", "Mapa de memoria");
                 model.Description = Localize("Representation of the system memory structure.", "Representación de la estructura de memoria del sistema.");
+                var report = GetMemoryReportData();
+                model.Metadata[Localize("Total Nodes", "Nodos totales")] = report.TotalNodes.ToString();
+                model.Metadata[Localize("Height", "Altura")] = report.Height.ToString();
+                var dot = AvlGraphGenerator.BuildDot(report);
+                model.SvgContent = DotCompiler.CompileDotToSvg(dot) ?? GetPlaceholderSvg(model.Title);
                 break;
+            }
             case "Routing":
+            {
                 model.Title = Localize("Relay Routing", "Ruta de relés");
                 model.Description = Localize("Message routing view between satellites and antennas.", "Vista del enrutamiento de mensajes entre satélites y antenas.");
+                var report = GetRoutesData();
+                model.Metadata[Localize("Total Routes", "Rutas totales")] = report.TotalRoutes.ToString();
+                model.Metadata[Localize("Active Routes", "Rutas activas")] = report.ActiveRoutes.ToString();
+                var dot = RouteGraphGenerator.BuildDot(report);
+                model.SvgContent = DotCompiler.CompileDotToSvg(dot) ?? GetPlaceholderSvg(model.Title);
                 break;
+            }
             case "Buffers":
+            {
                 model.Title = Localize("Buffer Capacity", "Capacidad de buffers");
                 model.Description = Localize("Occupancy and capacity details for buffers.", "Detalle de ocupación y capacidad de los buffers.");
+                var report = GetBuffersData();
+                model.Metadata[Localize("Total Buffers", "Buffers totales")] = report.TotalBuffers.ToString();
+                model.Metadata[Localize("Average Occupancy", "Ocupación promedio")] = report.AverageOccupancy + "%";
+                var dot = BufferGraphGenerator.BuildDot(report);
+                model.SvgContent = DotCompiler.CompileDotToSvg(dot) ?? GetPlaceholderSvg(model.Title);
                 break;
+            }
+            case "Matrix":
+            {
+                model.Title = Localize("Sparse Matrix", "Matriz dispersa");
+                model.Description = Localize("Spatial layout of the sparse matrix and occupancy state.", "Diseño espacial de la matriz dispersa y estado de ocupación.");
+                var report = GetSparseMatrixReportData();
+                model.Metadata[Localize("Rows", "Filas")] = report.Rows.ToString();
+                model.Metadata[Localize("Columns", "Columnas")] = report.Columns.ToString();
+                var dot = MatrixGraphGenerator.BuildDot(report);
+                model.SvgContent = DotCompiler.CompileDotToSvg(dot) ?? GetPlaceholderSvg(model.Title);
+                break;
+            }
             default:
                 model.Title = Localize("Generic Report", "Reporte genérico");
                 model.Description = Localize("Example system report.", "Reporte de sistema de ejemplo.");
+                model.SvgContent = GetPlaceholderSvg(model.Title);
                 break;
         }
 
-        model.SvgContent = $"<svg width='380' height='220' xmlns='http://www.w3.org/2000/svg'><rect width='380' height='220' fill='#f1f3f5' stroke='#ced4da'/><text x='20' y='40' font-family='Arial' font-size='16'>{Localize("Report of ", "Reporte de ")}{model.Title}</text></svg>";
-
         return model;
+    }
+
+    private static string GetPlaceholderSvg(string title)
+    {
+        return $"<svg width='420' height='220' xmlns='http://www.w3.org/2000/svg'><rect width='420' height='220' fill='#f1f3f5' stroke='#ced4da'/><text x='20' y='40' font-family='Arial' font-size='16'>Reporte: {title}</text></svg>";
     }
 
     public static List<LogViewModel> GetLogEntries()
@@ -160,57 +221,57 @@ public static class MockDataService
     }
 
     // Datos para rutas/relés
-    public static object GetRoutesData()
+    public static RouteReportData GetRoutesData()
     {
-        return new
+        return new RouteReportData
         {
-            routes = new[]
+            Routes = new List<RouteReportItem>
             {
-                new { id = "R001", source = "SAT-001", destination = "ANT-N1", hops = 1, status = Localize("active", "activa"), packets = 42 },
-                new { id = "R002", source = "SAT-002", destination = "ANT-N2", hops = 2, status = Localize("active", "activa"), packets = 28 },
-                new { id = "R003", source = "SAT-003", destination = "ANT-N3", hops = 1, status = Localize("inactive", "inactiva"), packets = 0 },
-                new { id = "R004", source = "ANT-N1", destination = "SAT-001", hops = 1, status = Localize("active", "activa"), packets = 38 },
-                new { id = "R005", source = "ANT-N2", destination = "SAT-002", hops = 2, status = Localize("active", "activa"), packets = 30 }
+                new() { Id = "R001", Source = "SAT-001", Destination = "ANT-N1", Hops = 1, Status = Localize("active", "activa"), Packets = 42 },
+                new() { Id = "R002", Source = "SAT-002", Destination = "ANT-N2", Hops = 2, Status = Localize("active", "activa"), Packets = 28 },
+                new() { Id = "R003", Source = "SAT-003", Destination = "ANT-N3", Hops = 1, Status = Localize("inactive", "inactiva"), Packets = 0 },
+                new() { Id = "R004", Source = "ANT-N1", Destination = "SAT-001", Hops = 1, Status = Localize("active", "activa"), Packets = 38 },
+                new() { Id = "R005", Source = "ANT-N2", Destination = "SAT-002", Hops = 2, Status = Localize("active", "activa"), Packets = 30 }
             },
-            totalRoutes = 5,
-            activeRoutes = 4
+            TotalRoutes = 5,
+            ActiveRoutes = 4
         };
     }
 
     // Datos para buffers (ABB)
-    public static object GetBuffersData()
+    public static BufferReportData GetBuffersData()
     {
-        return new
+        return new BufferReportData
         {
-            buffers = new[]
+            Buffers = new List<BufferReportItem>
             {
-                new { id = "BUF-001", satellite = "SAT-001", capacity = 100, occupied = 78, occupancyPercent = 78, status = Localize("high", "alto") },
-                new { id = "BUF-002", satellite = "SAT-002", capacity = 100, occupied = 45, occupancyPercent = 45, status = Localize("medium", "medio") },
-                new { id = "BUF-003", satellite = "SAT-003", capacity = 100, occupied = 92, occupancyPercent = 92, status = Localize("critical", "critico") },
-                new { id = "BUF-004", satellite = "SAT-004", capacity = 100, occupied = 23, occupancyPercent = 23, status = Localize("low", "bajo") },
-                new { id = "BUF-005", satellite = "SAT-005", capacity = 100, occupied = 67, occupancyPercent = 67, status = Localize("medium", "medio") }
+                new() { Id = "BUF-001", Satellite = "SAT-001", Capacity = 100, Occupied = 78, OccupancyPercent = 78, Status = Localize("high", "alto") },
+                new() { Id = "BUF-002", Satellite = "SAT-002", Capacity = 100, Occupied = 45, OccupancyPercent = 45, Status = Localize("medium", "medio") },
+                new() { Id = "BUF-003", Satellite = "SAT-003", Capacity = 100, Occupied = 92, OccupancyPercent = 92, Status = Localize("critical", "critico") },
+                new() { Id = "BUF-004", Satellite = "SAT-004", Capacity = 100, Occupied = 23, OccupancyPercent = 23, Status = Localize("low", "bajo") },
+                new() { Id = "BUF-005", Satellite = "SAT-005", Capacity = 100, Occupied = 67, OccupancyPercent = 67, Status = Localize("medium", "medio") }
             },
-            totalBuffers = 5,
-            averageOccupancy = 61
+            TotalBuffers = 5,
+            AverageOccupancy = 61
         };
     }
 
     // Datos para reporte de memoria AVL
-    public static object GetMemoryReportData()
+    public static AvlReportData GetMemoryReportData()
     {
-        return new
+        return new AvlReportData
         {
-            title = "Estructura de Memoria (AVL)",
-            nodes = new[]
+            Title = "Estructura de Memoria (AVL)",
+            Nodes = new List<AvlReportNode>
             {
-                new { id = "1", value = 50, balance = 0, children = new int[] { 2, 3 } },
-                new { id = "2", value = 30, balance = 0, children = new int[] { 4, 5 } },
-                new { id = "3", value = 70, balance = 0, children = new int[] { } },
-                new { id = "4", value = 20, balance = 0, children = new int[] { } },
-                new { id = "5", value = 40, balance = 0, children = new int[] { } }
+                new() { Id = "1", Value = 50, Children = new[] { 2, 3 } },
+                new() { Id = "2", Value = 30, Children = new[] { 4, 5 } },
+                new() { Id = "3", Value = 70, Children = Array.Empty<int>() },
+                new() { Id = "4", Value = 20, Children = Array.Empty<int>() },
+                new() { Id = "5", Value = 40, Children = Array.Empty<int>() }
             },
-            totalNodes = 5,
-            height = 3
+            TotalNodes = 5,
+            Height = 3
         };
     }
 

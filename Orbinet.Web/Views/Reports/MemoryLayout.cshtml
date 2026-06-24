@@ -1,4 +1,7 @@
 @model OrbitNet.Web.Models.ViewModels.ReportViewModel
+@{
+    var reportKey = ViewContext.RouteData.Values["action"]?.ToString() ?? "MemoryLayout";
+}
 
 <div class="page-header">
     <div>
@@ -7,7 +10,7 @@
     </div>
     <div class="page-actions">
         <a asp-controller="Reports" asp-action="Index" class="btn btn-secondary">@Localizer["BackToReports"]</a>
-        <a asp-controller="Reports" asp-action="ExportSvg" asp-route-report="MemoryLayout" class="btn btn-primary">@Localizer["ExportSvg"]</a>
+        <a asp-controller="Reports" asp-action="ExportSvg" asp-route-report="@reportKey" class="btn btn-primary">@Localizer["ExportSvg"]</a>
     </div>
 </div>
 
@@ -15,6 +18,19 @@
     <p class="report-description">@Model.Description</p>
     <p class="report-date">@Localizer["Generated"] @Model.GeneratedAt.ToString("g")</p>
 </div>
+
+@if (Model.Metadata?.Count > 0)
+{
+    <div class="report-metadata">
+        <dl>
+            @foreach (var entry in Model.Metadata)
+            {
+                <dt>@entry.Key</dt>
+                <dd>@entry.Value</dd>
+            }
+        </dl>
+    </div>
+}
 
 <div class="svg-container">
     <div class="svg-wrapper">

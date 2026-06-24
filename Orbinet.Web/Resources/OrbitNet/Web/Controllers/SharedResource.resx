@@ -230,6 +230,12 @@
   <data name="ReportCardRoutingDescription">
     <value>Communication route diagram between satellites and antennas in the constellation.</value>
   </data>
+  <data name="ReportCardMatrix">
+    <value>Sparse Matrix</value>
+  </data>
+  <data name="ReportCardMatrixDescription">
+    <value>Visualize sparse matrix occupancy and the spatial distribution of stored elements.</value>
+  </data>
   <data name="ViewReport">
     <value>View Report</value>
   </data>
