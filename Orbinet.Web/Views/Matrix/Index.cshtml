@@ -2,29 +2,32 @@
 
 <div class="page-header">
     <div>
-        <h1>Matriz Dispersa</h1>
-        <p class="report-description">Visualiza la estructura y ocupación de la matriz dispersa del sistema.</p>
+        <h1>@Localizer["SparseMatrix"]</h1>
+        <p class="report-description">@Localizer["SparseMatrixDescription"]</p>
     </div>
     <div class="page-actions">
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["BackToDashboard"]</a>
     </div>
 </div>
 
 <div class="matrix-stats">
     <div class="stat-card">
-        <strong>Filas</strong>
+        <strong>@Localizer["Rows"]</strong>
         <p class="stat-value">@Model.Rows</p>
     </div>
     <div class="stat-card">
-        <strong>Columnas</strong>
+        <strong>@Localizer["Columns"]</strong>
         <p class="stat-value">@Model.Columns</p>
     </div>
     <div class="stat-card">
-        <strong>Nodos ocupados</strong>
+        <strong>@Localizer["OccupiedNodes"]</strong>
         <p class="stat-value">@Model.OccupiedNodes</p>
     </div>
 </div>
 
-<div class="svg-container">
-    @Html.Raw(Model.SvgContent)
+<div class="section-card">
+    <h3>@Localizer["MatrixVisualization"]</h3>
+    <div class="svg-container">
+        @Html.Raw(Model.SvgContent)
+    </div>
 </div>

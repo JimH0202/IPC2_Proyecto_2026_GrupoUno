@@ -1,3 +1,4 @@
+using Orbinet.Web.DataStructures.Listas;
 using Orbinet.Web.Models.Entities;
 
 public class OrbitNetStore
@@ -11,7 +12,7 @@ public class OrbitNetStore
     public double QueueOccupancyPercentage { get; set; }
     public string ReceptorSatelliteId { get; set; }
     public bool ConfigLoaded { get; set; }
-    public List<MessagePacket> PaquetesEnCola { get; } = new();
+    public ListaEnlazada<MessagePacket> PaquetesEnCola { get; } = new();
 
     public OrbitNetStore()
     {

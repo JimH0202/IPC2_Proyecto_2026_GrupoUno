@@ -2,45 +2,86 @@
 
 <div class="page-header">
     <div>
-        <h1>Dashboard</h1>
-        <p class="report-description">Controla el estado de la constelación, operaciones y métricas del hemisferio.</p>
+        <h1>@Localizer["Dashboard"]</h1>
+        <p class="report-description">@Localizer["HomeDescription"]</p>
     </div>
     <div class="page-actions">
-        <a href="@Url.Action("Index", "Satellites")" class="action-card">Ver satélites</a>
-        <a href="@Url.Action("Dashboard", "Simulation")" class="action-card">Ir a simulación</a>
-        <a href="@Url.Action("MemoryLayout", "Reports")" class="action-card">Ver reportes</a>
+        <a href="@Url.Action("Index", "Satellites")" class="action-card">@Localizer["ViewSatellites"]</a>
+        <a href="@Url.Action("Dashboard", "Simulation")" class="action-card">@Localizer["GoToSimulation"]</a>
+        <a href="@Url.Action("MemoryLayout", "Reports")" class="action-card">@Localizer["ViewReports"]</a>
     </div>
 </div>
 
-<div style="background-color: @(Model.Hemisphere == "South" ? "#e8f4f8" : "#f0e8f8"); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid @(Model.Hemisphere == "South" ? "#0078d4" : "#8764b8");">
-    <h2 style="margin: 0; color: @(Model.Hemisphere == "South" ? "#0078d4" : "#8764b8");">
-        OrbitNet - Hemisferio @Model.Hemisphere
-    </h2>
-    <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">
-        @(Model.Hemisphere == "North" ? "Constelación del Hemisferio Norte • Puerto 5000" : "Constelación del Hemisferio Sur • Puerto 5001")
-    </p>
+<div class="hero-banner @(Model.Hemisphere == "South" ? "south" : "north")">
+    <h2>OrbitNet - @Localizer[$"Hemisphere{Model.Hemisphere}"]</h2>
+    <p>@(Model.Hemisphere == "North" ? Localizer["NorthHemisphereDescription"] : Localizer["SouthHemisphereDescription"])</p>
 </div>
 
-<h3>Estado del Sistema</h3>
+<div class="stats-grid">
+    <div class="stat-card">
+        <strong>@Localizer["CurrentTick"]</strong>
+        <p class="stat-value">@Model.CurrentTick</p>
+    </div>
+    <div class="stat-card">
+        <strong>@Localizer["ActiveSatellites"]</strong>
+        <p class="stat-value">@Model.ActiveSatellites</p>
+    </div>
+    <div class="stat-card">
+        <strong>@Localizer["PendingMessages"]</strong>
+        <p class="stat-value">@Model.PendingMessages</p>
+    </div>
+    <div class="stat-card">
+        <strong>@Localizer["ProcessedMessages"]</strong>
+        <p class="stat-value">@Model.ProcessedMessages</p>
+    </div>
+</div>
 
-<hr />
+<div class="section-card" style="margin-top: 24px;">
+    <h3>@Localizer["SystemDetails"]</h3>
+    <p>@Localizer["SystemDetailsDescription"]</p>
+    <div class="stats-grid" style="margin-top: 18px;">
+        <div class="stat-card">
+            <strong>@Localizer["Antennas"]</strong>
+            <p class="stat-value">@Model.TotalAntennas</p>
+        </div>
+        <div class="stat-card">
+            <strong>@Localizer["Port"]</strong>
+            <p class="stat-value">@Model.Port</p>
+        </div>
+        <div class="stat-card">
+            <strong>@Localizer["RemoteHemisphere"]</strong>
+            <p class="stat-value">@Model.RemoteHemisphereUrl</p>
+        </div>
+        <div class="stat-card">
+            <strong>@Localizer["Simulation"]</strong>
+            <p class="stat-value">@(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])</p>
+        </div>
+    </div>
+</div>
 
-<p><strong>Tick Actual:</strong> @Model.CurrentTick</p>
-
-<p><strong>Satélites Activos:</strong> @Model.ActiveSatellites</p>
-
-<p><strong>Satélites Inactivos:</strong> @Model.InactiveSatellites</p>
-
-<p><strong>Mensajes Pendientes:</strong> @Model.PendingMessages</p>
-
-<p><strong>Mensajes Procesados:</strong> @Model.ProcessedMessages</p>
-
-<p><strong>Antenas:</strong> @Model.TotalAntennas</p>
-
-<p><strong>Puerto:</strong> @Model.Port</p>
-
-<p><strong>Hemisferio remoto:</strong> @Model.RemoteHemisphereUrl</p>
-
-<p><strong>Simulación:</strong> @(Model.IsSimulationRunning ? "Activa" : "Detenida")</p>
-
-//pendientes cards
+<div class="section-card" style="margin-top: 24px;">
+    <h3>@Localizer["SatellitesInConstellation"]</h3>
+    <div class="satellite-table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>@Localizer["Id"]</th>
+                    <th>@Localizer["Name"]</th>
+                    <th>@Localizer["Orbit"]</th>
+                    <th>@Localizer["Active"]</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var satellite in Model.Satellites)
+            {
+                <tr>
+                    <td>@satellite.Id</td>
+                    <td>@satellite.Name</td>
+                    <td>@satellite.OrbitId</td>
+                    <td>@(satellite.IsActive ? Localizer["Yes"] : Localizer["No"])</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

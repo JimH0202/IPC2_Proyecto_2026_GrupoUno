@@ -2,20 +2,52 @@
 
 <div class="page-header">
     <div>
-        <h1>Detalle de Satélite</h1>
-        <p class="report-description">Información completa del satélite seleccionado y su actividad reciente.</p>
+        <h1>@Localizer["SatelliteDetail"]</h1>
+        <p class="report-description">@Localizer["SatelliteDetailDescription"]</p>
     </div>
     <div class="page-actions">
-        <a asp-controller="Satellites" asp-action="Index" class="btn btn-primary">Volver a la lista</a>
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+        <a asp-controller="Satellites" asp-action="Index" class="btn btn-primary">@Localizer["BackToList"]</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["BackToDashboard"]</a>
     </div>
 </div>
 
-<p><strong>Nombre:</strong> @Model.Name</p>
-<p><strong>Órbita:</strong> @Model.OrbitId</p>
-<p><strong>Tipo:</strong> @Model.Type</p>
-<p><strong>Posición:</strong> (@Model.X, @Model.Y)</p>
-<p><strong>Activo:</strong> @(Model.IsActive ? "Sí" : "No")</p>
-<p><strong>Mensajes enviados:</strong> @Model.MessagesSent</p>
-<p><strong>Mensajes recibidos:</strong> @Model.MessagesReceived</p>
+<div class="section-card">
+    <h3>@Localizer["SatelliteSummary"]</h3>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <strong>@Localizer["Name"]</strong>
+            <p class="stat-value">@Model.Name</p>
+        </div>
+        <div class="stat-card">
+            <strong>@Localizer["Orbit"]</strong>
+            <p class="stat-value">@Model.OrbitId</p>
+        </div>
+        <div class="stat-card">
+            <strong>@Localizer["Type"]</strong>
+            <p class="stat-value">@Model.Type</p>
+        </div>
+        <div class="stat-card">
+            <strong>@Localizer["Active"]</strong>
+            <p class="stat-value">@(Model.IsActive ? Localizer["Yes"] : Localizer["No"])</p>
+        </div>
+    </div>
+</div>
+
+<div class="section-card">
+    <h3>@Localizer["SatelliteActivity"]</h3>
+    <div class="detail-list">
+        <div>
+            <dt>@Localizer["Position"]</dt>
+            <dd>(@Model.X, @Model.Y)</dd>
+        </div>
+        <div>
+            <dt>@Localizer["MessagesSent"]</dt>
+            <dd>@Model.MessagesSent</dd>
+        </div>
+        <div>
+            <dt>@Localizer["MessagesReceived"]</dt>
+            <dd>@Model.MessagesReceived</dd>
+        </div>
+    </div>
+</div>
 

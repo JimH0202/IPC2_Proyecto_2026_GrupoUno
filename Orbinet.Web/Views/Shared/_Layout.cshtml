@@ -1,32 +1,50 @@
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<OrbitNet.Web.Controllers.SharedResource> Localizer
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>OrbitNet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@Localizer["AppTitle"]</title>
 
     <link rel="stylesheet" href="~/site.css" asp-append-version="true" />
 </head>
 <body>
+    @{ var activeController = ViewContext.RouteData.Values["controller"]?.ToString(); var activeAction = ViewContext.RouteData.Values["action"]?.ToString(); }
     <div class="app-shell">
-        <header class="app-header">
-            <div class="brand">
-                <h1>OrbitNet</h1>
-                <p>Gestión de satélites, simulación y reportes</p>
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h1>@Localizer["AppTitle"]</h1>
             </div>
-            <nav class="top-nav">
-                <a asp-controller="Home" asp-action="Index" class="nav-item">Inicio</a>
-                <a asp-controller="Upload" asp-action="Index" class="nav-item">Carga XML</a>
-                <a asp-controller="Simulation" asp-action="Dashboard" class="nav-item">Simulación</a>
-                <a asp-controller="Matrix" asp-action="Index" class="nav-item">Matriz</a>
-                <a asp-controller="Satellites" asp-action="Index" class="nav-item">Satélites</a>
-                <a asp-controller="Reports" asp-action="Index" class="nav-item">Reportes</a>
-                <a asp-controller="Logs" asp-action="Index" class="nav-item">Logs</a>
+            <nav class="sidebar-nav">
+                <a asp-controller="Home" asp-action="Index" class="sidebar-link @(activeController == "Home" ? "active" : "")">@Localizer["Dashboard"]</a>
+                <a asp-controller="Upload" asp-action="Index" class="sidebar-link @(activeController == "Upload" ? "active" : "")">@Localizer["XMLUpload"]</a>
+                <a asp-controller="Simulation" asp-action="Dashboard" class="sidebar-link @(activeController == "Simulation" ? "active" : "")">@Localizer["Simulation"]</a>
+                <a asp-controller="Matrix" asp-action="Index" class="sidebar-link @(activeController == "Matrix" ? "active" : "")">@Localizer["Matrix"]</a>
+                <a asp-controller="Satellites" asp-action="Index" class="sidebar-link @(activeController == "Satellites" ? "active" : "")">@Localizer["Satellites"]</a>
+                <a asp-controller="Reports" asp-action="Index" class="sidebar-link @(activeController == "Reports" ? "active" : "")">@Localizer["Reports"]</a>
+                <a asp-controller="Logs" asp-action="Index" class="sidebar-link @(activeController == "Logs" ? "active" : "")">@Localizer["Logs"]</a>
+                <a asp-controller="Configuration" asp-action="Index" class="sidebar-link @(activeController == "Configuration" ? "active" : "")">@Localizer["Configuration"]</a>
             </nav>
-        </header>
+            <div class="sidebar-footer">
+                <a asp-controller="Home" asp-action="SetLanguage" asp-route-culture="es" asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)" class="lang-link" title="Español">ES</a>
+                <span class="sep">|</span>
+                <a asp-controller="Home" asp-action="SetLanguage" asp-route-culture="en" asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)" class="lang-link" title="English">EN</a>
+            </div>
+        </aside>
 
-        <main class="page-content">
-            @RenderBody()
-        </main>
+        <div class="content-area">
+            <header class="topbar">
+                <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+                <div class="topbar-title">@Localizer["AppTitle"]</div>
+            </header>
+
+            <main class="page-content">
+                @RenderBody()
+            </main>
+        </div>
     </div>
+
 </body>
 </html>

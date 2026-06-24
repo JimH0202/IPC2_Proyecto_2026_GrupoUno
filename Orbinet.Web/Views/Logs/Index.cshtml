@@ -2,27 +2,29 @@
 
 <div class="page-header">
     <div>
-        <h1>Registros del sistema</h1>
-        <p class="report-description">Consulta los eventos recientes y revisa el historial de operaciones en OrbitNet.</p>
+        <h1>@Localizer["SystemLogs"]</h1>
+        <p class="report-description">@Localizer["SystemLogsDescription"]</p>
     </div>
     <div class="page-actions">
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver al dashboard</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["BackToDashboard"]</a>
     </div>
 </div>
 
 <div class="log-summary">
-    <p>Total de registros: <strong>@Model.Count</strong></p>
+    <p>@Localizer["TotalLogs"] <strong>@Model.Count</strong></p>
 </div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Fecha</th>
-            <th>Nivel</th>
-            <th>Evento</th>
-            <th>Detalles</th>
-        </tr>
-    </thead>
+<div class="section-card">
+    <h3>@Localizer["LatestLogs"]</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>@Localizer["Date"]</th>
+                <th>@Localizer["Level"]</th>
+                <th>@Localizer["Event"]</th>
+                <th>@Localizer["DetailsLabel"]</th>
+            </tr>
+        </thead>
     <tbody>
     @foreach (var log in Model)
     {
@@ -35,3 +37,4 @@
     }
     </tbody>
 </table>
+</div>
