@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System; // Necesario para Environment.GetEnvironmentVariable
+using System;
 using OrbitNet.Web.Configuration;
 using OrbitNet.Web.Services;
-using OrbitNet.Web.Services.Communication;     // Para que encuentre RelayHttpService
-using OrbitNet.Web.Services.SimulationEngine;  // Para que encuentre TickProcessor
+using OrbitNet.Web.Services.Communication;
+using OrbitNet.Web.Services.SimulationEngine;
+using OrbitNet.Web.Models.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- CONFIGURACIÓN DINÁMICA DE PUERTOS Y HEMISFERIOS ---
 var portEnv = Environment.GetEnvironmentVariable("ASPNETCORE_PORT");
 var port = string.IsNullOrWhiteSpace(portEnv) ? "5000" : portEnv;
 
@@ -26,7 +26,7 @@ builder.WebHost.UseUrls($"http://localhost:{port}");
 // ------------------------------------------------------------------------
 
 // 1. Configuraciones compartidas (MVC + API)
-builder.Services.AddControllersWithViews(); 
+builder.Services.AddControllersWithViews(); // Soporta Vistas Razor y Endpoints de API
 builder.Services.AddHttpClient(); // Requisito para comunicación entre puertos
 
 // 2. Inyección de tus servicios y configuraciones del sistema
@@ -40,7 +40,10 @@ builder.Services.AddSingleton<TickProcessor>();
 
 var app = builder.Build();
 
+<<<<<<< HEAD:OrbitNet.Web/Program.cs
 // 3. Configuración del Pipeline HTTP (Rutas y Archivos Estáticos)
+=======
+>>>>>>> origin/motor-de-simulacion:Orbinet.Web/Program.cs
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -61,5 +64,8 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 app.Run();
+<<<<<<< HEAD:OrbitNet.Web/Program.cs
 
 public partial class Program { }
+=======
+>>>>>>> origin/motor-de-simulacion:Orbinet.Web/Program.cs
