@@ -11,24 +11,23 @@ public class SimulationController : Controller
         return View(model);
     }
 
+    [HttpGet]
     [HttpPost]
-    public IActionResult TickResult(int count = 1)
+    public IActionResult TickResult(int count = 1, bool isRunning = true)
     {
-        var model = MockDataService.GetSimulationViewModel(additionalTicks: count);
+        var model = MockDataService.GetSimulationViewModel(additionalTicks: count, isRunning: isRunning);
         return View(model);
     }
 
     [HttpPost]
     public IActionResult ExecuteTicks(int count)
     {
-        var model = MockDataService.GetSimulationViewModel(additionalTicks: count);
-        return View("TickResult", model);
+        return RedirectToAction("TickResult", new { count });
     }
 
     [HttpPost]
     public IActionResult StopSimulation()
     {
-        var model = MockDataService.GetSimulationViewModel(isRunning: false);
-        return View("TickResult", model);
+        return RedirectToAction("TickResult", new { isRunning = false });
     }
 }

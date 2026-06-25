@@ -41,12 +41,8 @@ public class HomeController : Controller
         // redirect to a safe GET endpoint instead (Simulation/Dashboard) to avoid 405 errors.
         if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
         {
-            var lower = returnUrl.ToLowerInvariant();
-            if (lower.Contains("/simulation/tickresult") || lower.Contains("/simulation/executeticks") || lower.Contains("/simulation/stopsimulation"))
-            {
-                return RedirectToAction("Dashboard", "Simulation");
-            }
-
+            // If returnUrl points to a POST-only action we previously redirected to Dashboard.
+            // Since TickResult now supports GET, permit returning to it directly.
             return Redirect(returnUrl);
         }
 
