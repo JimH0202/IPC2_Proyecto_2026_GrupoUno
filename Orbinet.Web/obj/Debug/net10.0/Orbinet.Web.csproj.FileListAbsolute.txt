@@ -43,8 +43,8 @@ C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\up6w1rfc8b-{0}-214v03jwiw-214v03jwiw.gz
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\hpf3bzbnwu-{0}-h3obilb6v3-h3obilb6v3.gz
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\6ukgub8m89-{0}-dwo3w56il5-dwo3w56il5.gz
-C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\kneccg3vyz-{0}-au61rttcjr-au61rttcjr.gz
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\1b50e30v50-{0}-ccbktr7vam-ccbktr7vam.gz
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\uyu7tk6phm-{0}-4istgtgejq-4istgtgejq.gz
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\b8chfr7bwm-{0}-zfyuw920s7-zfyuw920s7.gz
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\gt22icqshe-{0}-8ttyrvlfge-8ttyrvlfge.gz
+C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\kneccg3vyz-{0}-bur9rww5kj-bur9rww5kj.gz

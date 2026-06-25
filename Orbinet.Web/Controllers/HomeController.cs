@@ -37,9 +37,16 @@ public class HomeController : Controller
     public IActionResult SetLanguage(string culture, string returnUrl)
     {
         LocalizationService.SetLanguage(Response, culture);
-        
+        // If returnUrl points to a POST-only endpoint (TickResult/ExecuteTicks/StopSimulation)
+        // redirect to a safe GET endpoint instead (Simulation/Dashboard) to avoid 405 errors.
         if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
         {
+            var lower = returnUrl.ToLowerInvariant();
+            if (lower.Contains("/simulation/tickresult") || lower.Contains("/simulation/executeticks") || lower.Contains("/simulation/stopsimulation"))
+            {
+                return RedirectToAction("Dashboard", "Simulation");
+            }
+
             return Redirect(returnUrl);
         }
 

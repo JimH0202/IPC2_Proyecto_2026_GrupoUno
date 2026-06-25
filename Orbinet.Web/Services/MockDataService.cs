@@ -50,9 +50,9 @@ public static class MockDataService
     {
         return new List<SatelliteViewModel>
         {
-            new () { Id = "SAT-001", Name = "Tierra-1", OrbitId = "ORB-N1", Type = "Polar", X = 120, Y = 210, IsActive = true, MessagesSent = 42, MessagesReceived = 38 },
-            new () { Id = "SAT-002", Name = "Luna-2", OrbitId = "ORB-S3", Type = "Geoestacionaria", X = 310, Y = 140, IsActive = false, MessagesSent = 28, MessagesReceived = 30 },
-            new () { Id = "SAT-003", Name = "Solar-3", OrbitId = "ORB-N4", Type = "Heliostacionaria", X = 520, Y = 90, IsActive = true, MessagesSent = 55, MessagesReceived = 49 }
+            new () { Id = "SAT-001", Name = "Tierra-1", OrbitId = "ORB-N1", Type = "Polar", X = 120, Y = 210, IsActive = true, MessagesSent = 42, MessagesReceived = 38, Resends = 5, DiscardedMessages = 2, LastUpdate = DateTime.Now.AddMinutes(-5), RecentHistory = GetLogEntries() },
+            new () { Id = "SAT-002", Name = "Luna-2", OrbitId = "ORB-S3", Type = "Geoestacionaria", X = 310, Y = 140, IsActive = false, MessagesSent = 28, MessagesReceived = 30, Resends = 3, DiscardedMessages = 1, LastUpdate = DateTime.Now.AddMinutes(-20), RecentHistory = GetLogEntries() },
+            new () { Id = "SAT-003", Name = "Solar-3", OrbitId = "ORB-N4", Type = "Heliostacionaria", X = 520, Y = 90, IsActive = true, MessagesSent = 55, MessagesReceived = 49, Resends = 7, DiscardedMessages = 4, LastUpdate = DateTime.Now.AddMinutes(-2), RecentHistory = GetLogEntries() }
         };
     }
 
@@ -68,7 +68,11 @@ public static class MockDataService
             Y = 0,
             IsActive = false,
             MessagesSent = 0,
-            MessagesReceived = 0
+            MessagesReceived = 0,
+            Resends = 0,
+            DiscardedMessages = 0,
+            LastUpdate = DateTime.Now,
+            RecentHistory = GetLogEntries()
         };
     }
 

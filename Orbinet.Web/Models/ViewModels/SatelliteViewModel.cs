@@ -19,4 +19,12 @@ public class SatelliteViewModel
     public int MessagesSent { get; set; }
 
     public int MessagesReceived { get; set; }
+
+    public int Resends { get; set; }
+
+    public int DiscardedMessages { get; set; }
+
+    public DateTime LastUpdate { get; set; }
+
+    public List<LogViewModel> RecentHistory { get; set; } = new();
 }

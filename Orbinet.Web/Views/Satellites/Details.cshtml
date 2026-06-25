@@ -33,9 +33,60 @@
 
 <div class="sec">
     <h3>Estadísticas</h3>
-    <dl>
-        <div class="dfield"><dt>@Localizer["MessagesSent"]</dt><dd>@Model.MessagesSent</dd></div>
-        <div class="dfield"><dt>@Localizer["MessagesReceived"]</dt><dd>@Model.MessagesReceived</dd></div>
-        <div class="dfield"><dt>@Localizer["Position"]</dt><dd>(@Model.X, @Model.Y)</dd></div>
-    </dl>
+    <div class="detail-grid">
+        <div class="dcard">
+            <div class="dcard-label">@Localizer["MessagesSent"]</div>
+            <div class="dcard-val">@Model.MessagesSent</div>
+        </div>
+        <div class="dcard">
+            <div class="dcard-label">@Localizer["MessagesReceived"]</div>
+            <div class="dcard-val">@Model.MessagesReceived</div>
+        </div>
+        <div class="dcard">
+            <div class="dcard-label">@Localizer["Resends"]</div>
+            <div class="dcard-val">@Model.Resends</div>
+        </div>
+        <div class="dcard">
+            <div class="dcard-label">@Localizer["DiscardedMessages"]</div>
+            <div class="dcard-val">@Model.DiscardedMessages</div>
+        </div>
+        <div class="dcard">
+            <div class="dcard-label">@Localizer["Position"]</div>
+            <div class="dcard-val">(@Model.X, @Model.Y)</div>
+        </div>
+        <div class="dcard">
+            <div class="dcard-label">@Localizer["LastUpdate"]</div>
+            <div class="dcard-val">@Model.LastUpdate.ToString("dd/MM/yyyy HH:mm:ss")</div>
+        </div>
+    </div>
+</div>
+
+<div class="sec">
+    <h3>@Localizer["RecentHistory"]</h3>
+    @if (Model.RecentHistory != null && Model.RecentHistory.Any())
+    {
+        <table class="tbl">
+            <thead>
+                <tr>
+                    <th>@Localizer["Timestamp"]</th>
+                    <th>@Localizer["Event"]</th>
+                    <th>@Localizer["Details"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var log in Model.RecentHistory)
+                {
+                    <tr>
+                        <td>@log.Timestamp.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                        <td>@log.Event</td>
+                        <td>@log.Details</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="muted">@Localizer["NoRecentHistory"]</div>
+    }
 </div>
