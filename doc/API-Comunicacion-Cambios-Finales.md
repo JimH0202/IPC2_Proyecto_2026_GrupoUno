@@ -42,14 +42,14 @@ Incluye archivo, líneas, qué hace cada bloque y cómo se conecta todo.
 
 ---
 
-## Archivo 1: `Orbinet.Web/Models/Entities/OrbitNetStore.cs`
+## Archivo 1: `OrbitNet.Web/Models/Entities/OrbitNetStore.cs`
 
 Este archivo es la **memoria RAM** del sistema. Antes solo guardaba contadores; ahora también guarda la cola de paquetes.
 
 ### Líneas 1-5 — Imports y clase
 
 ```csharp
-using Orbinet.Web.Models.Entities;
+using OrbitNet.Web.Models.Entities;
 
 public class OrbitNetStore
 {
@@ -128,7 +128,7 @@ Ejemplos:
 
 ---
 
-## Archivo 2: `Orbinet.Web/Services/SimulationEngine/TickProcessor.cs`
+## Archivo 2: `OrbitNet.Web/Services/SimulationEngine/TickProcessor.cs`
 
 Contiene la lógica de **decidir si un paquete debe salir al otro hemisferio**.
 
@@ -188,7 +188,7 @@ Contiene la lógica de **decidir si un paquete debe salir al otro hemisferio**.
 
 ---
 
-## Archivo 3: `Orbinet.Web/Services/Communication/RelayHttpService.cs`
+## Archivo 3: `OrbitNet.Web/Services/Communication/RelayHttpService.cs`
 
 Servicio que **envía HTTP** al otro puerto. No se modificó en este cambio, pero es parte del flujo cross-port.
 
@@ -219,7 +219,7 @@ Servicio que **envía HTTP** al otro puerto. No se modificó en este cambio, per
 
 ---
 
-## Archivo 4: `Orbinet.Web/Controllers/SpaceController.cs` (cambio principal)
+## Archivo 4: `OrbitNet.Web/Controllers/SpaceController.cs` (cambio principal)
 
 El controlador conecta todo: auth, validación de config, cross-port y cola.
 
@@ -354,13 +354,13 @@ Cambió de `IActionResult` a `async Task<IActionResult>` porque hay que `await` 
 
 ### Terminal 1 — Norte (5000)
 ```powershell
-cd Orbinet.Web
+cd OrbitNet.Web
 dotnet run --launch-profile OrbitNet-North
 ```
 
 ### Terminal 2 — Sur (5001)
 ```powershell
-cd Orbinet.Web
+cd OrbitNet.Web
 dotnet run --launch-profile OrbitNet-South
 ```
 
@@ -368,13 +368,13 @@ dotnet run --launch-profile OrbitNet-South
 
 **1. Cargar config en Norte:**
 ```powershell
-$xml = Get-Content "Orbinet.Web/ArchivosPrueba/Cargaexitosa1_CNorte_5000.xml" -Raw
+$xml = Get-Content "OrbitNet.Web/ArchivosPrueba/Cargaexitosa1_CNorte_5000.xml" -Raw
 Invoke-RestMethod -Uri "http://localhost:5000/api/v1/space/config" -Method POST -ContentType "application/json" -Body (@{ xml_data = $xml } | ConvertTo-Json)
 ```
 
 **2. Cargar config en Sur:**
 ```powershell
-$xml = Get-Content "Orbinet.Web/ArchivosPrueba/Cargaexitosa2_CSur_5001.xml" -Raw
+$xml = Get-Content "OrbitNet.Web/ArchivosPrueba/Cargaexitosa2_CSur_5001.xml" -Raw
 Invoke-RestMethod -Uri "http://localhost:5001/api/v1/space/config" -Method POST -ContentType "application/json" -Body (@{ xml_data = $xml } | ConvertTo-Json)
 ```
 
@@ -454,7 +454,7 @@ Valor simple para calcular porcentajes legibles. Cuando el equipo de TDAs conect
 ## Archivos modificados en este cambio
 
 ```
-Orbinet.Web/
+OrbitNet.Web/
 ├── Models/Entities/OrbitNetStore.cs      ← cola + cálculo %
 ├── Controllers/SpaceController.cs      ← relay cross-port + validación config
 └── Services/SimulationEngine/TickProcessor.cs  ← RequiereRelayCrossPort()

@@ -1,0 +1,30 @@
+@model OrbitNet.Web.Models.ViewModels.ReportViewModel
+
+<div class="page-header">
+    <div>
+        <h1>@Model.Title</h1>
+        <p class="report-description">@Model.Description</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Reports" asp-action="Index" class="btn btn-secondary">@Localizer["BackToReports"]</a>
+        <a asp-controller="Reports" asp-action="ExportSvg" asp-route-report="Routing" class="btn btn-primary">@Localizer["ExportSvg"]</a>
+    </div>
+</div>
+
+<div class="report-summary">
+    <p class="report-description">@Model.Description</p>
+    <p class="report-date">@Localizer["Generated"] @Model.GeneratedAt.ToString("g")</p>
+</div>
+
+<div class="svg-container">
+    <div class="svg-wrapper">
+        @if (!string.IsNullOrWhiteSpace(Model.SvgContent))
+        {
+            @Html.Raw(Model.SvgContent)
+        }
+        else
+        {
+            <div class="result-box">@Localizer["NoSvgContent"]</div>
+        }
+    </div>
+</div>

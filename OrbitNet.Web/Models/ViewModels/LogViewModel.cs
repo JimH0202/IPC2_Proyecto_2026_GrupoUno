@@ -1,0 +1,14 @@
+using System;
+
+namespace OrbitNet.Web.Models.ViewModels;
+
+public class LogViewModel
+{
+    public DateTime Timestamp { get; set; }
+
+    public string Level { get; set; } = string.Empty;
+
+    public string Event { get; set; } = string.Empty;
+
+    public string Details { get; set; } = string.Empty;
+}

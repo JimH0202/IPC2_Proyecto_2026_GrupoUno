@@ -7,7 +7,7 @@ public class XmlIngestTests
         string ruta = Path.Combine(
             AppContext.BaseDirectory,
             "..", "..", "..", "..",
-            "Orbinet.Web", "ArchivosPrueba", nombreArchivo);
+            "OrbitNet.Web", "ArchivosPrueba", nombreArchivo);
         return File.ReadAllText(Path.GetFullPath(ruta));
     }
 

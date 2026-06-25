@@ -1,5 +1,5 @@
 namespace OrbitNet.Tests.LogTests;
-using Orbinet.Web.DataStructures.Logs;
+using OrbitNet.Web.DataStructures.Logs;
 using Xunit;
 
 public class LogAuditoriaTests

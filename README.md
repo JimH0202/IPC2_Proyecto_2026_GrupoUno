@@ -53,7 +53,7 @@ Estos archivos ya estaban en la rama antes de la infraestructura de la API:
 | `appsettings.South.json` | Hemisferio Sur: puerto 5001, hermano 5000 |
 | `Configuration/AppInstanceSettings.cs` | Clase POCO: `Hemisphere`, `Port`, `SiblingPort` |
 | `Utils/Constants.cs` | Usuario, contraseña y puertos fijos del protocolo |
-| `Orbinet.Web.csproj` | Proyecto ASP.NET Core 8.0 (necesario para compilar y correr la API) |
+| `OrbitNet.Web.csproj` | Proyecto ASP.NET Core 8.0 (necesario para compilar y correr la API) |
 
 **Cómo levantar las dos instancias:**
 
@@ -157,7 +157,7 @@ El `RelayHttpService` apunta a `http://localhost:{SiblingPort}/api/v1/space/rela
 ## Estructura de carpetas relevante para API
 
 ```
-Orbinet.Web/
+OrbitNet.Web/
 ├── Controllers/
 │   └── SpaceController.cs          ← Endpoints REST
 ├── Configuration/
@@ -189,7 +189,7 @@ Orbinet.Web/
 ├── appsettings.json
 ├── appsettings.North.json
 ├── appsettings.South.json
-└── Orbinet.Web.csproj
+└── OrbitNet.Web.csproj
 ```
 
 ---

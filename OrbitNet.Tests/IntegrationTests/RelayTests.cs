@@ -129,17 +129,17 @@ public class RelayTests : IClassFixture<WebApplicationFactory<Program>>
 
         var httpClientFactory = new FakeHttpClientFactory(handler);
         var basicAuth = new BasicAuthService();
-        var settings = Microsoft.Extensions.Options.Options.Create(new Orbinet.Web.Configuration.AppInstanceSettings
+        var settings = Microsoft.Extensions.Options.Options.Create(new OrbitNet.Web.Configuration.AppInstanceSettings
         {
             Hemisphere = "North",
             Port = 5000,
             SiblingPort = 5001
         });
 
-        var relayService = new Orbinet.Web.Services.Communication.RelayHttpService(
+        var relayService = new OrbitNet.Web.Services.Communication.RelayHttpService(
             httpClientFactory, basicAuth, settings);
 
-        var paquete = new Orbinet.Web.Models.Entities.MessagePacket
+        var paquete = new OrbitNet.Web.Models.Entities.MessagePacket
         {
             CodHex = "A19F",
             SenderId = "SAT-ECU-0012",
@@ -180,7 +180,7 @@ public class RelayTests : IClassFixture<WebApplicationFactory<Program>>
         return Path.GetFullPath(Path.Combine(
             AppContext.BaseDirectory,
             "..", "..", "..", "..",
-            "Orbinet.Web", "ArchivosPrueba", nombreArchivo));
+            "OrbitNet.Web", "ArchivosPrueba", nombreArchivo));
     }
 
     private sealed class CapturingHandler : HttpMessageHandler
