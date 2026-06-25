@@ -6,28 +6,48 @@
         <p class="report-description">@Localizer["SparseMatrixDescription"]</p>
     </div>
     <div class="page-actions">
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["BackToDashboard"]</a>
+        <a asp-controller="Reports" asp-action="ExportSvg" asp-route-report="Matrix" class="btn btn-primary">@Localizer["ExportSvg"]</a>
     </div>
 </div>
 
-<div class="matrix-stats">
-    <div class="stat-card">
-        <strong>@Localizer["Rows"]</strong>
-        <p class="stat-value">@Model.Rows</p>
+<div class="matrix-toolbar">
+    <div class="matrix-stats">
+        <div class="stat-card">
+            <strong>@Localizer["Rows"]</strong>
+            <p class="stat-value">@Model.Rows</p>
+        </div>
+        <div class="stat-card">
+            <strong>@Localizer["Columns"]</strong>
+            <p class="stat-value">@Model.Columns</p>
+        </div>
+        <div class="stat-card">
+            <strong>@Localizer["OccupiedNodes"]</strong>
+            <p class="stat-value">@Model.OccupiedNodes</p>
+        </div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["Columns"]</strong>
-        <p class="stat-value">@Model.Columns</p>
-    </div>
-    <div class="stat-card">
-        <strong>@Localizer["OccupiedNodes"]</strong>
-        <p class="stat-value">@Model.OccupiedNodes</p>
+    <div class="matrix-actions">
+        <select class="form-select" aria-label="@Localizer["HemisphereSelector"]">
+            <option selected>@Localizer["NorthernHemisphere"]</option>
+            <option>@Localizer["SouthernHemisphere"]</option>
+        </select>
     </div>
 </div>
 
-<div class="section-card">
-    <h3>@Localizer["MatrixVisualization"]</h3>
-    <div class="svg-container">
-        @Html.Raw(Model.SvgContent)
+<div class="matrix-view-card">
+    <div class="matrix-layout">
+        <div class="matrix-canvas">
+            @Html.Raw(Model.SvgContent)
+        </div>
+        <div class="matrix-legend">
+            <h4>@Localizer["Legend"]</h4>
+            <div class="legend-item">
+                <span class="legend-dot active"></span>
+                @Localizer["ActiveSatellite"]
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot empty"></span>
+                @Localizer["EmptySpace"]
+            </div>
+        </div>
     </div>
 </div>

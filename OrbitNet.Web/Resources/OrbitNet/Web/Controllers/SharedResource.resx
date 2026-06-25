@@ -230,6 +230,12 @@
   <data name="ReportCardRoutingDescription">
     <value>Communication route diagram between satellites and antennas in the constellation.</value>
   </data>
+  <data name="ReportCardMatrix">
+    <value>Sparse Matrix</value>
+  </data>
+  <data name="ReportCardMatrixDescription">
+    <value>Visualize sparse matrix occupancy and the spatial distribution of stored elements.</value>
+  </data>
   <data name="ViewReport">
     <value>View Report</value>
   </data>
@@ -238,6 +244,24 @@
   </data>
   <data name="NoSvgContent">
     <value>No SVG content available.</value>
+  </data>
+  <data name="HemisphereSelector">
+    <value>Hemisphere</value>
+  </data>
+  <data name="NorthernHemisphere">
+    <value>Northern Hemisphere</value>
+  </data>
+  <data name="SouthernHemisphere">
+    <value>Southern Hemisphere</value>
+  </data>
+  <data name="Legend">
+    <value>Legend</value>
+  </data>
+  <data name="ActiveSatellite">
+    <value>Active Satellite</value>
+  </data>
+  <data name="EmptySpace">
+    <value>Empty Space</value>
   </data>
   <data name="SystemLogs">
     <value>System Logs</value>
