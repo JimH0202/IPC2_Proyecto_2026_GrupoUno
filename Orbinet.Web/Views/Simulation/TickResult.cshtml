@@ -11,45 +11,91 @@
     </div>
 </div>
 
-<div class="section-card">
-    <div class="tick-result-box">
-        <div class="result-item">
-            <strong>@Localizer["TickResultCurrentTick"]</strong> @Model.CurrentTick
+<div class="sec">
+    <div class="metrics" role="region" aria-label="Simulation metrics">
+        <div class="mcard">
+            <div class="mtitle">@Localizer["TickResultCurrentTick"]</div>
+            <div class="mval blue">@Model.CurrentTick</div>
+            <div class="msub">@Localizer["TickResultSimulation"]: @(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])</div>
         </div>
-        <div class="result-item">
-            <strong>@Localizer["TickResultProcessedMessages"]</strong> <span class="highlight">@Model.ProcessedMessages</span>
+
+        <div class="mcard">
+            <div class="mtitle">@Localizer["TickResultProcessedMessages"]</div>
+            <div class="mval green">@Model.ProcessedMessages</div>
+            <div class="msub">@Localizer["Messages processed in recent ticks"]</div>
         </div>
-        <div class="result-item">
-            <strong>@Localizer["TickResultActiveSatellites"]</strong> @Model.ActiveSatellites
+
+        <div class="mcard">
+            <div class="mtitle">@Localizer["TickResultActiveSatellites"]</div>
+            <div class="mval orange">@Model.ActiveSatellites</div>
+            <div class="msub">@Localizer["Satellites currently active"]</div>
         </div>
-        <div class="result-item">
-            <strong>@Localizer["TickResultPendingMessages"]</strong> @Model.PendingMessages
-        </div>
-        <div class="result-item">
-            <strong>@Localizer["TickResultSimulation"]</strong> @(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])
+
+        <div class="mcard">
+            <div class="mtitle">@Localizer["TickResultPendingMessages"]</div>
+            <div class="mval red">@Model.PendingMessages</div>
+            <div class="msub">@Localizer["Messages waiting in queue"]</div>
         </div>
     </div>
 
-    <h3 style="margin-top: 28px;">@Localizer["TickResultSatellitesStatusTitle"]</h3>
-    <table>
-    <thead>
-        <tr>
-            <th>@Localizer["Id"]</th>
-            <th>@Localizer["Name"]</th>
-            <th>@Localizer["Orbit"]</th>
-            <th>@Localizer["Status"]</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var sat in Model.Satellites)
-    {
-        <tr>
-            <td>@sat.Id</td>
-            <td>@sat.Name</td>
-            <td>@sat.OrbitId</td>
-            <td>@(sat.IsActive ? Localizer["ActiveStatus"] : Localizer["InactiveStatus"])</td>
-        </tr>
-    }
-    </tbody>
-</table>
+    <div class="stats2">
+        <div class="scard">
+            <div class="slabel">@Localizer["Controls"]</div>
+            <div>
+                <form asp-controller="Simulation" asp-action="TickResult" method="post" style="display:inline">
+                    <button type="submit" class="btn btn-secondary">@Localizer["ExecuteTick"]</button>
+                </form>
+                <form asp-controller="Simulation" asp-action="ExecuteTicks" method="post" style="display:inline; margin-left:8px">
+                    <input type="hidden" name="count" value="10" />
+                    <button type="submit" class="btn btn-secondary">@Localizer["Execute10Ticks"]</button>
+                </form>
+                <form asp-controller="Simulation" asp-action="ExecuteTicks" method="post" style="display:inline; margin-left:8px">
+                    <input type="hidden" name="count" value="100" />
+                    <button type="submit" class="btn btn-secondary">@Localizer["Execute100Ticks"]</button>
+                </form>
+            </div>
+        </div>
 
+        <div class="scard">
+            <div class="slabel">@Localizer["Simulation Status"]</div>
+            <div class="sval primary">@(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])</div>
+            <div class="msub">@Localizer["TickResultCurrentTick"]: @Model.CurrentTick</div>
+        </div>
+
+        <div class="scard">
+            <div class="slabel">@Localizer["Processed"]</div>
+            <div class="sval">@Model.ProcessedMessages</div>
+            <div class="msub">@Localizer["Total messages processed"]</div>
+        </div>
+    </div>
+
+    <h3>@Localizer["TickResultSatellitesStatusTitle"]</h3>
+    <div class="detail-grid">
+        @foreach (var sat in Model.Satellites)
+        {
+            <div class="dcard">
+                <div class="dcard-label">@Localizer["Name"]</div>
+                <div class="dcard-val">@sat.Name (@sat.Id)</div>
+                <dl class="dfield">
+                    <dt>@Localizer["Orbit"]</dt>
+                    <dd>@sat.OrbitId</dd>
+                </dl>
+                <dl class="dfield">
+                    <dt>@Localizer["Status"]</dt>
+                    <dd>
+                        @if (sat.IsActive)
+                        {
+                            <span class="badge badge-success" style="color:var(--success); font-weight:700;">@Localizer["ActiveStatus"]</span>
+                        }
+                        else
+                        {
+                            <span class="badge" style="color:var(--muted);">@Localizer["InactiveStatus"]</span>
+                        }
+                    </dd>
+                </dl>
+            </div>
+        }
+    </div>
+</div>
+
+ 
