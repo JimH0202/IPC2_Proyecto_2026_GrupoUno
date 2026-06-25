@@ -1,44 +1,63 @@
 @model List<OrbitNet.Web.Models.ViewModels.SatelliteViewModel>
 
-<div class="page-header">
+<div class="page-header-row">
     <div>
         <h1>@Localizer["SatelliteList"]</h1>
-        <p class="report-description">@Localizer["SatelliteListDescription"]</p>
+        <p>@Localizer["SatelliteListDescription"]</p>
     </div>
-    <div class="page-actions">
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["BackToDashboard"]</a>
+    <button class="btn btn-primary btn-sm" onclick="location.reload();">🔄 Actualizar</button>
+</div>
+
+<div class="tbl-wrap">
+    <div class="tbl-toolbar">
+        <input class="search-in" id="searchInput" placeholder="🔍 Buscar satélite..." />
+    </div>
+    <table class="tbl" id="satelliteTable">
+        <thead>
+            <tr>
+                <th>@Localizer["Id"]</th>
+                <th>@Localizer["Name"]</th>
+                <th>@Localizer["Orbit"]</th>
+                <th>@Localizer["Type"]</th>
+                <th>@Localizer["Status"]</th>
+                <th>@Localizer["MessagesSent"]</th>
+                <th>@Localizer["MessagesReceived"]</th>
+                <th>@Localizer["Actions"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sat in Model)
+            {
+                <tr>
+                    <td>@sat.Id</td>
+                    <td>@sat.Name</td>
+                    <td>@sat.OrbitId</td>
+                    <td>@sat.Type</td>
+                    <td>
+                        <span class="badge @(sat.IsActive ? "badge-active" : "badge-inactive")">
+                            @(sat.IsActive ? Localizer["ActiveStatus"] : Localizer["InactiveStatus"])
+                        </span>
+                    </td>
+                    <td>@sat.MessagesSent</td>
+                    <td>@sat.MessagesReceived</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@sat.Id" class="btn btn-primary btn-sm">@Localizer["ViewDetails"]</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="pag-wrap">
+        <span>Mostrando 1 a @Model.Count de @Model.Count satélites</span>
+        <div class="pag"><span class="cur">1</span></div>
     </div>
 </div>
 
-<div class="section-card">
-    <h3>@Localizer["InventoryOfSatellites"]</h3>
-    <table>
-    <thead>
-        <tr>
-            <th>@Localizer["Id"]</th>
-            <th>@Localizer["Name"]</th>
-            <th>@Localizer["Orbit"]</th>
-            <th>@Localizer["Type"]</th>
-            <th>@Localizer["Active"]</th>
-            <th>@Localizer["MessagesSent"]</th>
-            <th>@Localizer["MessagesReceived"]</th>
-            <th>@Localizer["Actions"]</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var sat in Model)
-    {
-        <tr>
-            <td>@sat.Id</td>
-            <td>@sat.Name</td>
-            <td>@sat.OrbitId</td>
-            <td>@sat.Type</td>
-            <td>@(sat.IsActive ? Localizer["Yes"] : Localizer["No"])</td>
-            <td>@sat.MessagesSent</td>
-            <td>@sat.MessagesReceived</td>
-            <td><a asp-action="Details" asp-route-id="@sat.Id" class="btn btn-primary">@Localizer["ViewDetails"]</a></td>
-        </tr>
-    }
-    </tbody>
-</table>
-</div>
+<script>
+document.getElementById('searchInput').addEventListener('keyup', function () {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('#satelliteTable tbody tr').forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+});
+</script>

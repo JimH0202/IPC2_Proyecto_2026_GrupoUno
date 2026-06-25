@@ -1,23 +1,34 @@
 @model OrbitNet.Web.Models.ViewModels.UploadViewModel
 
 <div class="page-header">
-    <div>
-        <h1>@Localizer["UploadPageTitle"]</h1>
-        <p class="report-description">@Localizer["UploadPageDescription"]</p>
-    </div>
-    <div class="page-actions">
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["BackToDashboard"]</a>
-    </div>
+    <h1>@Localizer["UploadPageTitle"]</h1>
+    <p>@Localizer["UploadPageDescription"]</p>
 </div>
 
-<div class="section-card">
-    <h3>@Localizer["UploadSectionTitle"]</h3>
-    <form asp-action="Result" asp-controller="Upload" method="post" enctype="multipart/form-data" class="upload-form">
-        <div class="form-group">
-            <label for="xmlFile">@Localizer["UploadFormLabel"]</label>
-            <input type="file" id="xmlFile" name="xmlFile" accept=".xml" required />
+<div class="sec">
+    <h3>Subir archivo</h3>
+    <form asp-action="Result" asp-controller="Upload" method="post" enctype="multipart/form-data">
+        <div class="upload-box" id="uploadBox">
+            <div class="upload-icon">☁️</div>
+            <p><strong>Arrastre y suelte el archivo XML aquí</strong></p>
+            <p>o haga clic para seleccionar</p>
+            <input type="file" id="xmlFile" name="xmlFile" accept=".xml" required style="display:none;" />
+            <button type="button" class="btn btn-primary" style="margin-top:8px"
+                    onclick="document.getElementById('xmlFile').click();">
+                Seleccionar Archivo
+            </button>
+            <p style="margin-top:8px;font-size:10.5px;color:#94a3b8">Solo archivos .xml son permitidos</p>
         </div>
-        <button type="submit" class="btn btn-primary">@Localizer["UploadButton"]</button>
+        <div style="display:none;" id="filePreview">
+            <p style="margin-top:10px"><strong>Archivo seleccionado:</strong> <span id="fileName"></span></p>
+            <div class="actions" style="margin-top:8px">
+                <button type="submit" class="btn btn-primary">Confirmar carga</button>
+                <button type="button" class="btn btn-secondary"
+                        onclick="document.getElementById('xmlFile').value='';document.getElementById('filePreview').style.display='none';document.getElementById('uploadBox').style.display='block';">
+                    Cambiar archivo
+                </button>
+            </div>
+        </div>
     </form>
 </div>
 
@@ -26,3 +37,40 @@
     <p>@Localizer["UploadInstructions"]</p>
     <p>@Localizer["UploadInstructionsDetail"]</p>
 </div>
+
+@if (Model?.Success == true && !string.IsNullOrEmpty(Model.FileName))
+{
+    <div class="last-up">
+        <h4>✅ Última carga</h4>
+        <div class="lu-item">
+            <div>
+                <div class="lu-name">@Model.FileName</div>
+                <div class="lu-meta">Satélites: @Model.SatellitesLoaded · Antenas: @Model.AntennasLoaded · Órbitas: @Model.PolarOrbitsLoaded</div>
+            </div>
+            <button class="btn btn-secondary btn-sm">Ver Detalle</button>
+        </div>
+    </div>
+}
+
+<script>
+const uploadBox = document.getElementById('uploadBox');
+const xmlFile = document.getElementById('xmlFile');
+const filePreview = document.getElementById('filePreview');
+const fileName = document.getElementById('fileName');
+uploadBox.addEventListener('dragover', e => { e.preventDefault(); uploadBox.classList.add('dragover'); });
+uploadBox.addEventListener('dragleave', () => uploadBox.classList.remove('dragover'));
+uploadBox.addEventListener('drop', e => {
+    e.preventDefault(); uploadBox.classList.remove('dragover');
+    if (e.dataTransfer.files.length > 0) {
+        xmlFile.files = e.dataTransfer.files;
+        fileName.textContent = e.dataTransfer.files[0].name;
+        uploadBox.style.display = 'none'; filePreview.style.display = 'block';
+    }
+});
+xmlFile.addEventListener('change', () => {
+    if (xmlFile.files.length > 0) {
+        fileName.textContent = xmlFile.files[0].name;
+        uploadBox.style.display = 'none'; filePreview.style.display = 'block';
+    }
+});
+</script>

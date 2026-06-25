@@ -1,99 +1,239 @@
-.metric-card{
-    background:white;
-    border-radius:14px;
-    box-shadow:var(--shadow);
-    padding:20px;
+/* ===========================
+   CARDS
+=========================== */
+
+/* ── Metric cards (4-col top row) ── */
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
 }
 
-.metric-title{
-    font-size:13px;
-    color:var(--muted);
+.mcard {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
 }
 
-.metric-value{
-    font-size:34px;
-    font-weight:700;
-    margin-top:8px;
+.mtitle {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 4px;
 }
 
-.metric-subtitle{
-    font-size:12px;
-    color:var(--muted);
-    margin-top:8px;
+.mval {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 3px;
 }
 
-.card{
-    border:none;
-    border-radius:16px;
-    box-shadow:var(--shadow);
+.mval.blue   { color: var(--metric-blue); }
+.mval.green  { color: var(--metric-green); }
+.mval.orange { color: var(--metric-orange); }
+.mval.red    { color: var(--metric-red); }
+
+.msub {
+    font-size: 10px;
+    color: #94a3b8;
 }
 
-.card-header{
-    background:white;
-    border:none;
-    border-bottom:1px solid var(--border);
-    padding:20px;
+/* ── Stat cards (3-col secondary row) ── */
+.stats2 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
 }
 
-.card-body{
-    padding:20px;
+.scard {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
 }
 
-.reports-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:24px;
+.slabel {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 6px;
 }
 
-.report-card{
-    background:white;
-    border-radius:18px;
-    box-shadow:var(--shadow);
-    padding:28px;
-    display:flex;
-    flex-direction:column;
-    gap:16px;
+.sval {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
 }
 
-.report-card h3{
-    margin:0;
-    font-size:1.25rem;
+.sval.primary { color: var(--primary); }
+
+/* ── Section card ── */
+.sec {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 16px 18px;
+    margin-top: 10px;
 }
 
-.report-card p{
-    margin:0;
-    color:var(--muted);
-    line-height:1.6;
+.sec h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
 }
 
-.action-card{
-    display:inline-block;
-    margin-top:auto;
-    color:var(--primary);
-    font-weight:700;
-    text-decoration:none;
+/* ── Report cards on index ── */
+.reports-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 12px;
 }
 
-.action-card:hover{
-    text-decoration:underline;
+.rep-card {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: box-shadow .2s;
 }
 
-.stat-card{
-    background:white;
-    border-radius:18px;
-    border:1px solid var(--border);
-    box-shadow:var(--shadow);
-    padding:22px;
+.rep-card:hover { box-shadow: var(--shadow-lg); }
+
+.rep-card h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
 }
 
-.stat-card strong{
-    display:block;
-    margin-bottom:10px;
-    color:var(--muted);
+.rep-card p {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    line-height: 1.4;
 }
 
-.stat-card .stat-value{
-    font-size:1.75rem;
-    font-weight:700;
-    color:var(--text);
+.rep-link {
+    color: var(--primary);
+    font-size: 11.5px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* ── Satellite detail cards ── */
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.dcard {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
+}
+
+.dcard-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 4px;
+}
+
+.dcard-val {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* ── Detail field list ── */
+.dfield {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 0.5px solid #f1f5f9;
+    font-size: 12px;
+}
+
+.dfield:last-child { border-bottom: none; }
+.dfield dt { color: var(--muted); }
+.dfield dd { font-weight: 600; color: var(--text); }
+
+/* ── Report wrap ── */
+.report-wrap {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 16px 18px;
+    margin-top: 10px;
+}
+
+.report-svg-area {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    min-height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+}
+
+/* ── Buffer stats ── */
+.buf-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.bstat {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+}
+
+.bstat-t {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    color: var(--muted);
+}
+
+.bstat-v {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary);
+    margin-top: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .stats2  { grid-template-columns: 1fr; }
+    .reports-grid { grid-template-columns: 1fr; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .buf-stats { grid-template-columns: repeat(2, 1fr); }
 }

@@ -1,53 +1,43 @@
 @model OrbitNet.Web.Models.ViewModels.MatrixViewModel
 
 <div class="page-header">
-    <div>
-        <h1>@Localizer["SparseMatrix"]</h1>
-        <p class="report-description">@Localizer["SparseMatrixDescription"]</p>
-    </div>
-    <div class="page-actions">
-        <a asp-controller="Reports" asp-action="ExportSvg" asp-route-report="Matrix" class="btn btn-primary">@Localizer["ExportSvg"]</a>
-    </div>
+    <h1>@Localizer["SparseMatrix"]</h1>
+    <p>@Localizer["SparseMatrixDescription"]</p>
 </div>
 
-<div class="matrix-toolbar">
-    <div class="matrix-stats">
-        <div class="stat-card">
-            <strong>@Localizer["Rows"]</strong>
-            <p class="stat-value">@Model.Rows</p>
+<div class="matrix-toolbar-row">
+    <div class="stats2" style="flex:1;margin-bottom:0">
+        <div class="scard">
+            <div class="slabel">@Localizer["Rows"]</div>
+            <div class="sval">@Model.Rows</div>
         </div>
-        <div class="stat-card">
-            <strong>@Localizer["Columns"]</strong>
-            <p class="stat-value">@Model.Columns</p>
+        <div class="scard">
+            <div class="slabel">@Localizer["Columns"]</div>
+            <div class="sval">@Model.Columns</div>
         </div>
-        <div class="stat-card">
-            <strong>@Localizer["OccupiedNodes"]</strong>
-            <p class="stat-value">@Model.OccupiedNodes</p>
+        <div class="scard">
+            <div class="slabel">@Localizer["OccupiedNodes"]</div>
+            <div class="sval primary">@Model.OccupiedNodes</div>
         </div>
     </div>
-    <div class="matrix-actions">
-        <select class="form-select" aria-label="@Localizer["HemisphereSelector"]">
-            <option selected>@Localizer["NorthernHemisphere"]</option>
+    <div>
+        <select class="msel">
+            <option>@Localizer["NorthernHemisphere"]</option>
             <option>@Localizer["SouthernHemisphere"]</option>
         </select>
+        <a asp-controller="Reports" asp-action="ExportSvg" asp-route-report="Matrix"
+           class="btn btn-primary btn-sm" style="margin-left:6px">@Localizer["ExportSvg"]</a>
     </div>
 </div>
 
-<div class="matrix-view-card">
-    <div class="matrix-layout">
-        <div class="matrix-canvas">
-            @Html.Raw(Model.SvgContent)
-        </div>
-        <div class="matrix-legend">
-            <h4>@Localizer["Legend"]</h4>
-            <div class="legend-item">
-                <span class="legend-dot active"></span>
-                @Localizer["ActiveSatellite"]
-            </div>
-            <div class="legend-item">
-                <span class="legend-dot empty"></span>
-                @Localizer["EmptySpace"]
-            </div>
-        </div>
+<div class="matrix-layout">
+    <div class="mat-canvas">
+        @Html.Raw(Model.SvgContent)
+    </div>
+    <div class="mat-legend">
+        <h4>@Localizer["Legend"]</h4>
+        <div class="legend-item"><span class="ld active"></span>@Localizer["ActiveSatellite"]</div>
+        <div class="legend-item"><span class="ld inactive"></span>Satélite Inactivo</div>
+        <div class="legend-item"><span class="ld empty"></span>@Localizer["EmptySpace"]</div>
     </div>
 </div>

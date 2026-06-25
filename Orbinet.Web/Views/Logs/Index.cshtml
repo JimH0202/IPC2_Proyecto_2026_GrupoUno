@@ -1,22 +1,18 @@
 @model List<OrbitNet.Web.Models.ViewModels.LogViewModel>
 
-<div class="page-header">
+<div class="page-header-row">
     <div>
         <h1>@Localizer["SystemLogs"]</h1>
-        <p class="report-description">@Localizer["SystemLogsDescription"]</p>
+        <p>@Localizer["SystemLogsDescription"]</p>
     </div>
-    <div class="page-actions">
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["BackToDashboard"]</a>
-    </div>
+    <button class="btn btn-primary btn-sm" onclick="location.reload();">🔄 Actualizar</button>
 </div>
 
-<div class="log-summary">
-    <p>@Localizer["TotalLogs"] <strong>@Model.Count</strong></p>
-</div>
-
-<div class="section-card">
-    <h3>@Localizer["LatestLogs"]</h3>
-    <table>
+<div class="tbl-wrap">
+    <div class="tbl-toolbar">
+        <input class="search-in" id="searchInput" placeholder="🔍 Buscar en registros..." />
+    </div>
+    <table class="tbl" id="logsTable">
         <thead>
             <tr>
                 <th>@Localizer["Date"]</th>
@@ -25,16 +21,31 @@
                 <th>@Localizer["DetailsLabel"]</th>
             </tr>
         </thead>
-    <tbody>
-    @foreach (var log in Model)
-    {
-        <tr>
-            <td>@log.Timestamp.ToString("g")</td>
-            <td><span class="log-level log-@log.Level.ToLower()">@log.Level</span></td>
-            <td>@log.Event</td>
-            <td>@log.Details</td>
-        </tr>
-    }
-    </tbody>
-</table>
+        <tbody>
+            @foreach (var log in Model)
+            {
+                <tr>
+                    <td>@log.Timestamp.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                    <td>
+                        <span class="badge log-level-@log.Level.ToLower()">@log.Level</span>
+                    </td>
+                    <td>@log.Event</td>
+                    <td>@log.Details</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="pag-wrap">
+        <span>Mostrando 1 a @Model.Count de @Model.Count registros</span>
+        <div class="pag"><span class="cur">1</span></div>
+    </div>
 </div>
+
+<script>
+document.getElementById('searchInput').addEventListener('keyup', function () {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('#logsTable tbody tr').forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+});
+</script>

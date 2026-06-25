@@ -1,87 +1,68 @@
 @model OrbitNet.Web.Models.ViewModels.DashboardViewModel
 
 <div class="page-header">
-    <div>
-        <h1>@Localizer["Dashboard"]</h1>
-        <p class="report-description">@Localizer["HomeDescription"]</p>
+    <h1>@Localizer["Dashboard"] de Simulación</h1>
+    <p>@Localizer["HomeDescription"]</p>
+</div>
+
+<div class="metrics">
+    <div class="mcard">
+        <div class="mtitle">@Localizer["CurrentTick"]</div>
+        <div class="mval blue">@Model.CurrentTick</div>
+        <div class="msub">Última actualización: @DateTime.Now.ToString("dd/MM/yyyy")</div>
     </div>
-    <div class="page-actions">
-        <a href="@Url.Action("Index", "Satellites")" class="action-card">@Localizer["ViewSatellites"]</a>
-        <a href="@Url.Action("Dashboard", "Simulation")" class="action-card">@Localizer["GoToSimulation"]</a>
-        <a href="@Url.Action("MemoryLayout", "Reports")" class="action-card">@Localizer["ViewReports"]</a>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["ActiveSatellites"]</div>
+        <div class="mval green">@Model.ActiveSatellites</div>
+        <div class="msub">de @Model.Satellites.Count totales</div>
+    </div>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["PendingMessages"]</div>
+        <div class="mval orange">@Model.PendingMessages</div>
+        <div class="msub">en cola</div>
+    </div>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["ProcessedMessages"]</div>
+        <div class="mval red">@Model.ProcessedMessages</div>
+        <div class="msub">total acumulado</div>
     </div>
 </div>
 
-<div class="hero-banner @(Model.Hemisphere == "South" ? "south" : "north")">
-    <h2>OrbitNet - @Localizer[$"Hemisphere{Model.Hemisphere}"]</h2>
-    <p>@(Model.Hemisphere == "North" ? Localizer["NorthHemisphereDescription"] : Localizer["SouthHemisphereDescription"])</p>
-</div>
-
-<div class="stats-grid">
-    <div class="stat-card">
-        <strong>@Localizer["CurrentTick"]</strong>
-        <p class="stat-value">@Model.CurrentTick</p>
+<div class="stats2">
+    <div class="scard">
+        <div class="slabel">@Localizer["Antennas"]</div>
+        <div class="sval primary">@Model.TotalAntennas</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["ActiveSatellites"]</strong>
-        <p class="stat-value">@Model.ActiveSatellites</p>
+    <div class="scard">
+        <div class="slabel">Hemisferio Actual</div>
+        <div class="sval primary">@(Model.Hemisphere == "North" ? Localizer["HemisphereNorth"] : Localizer["HemisphereSouth"])</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["PendingMessages"]</strong>
-        <p class="stat-value">@Model.PendingMessages</p>
-    </div>
-    <div class="stat-card">
-        <strong>@Localizer["ProcessedMessages"]</strong>
-        <p class="stat-value">@Model.ProcessedMessages</p>
-    </div>
-</div>
-
-<div class="section-card" style="margin-top: 24px;">
-    <h3>@Localizer["SystemDetails"]</h3>
-    <p>@Localizer["SystemDetailsDescription"]</p>
-    <div class="stats-grid" style="margin-top: 18px;">
-        <div class="stat-card">
-            <strong>@Localizer["Antennas"]</strong>
-            <p class="stat-value">@Model.TotalAntennas</p>
-        </div>
-        <div class="stat-card">
-            <strong>@Localizer["Port"]</strong>
-            <p class="stat-value">@Model.Port</p>
-        </div>
-        <div class="stat-card">
-            <strong>@Localizer["RemoteHemisphere"]</strong>
-            <p class="stat-value">@Model.RemoteHemisphereUrl</p>
-        </div>
-        <div class="stat-card">
-            <strong>@Localizer["Simulation"]</strong>
-            <p class="stat-value">@(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])</p>
+    <div class="scard">
+        <div class="slabel">Estado Simulación</div>
+        <div style="margin-top:4px">
+            <span class="badge badge-sim @(Model.IsSimulationRunning ? "" : "badge-inactive")">
+                @(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])
+            </span>
         </div>
     </div>
 </div>
 
-<div class="section-card" style="margin-top: 24px;">
-    <h3>@Localizer["SatellitesInConstellation"]</h3>
-    <div class="satellite-table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>@Localizer["Id"]</th>
-                    <th>@Localizer["Name"]</th>
-                    <th>@Localizer["Orbit"]</th>
-                    <th>@Localizer["Active"]</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach (var satellite in Model.Satellites)
-            {
-                <tr>
-                    <td>@satellite.Id</td>
-                    <td>@satellite.Name</td>
-                    <td>@satellite.OrbitId</td>
-                    <td>@(satellite.IsActive ? Localizer["Yes"] : Localizer["No"])</td>
-                </tr>
-            }
-            </tbody>
-        </table>
+<div class="sec">
+    <h3>Acciones Rápidas</h3>
+    <div class="actions">
+        <form asp-controller="Simulation" asp-action="TickResult" method="post" style="display:inline">
+            <button type="submit" class="btn btn-secondary">@Localizer["ExecuteTick"]</button>
+        </form>
+        <form asp-controller="Simulation" asp-action="ExecuteTicks" method="post" style="display:inline">
+            <input type="hidden" name="count" value="10" />
+            <button type="submit" class="btn btn-secondary">@Localizer["Execute10Ticks"]</button>
+        </form>
+        <form asp-controller="Simulation" asp-action="ExecuteTicks" method="post" style="display:inline">
+            <input type="hidden" name="count" value="100" />
+            <button type="submit" class="btn btn-secondary">@Localizer["Execute100Ticks"]</button>
+        </form>
+        <form asp-controller="Simulation" asp-action="StopSimulation" method="post" style="display:inline">
+            <button type="submit" class="btn btn-danger">@Localizer["StopSimulation"]</button>
+        </form>
     </div>
 </div>
