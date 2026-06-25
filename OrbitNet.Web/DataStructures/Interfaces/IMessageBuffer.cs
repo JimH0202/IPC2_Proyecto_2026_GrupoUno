@@ -1,8 +1,11 @@
-namespace OrbitNet.Web.DataStructures.Interfaces
+namespace OrbitNet.Web.DataStructures.Interfaces;
+using OrbitNet.Web.Models.Entities;
+
+public interface IMessageBuffer : IAbstractCollection
 {
-    /// Contrato planificado para el buffer que gestionará los paquetes de mensajes.
-    public interface IMessageBuffer : IAbstractColletion
-    {
-        // Por el momento lo dejé vacio, no se si esto también lo hace el encargado de simulación o si lo hace el encargado de la estructura de datos, pero por ahora lo dejo así.
-    }
+    void Agregar(MessagePacket packet);
+    MessagePacket? ObtenerSiguiente();
+    MessagePacket? VerSiguiente();
+    MessagePacket? BuscarPorCodigoHex(string hexCode);
+    string RecorrerInOrden();
 }
