@@ -1,4 +1,3 @@
-using System.Text;
 using System.Text.Json.Serialization;
 using Orbinet.Web.Models.Enums; // Para poder usar el Enum MessageStatus
 
@@ -40,6 +39,10 @@ namespace Orbinet.Web.Models.Entities
         /// Inicializa una nueva instancia de <see cref="MessagePacket"/> con un estado inicial.
         public MessagePacket()
         {
+            CodHex = string.Empty;
+            SenderId = string.Empty;
+            DestinationIp = string.Empty;
+            Content = string.Empty;
             Status = MessageStatus.EnEspera; // Todo paquete inicia esperando ser transmitido
             HopCount = 0; // Inicialmente, el paquete no ha realizado ningún salto
         }
