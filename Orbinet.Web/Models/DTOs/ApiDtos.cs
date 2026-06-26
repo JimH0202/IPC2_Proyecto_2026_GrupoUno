@@ -4,40 +4,40 @@ using System.Text.Json.Serialization;
 public class ConfigRequestDto
 {
     [JsonPropertyName("xml_data")]
-    public string XmlData { get; set; }
+    public string XmlData { get; set; }  = string.Empty;
 }
 
 public class ConfigSuccessResponse
 {
     [JsonPropertyName("status")]
-    public string Status { get; set; }
+    public string Status { get; set; }  = string.Empty;
 
     [JsonPropertyName("message")]
-    public string Message { get; set; }
+    public string Message { get; set; }  = string.Empty;
 
     [JsonPropertyName("timestamp")]
-    public string Timestamp { get; set; }
+    public string Timestamp { get; set; }  = string.Empty;
 }
 
 public class ConfigErrorResponse
 {
     [JsonPropertyName("status")]
-    public string Status { get; set; }
+    public string Status { get; set; }  = string.Empty;
 
     [JsonPropertyName("error_code")]
-    public string ErrorCode { get; set; }
+    public string ErrorCode { get; set; }  = string.Empty;
 
     [JsonPropertyName("details")]
-    public string Details { get; set; }
+    public string Details { get; set; }  = string.Empty;
 }
 
 public class RelaySuccessResponse
 {
     [JsonPropertyName("status")]
-    public string Status { get; set; }
+    public string Status { get; set; }  = string.Empty;
 
     [JsonPropertyName("message")]
-    public string Message { get; set; }
+    public string Message { get; set; }  = string.Empty;
 
     [JsonPropertyName("queue_occupancy_percentage")]
     public double QueueOccupancyPercentage { get; set; }
@@ -46,10 +46,10 @@ public class RelaySuccessResponse
 public class RelayErrorResponse
 {
     [JsonPropertyName("status")]
-    public string Status { get; set; }
+    public string Status { get; set; }  = string.Empty;
 
     [JsonPropertyName("details")]
-    public string Details { get; set; }
+    public string Details { get; set; }  = string.Empty;
 }
 
 public class SimulationStepRequestDto
@@ -61,7 +61,7 @@ public class SimulationStepRequestDto
 public class SimulationStepResponse
 {
     [JsonPropertyName("status")]
-    public string Status { get; set; }
+    public string Status { get; set; }  = string.Empty;
 
     [JsonPropertyName("current_tick")]
     public int CurrentTick { get; set; }
@@ -70,5 +70,5 @@ public class SimulationStepResponse
     public int EventsProcessed { get; set; }
 
     [JsonPropertyName("details")]
-    public string Details { get; set; }
+    public string Details { get; set; }  = string.Empty;
 }
