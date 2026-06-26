@@ -8,6 +8,7 @@ namespace Orbinet.Web.Models.Entities
     /// Almacena los datos de posición orbital y los paquetes de datos en tránsito.
 
     public class Satellite {
+        //El constructor evita valores nulos, asegurando que que las propiedades tengan valores. 
         public Satellite()
         {
              Id = string.Empty;
