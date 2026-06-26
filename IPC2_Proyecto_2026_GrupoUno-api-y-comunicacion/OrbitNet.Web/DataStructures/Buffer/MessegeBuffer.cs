@@ -183,6 +183,10 @@ public class BufferMensajes : IMessageBuffer
         return SearchByHexCode(hexCode);
     }
 
+    // Punto de integracion para Graphviz:
+    // El recorrido del arbol puede utilizarse como base para generar
+    // la representacion gráfica del Buffer de Mensajes
+
     public string RecorrerInOrden()
     {
         return TraverseInOrder();

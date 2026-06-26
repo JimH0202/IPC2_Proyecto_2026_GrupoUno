@@ -264,8 +264,12 @@ public class RedSatelitalPlano : IMatrix
         }
     }
 
+    // Punto de integracion para Graphviz:
+    // Los encabezados publicos permiten recorrer la matriz dispersa
+    // para generar la representacion grafica de la red satelital
+
     // Metodos publicos para obtener los encabezados de filas y columnas
-        public HeaderNode? GetRowHeader(int row)
+    public HeaderNode? GetRowHeader(int row)
     {
         return SearchHeader(rowHeaders, row);
     }
