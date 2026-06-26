@@ -20,6 +20,9 @@ namespace Orbinet.Web.Models.Entities
         public int LogicalJumps { get; set; }
         /// Porcentaje promedio de ocupación de los buffers en la red espacial.
         public double QueueOccupancyPercentage { get; set; }
+
+        // === Datos auxiliares de simulación ===
+
         /// Identificador del satélite receptor configurado para auditoría o pruebas.
         public string ReceptorSatelliteId { get; set; }
         /// Bandera de control que indica si el archivo de configuración XML fue cargado con éxito.
@@ -31,19 +34,24 @@ namespace Orbinet.Web.Models.Entities
         /// Referencia directa a la Matriz Dispersa que representa la red satelital física en el espacio.
         public RedSatelitalPlano RedSatellites { get; set; }
         /// Referencia a la estructura que almacena las antenas terrestres (se actualizará con el tipo AVL o Lista del Integrante 1).
-        public object EstructuraAntenas { get; set; }
+        public object? EstructuraAntenas { get; set; }
         
         
         /// Inicializa una nueva instancia de <see cref="OrbitNetStore"/> con valores iniciales seguros.
         public OrbitNetStore()
         {
+            NodosProcesados = 0;
             CurrentTick = 0;
-            QueueOccupancyPercentage = 40.0;
-            ReceptorSatelliteId = "SAT-POL-1001";
+            EventsProcessed = 0;
+            LogicalJumps = 0;
+            QueueOccupancyPercentage = 0.0;
+
+            ReceptorSatelliteId = string.Empty;
             ConfigLoaded = false;
 
             // Instanciamos la matriz dispersa para que el motor no de errores de referencia nula al iniciar
             RedSatellites = new RedSatelitalPlano();
+            EstructuraAntenas = null;
         }
     }
 }
