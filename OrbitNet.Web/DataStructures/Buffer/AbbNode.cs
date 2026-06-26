@@ -1,6 +1,6 @@
-namespace Orbinet.Web.DataStructures.Buffer;
+namespace OrbitNet.Web.DataStructures.Buffer;
 
-using Orbinet.Web.Models.Entities;
+using OrbitNet.Web.Models.Entities;
 
 public class AbbNode
 {
