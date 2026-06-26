@@ -2,5 +2,5 @@
 OrbitNet.Tests/bin
 Orbinet.Web/obj
 OrbitNet.Tests/obj
-**/[Bb]in/
-**/[Oo]bj/
+[Bb]in/
+[Oo]bj/

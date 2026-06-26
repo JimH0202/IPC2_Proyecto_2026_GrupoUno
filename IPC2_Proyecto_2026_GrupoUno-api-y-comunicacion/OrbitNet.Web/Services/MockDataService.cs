@@ -125,4 +125,79 @@ public static class MockDataService
             new () { Timestamp = DateTime.Now.AddMinutes(-2), Level = "Info", Event = "Mensaje procesado", Details = "Se procesaron 5 mensajes en el último tick." }
         };
     }
+
+    public static SimulationViewModel GetSimulationViewModel(int additionalTicks)
+    {
+        var model = GetSimulationViewModel();
+        model.CurrentTick += additionalTicks;
+        model.ProcessedMessages += additionalTicks * 3;
+        return model;
+    }
+
+    public static SimulationViewModel GetSimulationViewModel(bool isRunning)
+    {
+        var model = GetSimulationViewModel();
+        model.IsSimulationRunning = isRunning;
+        return model;
+    }
+
+    public static object GetMatrixData()
+    {
+        return new
+        {
+            rows = 10,
+            columns = 12,
+            occupiedNodes = 14,
+            svgContent = "<svg width='360' height='200' xmlns='http://www.w3.org/2000/svg'><rect width='360' height='200' fill='#f8f9fa' stroke='#ddd' /><text x='20' y='40' font-family='Arial' font-size='18'>Matriz dispersa de ejemplo</text></svg>"
+        };
+    }
+
+    public static object GetMemoryReportData()
+    {
+        return new
+        {
+            title = "Mapa de memoria",
+            description = "Representación de la estructura de memoria del sistema.",
+            generatedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+            svgContent = "<svg width='380' height='220' xmlns='http://www.w3.org/2000/svg'><rect width='380' height='220' fill='#f1f3f5' stroke='#ced4da'/><text x='20' y='40' font-family='Arial' font-size='16'>Reporte de MemoryLayout</text></svg>"
+        };
+    }
+
+    public static object GetLiveSimulationData()
+    {
+        return new
+        {
+            currentTick = 150,
+            activeSatellites = 28,
+            pendingMessages = 15,
+            processedMessages = 450,
+            isRunning = true
+        };
+    }
+
+    public static object GetRoutesData()
+    {
+        return new
+        {
+            routes = new[]
+            {
+                new { from = "SAT-001", to = "ANT-N1", status = "activa", latency = "12ms" },
+                new { from = "SAT-002", to = "ANT-S1", status = "activa", latency = "18ms" },
+                new { from = "SAT-003", to = "ANT-N2", status = "inactiva", latency = "0ms" }
+            }
+        };
+    }
+
+    public static object GetBuffersData()
+    {
+        return new
+        {
+            buffers = new[]
+            {
+                new { id = "BUF-001", satellite = "SAT-001", occupancy = 45, capacity = 100 },
+                new { id = "BUF-002", satellite = "SAT-002", occupancy = 72, capacity = 100 },
+                new { id = "BUF-003", satellite = "SAT-003", occupancy = 10, capacity = 100 }
+            }
+        };
+    }
 }

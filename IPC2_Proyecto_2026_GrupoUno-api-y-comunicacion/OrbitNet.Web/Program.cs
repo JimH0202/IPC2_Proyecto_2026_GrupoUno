@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Localization;
 using System;
 using OrbitNet.Web.Configuration;
 using OrbitNet.Web.Services;
@@ -26,6 +27,7 @@ builder.WebHost.UseUrls($"http://localhost:{port}");
 // ------------------------------------------------------------------------
 
 // 1. Configuraciones compartidas (MVC + API)
+builder.Services.AddLocalization();
 builder.Services.AddControllersWithViews(); // Soporta Vistas Razor y Endpoints de API
 builder.Services.AddHttpClient(); // Requisito para comunicación entre puertos
 

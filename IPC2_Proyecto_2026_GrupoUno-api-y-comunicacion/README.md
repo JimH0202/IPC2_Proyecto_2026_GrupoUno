@@ -192,17 +192,3 @@ OrbitNet.Web/
 └── OrbitNet.Web.csproj
 ```
 
----
-
-## Próximos pasos (otros compañeros de equipo)
-
-- Conectar `XmlIngestService` con la matriz dispersa real (`RedSatelitalPlano`)
-- Conectar `/relay` con el buffer ABB de mensajes
-- Conectar `/simulation/step` con el motor orbital completo
-- Integrar `LogAuditoria` para registrar eventos de la API
-
----
-
-## Nota sobre compilación
-
-Se corrigió `Resources/SharedResource.es.resx` porque estaba vacío y el build fallaba. Ese archivo pertenece al módulo de internacionalización (otro compañero); solo se dejó con la estructura XML mínima válida para que la API compile sin errores.
