@@ -40,10 +40,7 @@ builder.Services.AddSingleton<TickProcessor>();
 
 var app = builder.Build();
 
-<<<<<<< HEAD:OrbitNet.Web/Program.cs
 // 3. Configuración del Pipeline HTTP (Rutas y Archivos Estáticos)
-=======
->>>>>>> origin/motor-de-simulacion:Orbinet.Web/Program.cs
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -64,8 +61,5 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 app.Run();
-<<<<<<< HEAD:OrbitNet.Web/Program.cs
 
 public partial class Program { }
-=======
->>>>>>> origin/motor-de-simulacion:Orbinet.Web/Program.cs
