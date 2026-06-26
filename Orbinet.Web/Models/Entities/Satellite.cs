@@ -1,3 +1,4 @@
+using Orbinet.Web.DataStructures.Buffer;
 using Orbinet.Web.DataStructures.Interfaces;
 
 namespace Orbinet.Web.Models.Entities
@@ -9,7 +10,11 @@ namespace Orbinet.Web.Models.Entities
     public class Satellite {
         public Satellite()
         {
+             Id = string.Empty;
+            Name = string.Empty;
+            Ip = string.Empty;
             OrbitalAngle = 0;
+            PaquetesABordo = new BufferMensajes();
         }
 
         /// Identificador único del satélite (ej: "Sat-Polar1-Node1").
