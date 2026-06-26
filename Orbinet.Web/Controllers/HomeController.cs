@@ -34,15 +34,19 @@ public class HomeController : Controller
 
     [HttpGet]
     [HttpPost]
+    [HttpHead]
     public IActionResult SetLanguage(string culture, string returnUrl)
     {
         LocalizationService.SetLanguage(Response, culture);
-        // If returnUrl points to a POST-only endpoint (TickResult/ExecuteTicks/StopSimulation)
-        // redirect to a safe GET endpoint instead (Simulation/Dashboard) to avoid 405 errors.
+
         if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
         {
-            // If returnUrl points to a POST-only action we previously redirected to Dashboard.
-            // Since TickResult now supports GET, permit returning to it directly.
+            var lowerReturnUrl = returnUrl.ToLowerInvariant();
+            if (lowerReturnUrl.StartsWith("/simulation/executeticks") || lowerReturnUrl.StartsWith("/simulation/stopsimulation"))
+            {
+                return RedirectToAction("TickResult", "Simulation");
+            }
+
             return Redirect(returnUrl);
         }
 
