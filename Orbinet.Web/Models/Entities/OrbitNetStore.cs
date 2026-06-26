@@ -1,4 +1,5 @@
 using Orbinet.Web.DataStructures.Matrix;
+using Orbinet.Web.Services.SimulationEngine.State;
       
 // NOTA: Si las antenas se guardan en el AVL, aquí se importa su namespace corporativo
 
@@ -20,7 +21,7 @@ namespace Orbinet.Web.Models.Entities
         public int LogicalJumps { get; set; }
         /// Porcentaje promedio de ocupación de los buffers en la red espacial.
         public double QueueOccupancyPercentage { get; set; }
-
+        
         // === Datos auxiliares de simulación ===
 
         /// Identificador del satélite receptor configurado para auditoría o pruebas.
@@ -35,6 +36,9 @@ namespace Orbinet.Web.Models.Entities
         public RedSatelitalPlano RedSatellites { get; set; }
         /// Referencia a la estructura que almacena las antenas terrestres (se actualizará con el tipo AVL o Lista del Integrante 1).
         public object? EstructuraAntenas { get; set; }
+        
+        // Contador de satélites detectados en la última iteración de rotación orbital.
+        public SatelliteStateIndex SatelliteStates { get; set; }
         
         
         /// Inicializa una nueva instancia de <see cref="OrbitNetStore"/> con valores iniciales seguros.
@@ -52,6 +56,7 @@ namespace Orbinet.Web.Models.Entities
             // Instanciamos la matriz dispersa para que el motor no de errores de referencia nula al iniciar
             RedSatellites = new RedSatelitalPlano();
             EstructuraAntenas = null;
+            SatelliteStates = new SatelliteStateIndex();
         }
     }
 }
