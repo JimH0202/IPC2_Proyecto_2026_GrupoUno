@@ -1,0 +1,87 @@
+@model OrbitNet.Web.Models.ViewModels.DashboardViewModel
+
+<div class="page-header">
+    <div>
+        <h1>@Localizer["Dashboard"]</h1>
+        <p class="report-description">@Localizer["HomeDescription"]</p>
+    </div>
+    <div class="page-actions">
+        <a href="@Url.Action("Index", "Satellites")" class="action-card">@Localizer["ViewSatellites"]</a>
+        <a href="@Url.Action("Dashboard", "Simulation")" class="action-card">@Localizer["GoToSimulation"]</a>
+        <a href="@Url.Action("MemoryLayout", "Reports")" class="action-card">@Localizer["ViewReports"]</a>
+    </div>
+</div>
+
+<div class="hero-banner @(Model.Hemisphere == "South" ? "south" : "north")">
+    <h2>OrbitNet - @Localizer[$"Hemisphere{Model.Hemisphere}"]</h2>
+    <p>@(Model.Hemisphere == "North" ? Localizer["NorthHemisphereDescription"] : Localizer["SouthHemisphereDescription"])</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <strong>@Localizer["CurrentTick"]</strong>
+        <p class="stat-value">@Model.CurrentTick</p>
+    </div>
+    <div class="stat-card">
+        <strong>@Localizer["ActiveSatellites"]</strong>
+        <p class="stat-value">@Model.ActiveSatellites</p>
+    </div>
+    <div class="stat-card">
+        <strong>@Localizer["PendingMessages"]</strong>
+        <p class="stat-value">@Model.PendingMessages</p>
+    </div>
+    <div class="stat-card">
+        <strong>@Localizer["ProcessedMessages"]</strong>
+        <p class="stat-value">@Model.ProcessedMessages</p>
+    </div>
+</div>
+
+<div class="section-card" style="margin-top: 24px;">
+    <h3>@Localizer["SystemDetails"]</h3>
+    <p>@Localizer["SystemDetailsDescription"]</p>
+    <div class="stats-grid" style="margin-top: 18px;">
+        <div class="stat-card">
+            <strong>@Localizer["Antennas"]</strong>
+            <p class="stat-value">@Model.TotalAntennas</p>
+        </div>
+        <div class="stat-card">
+            <strong>@Localizer["Port"]</strong>
+            <p class="stat-value">@Model.Port</p>
+        </div>
+        <div class="stat-card">
+            <strong>@Localizer["RemoteHemisphere"]</strong>
+            <p class="stat-value">@Model.RemoteHemisphereUrl</p>
+        </div>
+        <div class="stat-card">
+            <strong>@Localizer["Simulation"]</strong>
+            <p class="stat-value">@(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])</p>
+        </div>
+    </div>
+</div>
+
+<div class="section-card" style="margin-top: 24px;">
+    <h3>@Localizer["SatellitesInConstellation"]</h3>
+    <div class="satellite-table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>@Localizer["Id"]</th>
+                    <th>@Localizer["Name"]</th>
+                    <th>@Localizer["Orbit"]</th>
+                    <th>@Localizer["Active"]</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var satellite in Model.Satellites)
+            {
+                <tr>
+                    <td>@satellite.Id</td>
+                    <td>@satellite.Name</td>
+                    <td>@satellite.OrbitId</td>
+                    <td>@(satellite.IsActive ? Localizer["Yes"] : Localizer["No"])</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
