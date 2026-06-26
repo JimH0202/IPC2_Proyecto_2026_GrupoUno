@@ -1,0 +1,82 @@
+<div class="page-header">
+    <div>
+        <h1>@Localizer["SimulationDashboardTitle"]</h1>
+        <p class="report-description">@Localizer["SimulationDescription"]</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["Back"]</a>
+    </div>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <strong>@Localizer["CurrentTick"]</strong>
+        <p class="stat-value">@Model.CurrentTick</p>
+    </div>
+    <div class="stat-card">
+        <strong>@Localizer["ActiveSatellites"]</strong>
+        <p class="stat-value">@Model.ActiveSatellites</p>
+    </div>
+    <div class="stat-card">
+        <strong>@Localizer["PendingMessages"]</strong>
+        <p class="stat-value">@Model.PendingMessages</p>
+    </div>
+    <div class="stat-card">
+        <strong>@Localizer["ProcessedMessages"]</strong>
+        <p class="stat-value">@Model.ProcessedMessages</p>
+    </div>
+    <div class="stat-card">
+        <strong>@Localizer["Simulation"]</strong>
+        <p class="stat-value">@(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])</p>
+    </div>
+</div>
+
+<div class="section-card">
+    <h3>@Localizer["SimulationControls"]</h3>
+    <div class="simulation-controls">
+        <form asp-action="TickResult" method="post">
+            <button type="submit" class="btn btn-primary">@Localizer["ExecuteTick"]</button>
+        </form>
+
+        <form asp-action="ExecuteTicks" method="post">
+            <input type="hidden" name="count" value="10" />
+            <button type="submit" class="btn btn-primary">@Localizer["Execute10Ticks"]</button>
+        </form>
+
+        <form asp-action="ExecuteTicks" method="post">
+            <input type="hidden" name="count" value="100" />
+            <button type="submit" class="btn btn-primary">@Localizer["Execute100Ticks"]</button>
+        </form>
+
+        <form asp-action="StopSimulation" method="post">
+            <button type="submit" class="btn btn-secondary">@Localizer["StopSimulation"]</button>
+        </form>
+    </div>
+</div>
+
+<div class="section-card">
+    <h3>@Localizer["ActiveSatellites"]</h3>
+    <div class="tick-result-box">
+    <table>
+        <thead>
+            <tr>
+                <th>@Localizer["Id"]</th>
+                <th>@Localizer["Name"]</th>
+                <th>@Localizer["Orbit"]</th>
+                <th>@Localizer["Active"]</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var sat in Model.Satellites)
+        {
+            <tr>
+                <td>@sat.Id</td>
+                <td>@sat.Name</td>
+                <td>@sat.OrbitId</td>
+                <td>@(sat.IsActive ? Localizer["Yes"] : Localizer["No"])</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    </div>
+</div>

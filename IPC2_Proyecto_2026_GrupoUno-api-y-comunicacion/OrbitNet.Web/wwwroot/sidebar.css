@@ -1,0 +1,141 @@
+.sidebar{
+    width:260px;
+    background:
+        linear-gradient(
+            180deg,
+            var(--sidebar-start),
+            var(--sidebar-end)
+        );
+
+    color:white;
+    display:flex;
+    flex-direction:column;
+    padding:20px 12px;
+    transition:margin-left .3s ease;
+}
+
+.sidebar.collapsed{
+    margin-left:-260px;
+}
+
+.sidebar-brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:30px;
+}
+
+.sidebar-brand h1{
+    font-size:22px;
+    margin:0;
+}
+
+.sidebar-nav{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.sidebar-link{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+
+    color:#d6e3ff;
+    text-decoration:none;
+    background:none;
+    border:none;
+
+    padding:12px 15px;
+
+    border-radius:10px;
+
+    transition:.2s;
+    cursor:pointer;
+    font-size:1rem;
+}
+
+.sidebar-link:hover{
+    background:rgba(255,255,255,.08);
+}
+
+.sidebar-link.active{
+    background:var(--primary);
+    color:white;
+}
+
+.sidebar-menu-group{
+    position:relative;
+}
+
+.sidebar-menu-toggle{
+    width:100%;
+    text-align:left;
+}
+
+.menu-arrow{
+    font-size:1.2em;
+    transition:transform .3s ease;
+}
+
+.sidebar-menu-toggle[aria-expanded="true"] .menu-arrow{
+    transform:rotate(90deg);
+}
+
+.sidebar-submenu{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    background:rgba(0,0,0,.2);
+    border-radius:8px;
+    margin-top:4px;
+}
+
+.sidebar-submenu.show{
+    max-height:500px;
+    padding:8px 0;
+}
+
+.sidebar-sublink{
+    display:block;
+    color:#b0c4ff;
+    text-decoration:none;
+    padding:10px 30px;
+    font-size:.95rem;
+    transition:.2s;
+    border-left:2px solid transparent;
+}
+
+.sidebar-sublink:hover{
+    color:white;
+    background:rgba(255,255,255,.05);
+    border-left-color:var(--primary);
+}
+
+.sidebar-footer{
+    margin-top:auto;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,.1);
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    font-size:.9rem;
+}
+
+.lang-link{
+    color:#b0c4ff;
+    text-decoration:none;
+    transition:.2s;
+}
+
+.lang-link:hover{
+    color:white;
+}
+
+.sep{
+    color:#64748b;
+}
