@@ -1,5 +1,6 @@
 using Orbinet.Web.DataStructures.Buffer;
 using Orbinet.Web.DataStructures.Interfaces;
+using Orbinet.Web.Models.Enums;
 
 namespace Orbinet.Web.Models.Entities
 {
@@ -11,10 +12,11 @@ namespace Orbinet.Web.Models.Entities
         //El constructor evita valores nulos, asegurando que que las propiedades tengan valores. 
         public Satellite()
         {
-             Id = string.Empty;
+            Id = string.Empty;
             Name = string.Empty;
             Ip = string.Empty;
             OrbitalAngle = 0;
+            OrbitType = OrbitType.Ecuatorial;
             PaquetesABordo = new BufferMensajes();
         }
 
@@ -27,6 +29,9 @@ namespace Orbinet.Web.Models.Entities
         
         /// Posición angular actual del satélite en su órbita, medida en grados (0° a 360°).
         public double OrbitalAngle { get; set; }
+        /// Tipo de órbita en la que se encuentra el satélite (Ecuatorial o Polar).
+        /// Se utiliza para determinar la trayectoria y cobertura del satélite en la simulación.
+        public OrbitType OrbitType { get; set; }
         
         // Búfer estructurado (Árbol ABB) que gestiona los mensajes almacenados a bordo.
         /// Su implementación interna dependerá de las estructuras del equipo.
