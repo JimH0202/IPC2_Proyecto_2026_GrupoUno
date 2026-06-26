@@ -22,7 +22,7 @@ namespace Orbinet.Web.Models.Entities
 
         /// Nivel de prioridad del paquete (Baja, Media, Alta) para el despacho en colas.
         [JsonPropertyName("prioridad")]
-        public int Priority { get; set; }
+        public PriorityLevel Priority { get; set; }
 
         /// Cuerpo o contenido textual del mensaje transmitido.
         [JsonPropertyName("contenido")]
@@ -31,7 +31,7 @@ namespace Orbinet.Web.Models.Entities
         // Propiedad extra para el control del motor de simulación
         /// Estado actual del paquete dentro del ciclo de la simulación.
         /// No se serializa directamente desde el JSON de configuración inicial.
-        public MessageStatus Estado { get; set; }
+        public MessageStatus Status { get; set; }
 
         /// Cantidad de saltos o relevos que ha realizado el paquete entre nodos.
         /// Utilizado para el control del motor de simulación.
@@ -40,7 +40,7 @@ namespace Orbinet.Web.Models.Entities
         /// Inicializa una nueva instancia de <see cref="MessagePacket"/> con un estado inicial.
         public MessagePacket()
         {
-            Estado = MessageStatus.EnEspera; // Todo paquete inicia esperando ser transmitido
+            Status = MessageStatus.EnEspera; // Todo paquete inicia esperando ser transmitido
             HopCount = 0; // Inicialmente, el paquete no ha realizado ningún salto
         }
     }

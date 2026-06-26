@@ -13,8 +13,9 @@ namespace Orbinet.Web.Models.Entities
         /// Nombre descriptivo o región de cobertura de la trayectoria orbital.
         public string Name { get; set; }
 
-        /// Referencia al nodo de encabezado de fila (HeaderNode) en la matriz dispersa.
-        /// Permite al motor de simulación acceder y recorrer horizontalmente los satélites de esta órbita.
-        public HeaderNode EncabezadoMatriz { get; set; }
+        /// Número de fila que ocupa esta órbita dentro de la matriz dispersa.
+        /// El motor de simulación utilizará este índice para solicitar el
+        /// HeaderNode correspondiente a RedSatelitalPlano.
+        public int MatrixRow { get; set; }
     }
 }

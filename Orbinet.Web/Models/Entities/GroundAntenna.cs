@@ -1,3 +1,4 @@
+using Orbinet.Web.DataStructures.Buffer;
 using Orbinet.Web.DataStructures.Interfaces;
 
 namespace Orbinet.Web.Models.Entities
@@ -5,6 +6,19 @@ namespace Orbinet.Web.Models.Entities
     // Representa una estación o antena terrestre fija en la superficie de la Tierra.
     /// Actúa como origen y destino final de los paquetes de datos en la red OrbitNet.
     public class GroundAntenna{
+        //Constructor para ivetar los nulls en las propiedades de la antena terrestre
+        public GroundAntenna()
+        {
+            Id = string.Empty;
+            Name = string.Empty;
+            Coords = string.Empty;
+            Ip = string.Empty;
+            PosicionAngular = 0;
+
+            PaquetesEnEspera = new BufferMensajes();
+            PaquetesRecibidos = new BufferMensajes();
+        }
+
         /// Identificador único de la antena terrestre (ej: "ANT-GT-01").
         public string Id { get; set; }
         /// Nombre descriptivo para mostrar en vista.
