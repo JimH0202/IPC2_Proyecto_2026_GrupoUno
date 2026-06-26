@@ -2,7 +2,7 @@ using OrbitNet.Web.DataStructures.Interfaces;
 
 namespace OrbitNet.Web.DataStructures.Listas;
 
-public class ListaEnlazada<T> : IAbstractColletion
+public class ListaEnlazada<T> : IAbstractCollection
 {
     private NodoLista<T>? cabeza;
     private NodoLista<T>? cola;
