@@ -1,0 +1,28 @@
+@model OrbitNet.Web.Models.ViewModels.UploadViewModel
+
+<div class="page-header">
+    <div>
+        <h1>@Localizer["UploadPageTitle"]</h1>
+        <p class="report-description">@Localizer["UploadPageDescription"]</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["BackToDashboard"]</a>
+    </div>
+</div>
+
+<div class="section-card">
+    <h3>@Localizer["UploadSectionTitle"]</h3>
+    <form asp-action="Result" asp-controller="Upload" method="post" enctype="multipart/form-data" class="upload-form">
+        <div class="form-group">
+            <label for="xmlFile">@Localizer["UploadFormLabel"]</label>
+            <input type="file" id="xmlFile" name="xmlFile" accept=".xml" required />
+        </div>
+        <button type="submit" class="btn btn-primary">@Localizer["UploadButton"]</button>
+    </form>
+</div>
+
+<div class="info-box">
+    <h3>@Localizer["UploadInstructionsTitle"]</h3>
+    <p>@Localizer["UploadInstructions"]</p>
+    <p>@Localizer["UploadInstructionsDetail"]</p>
+</div>
