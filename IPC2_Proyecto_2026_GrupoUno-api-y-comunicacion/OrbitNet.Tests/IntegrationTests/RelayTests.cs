@@ -4,6 +4,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
+using OrbitNet.Web.Models.Enums;
 
 namespace OrbitNet.Tests.IntegrationTests;
 
@@ -144,7 +145,7 @@ public class RelayTests : IClassFixture<WebApplicationFactory<Program>>
             CodHex = "A19F",
             SenderId = "SAT-ECU-0012",
             DestinationIp = "10.0.0.90",
-            Priority = 5,
+            Priority = PriorityLevel.Alta,
             Content = "Simulacion 5000 a 5001"
         };
 
@@ -163,7 +164,7 @@ public class RelayTests : IClassFixture<WebApplicationFactory<Program>>
             codigo_hex = "A19F",
             emisor_id = "SAT-ECU-0012",
             destino_ip = destinoIp,
-            prioridad = 5,
+            prioridad = PriorityLevel.Alta,
             contenido = "Prueba relay API"
         };
     }

@@ -37,13 +37,9 @@ public class ListaAntenas
         for (int i = 0; i < lista.Count; i++)
         {
             var antena = lista.Get(i);
-
             if (antena != null && antena.Ip == ip)
-            {
                 return antena;
-            }
         }
-
         return null;
     }
 

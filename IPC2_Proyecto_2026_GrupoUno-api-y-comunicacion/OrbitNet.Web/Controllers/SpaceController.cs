@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Orbinet.Web.Models.Entities;                // Para que encuentre MessagePacket
-using Orbinet.Web.Services.SimulationEngine;       // Para que encuentre TickProcessor
-using Orbinet.Web.Models.DTOs;
+using OrbitNet.Web.Models.Entities;                // Para que encuentre MessagePacket
+using OrbitNet.Web.Services.SimulationEngine;       // Para que encuentre TickProcessor
+using OrbitNet.Web.Models.DTOs;
 
 namespace OrbitNet.Web.Controllers
 {
@@ -73,28 +73,24 @@ namespace OrbitNet.Web.Controllers
                 });
             }
 
-            if (_tickProcessor.RequiereRelayCrossPort(paquete))
+            
+            //Modifique el SpaeController.cs para poder acoplar el tickProcessor que actualicé
+            //Ahora ya no tiene datos simulados, ahora si trabaja con datos reales. 
+            // 1. Intentamos el reenvío cross-port inteligente del motor
+            bool enviado = await _tickProcessor.IntentarRelayCrossPortAsync(paquete);
+
+            // 2. Si se envió con éxito a la otra instancia, respondemos "Forwarded"
+            if (enviado)
             {
-                bool enviado = await _tickProcessor.IntentarRelayCrossPortAsync(paquete);
-
-                if (!enviado)
-                {
-                    return StatusCode(502, new ConfigErrorResponse
-                    {
-                        Status = "Error",
-                        ErrorCode = "RELAY_FORWARD_FAILED",
-                        Details = "No se pudo reenviar el paquete al hemisferio hermano. Verifique que la otra instancia este activa."
-                    });
-                }
-
                 return StatusCode(201, new RelaySuccessResponse
                 {
                     Status = "Forwarded",
-                    Message = "Paquete reenviado al hemisferio hermano via HTTP (puerto " + paquete.DestinationIp + ").",
+                    Message = "Paquete reenviado al hemisferio hermano via HTTP.",
                     QueueOccupancyPercentage = _store.CalcularOcupacionCola()
                 });
             }
 
+            // 3. Si no fue cross-port, significa que se queda en este hemisferio: lo encolamos
             _store.EncolarPaquete(paquete);
 
             return StatusCode(201, new RelaySuccessResponse

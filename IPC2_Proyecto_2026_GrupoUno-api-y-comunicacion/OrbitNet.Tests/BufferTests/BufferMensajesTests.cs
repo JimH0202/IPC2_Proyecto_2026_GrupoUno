@@ -1,7 +1,7 @@
 using Xunit;
-using Orbinet.Web.DataStructures.Buffer;
-using Orbinet.Web.Models.Entities;
-using Orbinet.Web.Models.Enums;
+using OrbitNet.Web.DataStructures.Buffer;
+using OrbitNet.Web.Models.Entities;
+using OrbitNet.Web.Models.Enums;
 
 namespace OrbitNet.Tests.BufferTests;
 

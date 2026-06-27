@@ -1,6 +1,6 @@
 using System.Text;
 using System.Text.Json.Serialization;
-namespace Orbinet.Web.Models.DTOs;
+namespace OrbitNet.Web.Models.DTOs;
 
 public class ConfigRequestDto
 {

@@ -1,4 +1,6 @@
 namespace OrbitNet.Tests.IntegrationTests;
+using OrbitNet.Web.Models.Entities;
+
 
 public class XmlIngestTests
 {

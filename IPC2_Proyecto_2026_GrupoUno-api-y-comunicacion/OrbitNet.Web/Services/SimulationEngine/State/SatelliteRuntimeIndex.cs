@@ -1,6 +1,6 @@
-using Orbinet.Web.Models.Entities;
+using OrbitNet.Web.Models.Entities;
 
-namespace Orbinet.Web.Services.SimulationEngine.State
+namespace OrbitNet.Web.Services.SimulationEngine.State
 {
     public class SatelliteRuntimeIndex
     {

@@ -1,5 +1,5 @@
-using Orbinet.Web.DataStructures.Buffer;
-using Orbinet.Web.DataStructures.Interfaces;
+using OrbitNet.Web.DataStructures.Buffer;
+using OrbitNet.Web.DataStructures.Interfaces;
 
 namespace OrbitNet.Web.Models.Entities
 {

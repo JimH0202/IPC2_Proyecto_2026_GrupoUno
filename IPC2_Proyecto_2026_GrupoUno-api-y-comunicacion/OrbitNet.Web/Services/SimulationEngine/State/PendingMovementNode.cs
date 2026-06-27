@@ -1,4 +1,4 @@
-namespace Orbinet.Web.Services.SimulationEngine.State
+namespace OrbitNet.Web.Services.SimulationEngine.State
 {
     public class PendingMovementNode
     {

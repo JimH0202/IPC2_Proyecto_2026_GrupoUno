@@ -1,11 +1,11 @@
 using Microsoft.Extensions.Options;
-using Orbinet.Web.Configuration;
-using Orbinet.Web.Models.DTOs;
-using Orbinet.Web.Models.Entities;
-using Orbinet.Web.Models.Enums;
-using Orbinet.Web.Services.Communication;
+using OrbitNet.Web.Configuration;
+using OrbitNet.Web.Models.DTOs;
+using OrbitNet.Web.Models.Entities;
+using OrbitNet.Web.Models.Enums;
+using OrbitNet.Web.Services.Communication;
 
-namespace Orbinet.Web.Services.SimulationEngine
+namespace OrbitNet.Web.Services.SimulationEngine
 {
     public class TickProcessor
     {

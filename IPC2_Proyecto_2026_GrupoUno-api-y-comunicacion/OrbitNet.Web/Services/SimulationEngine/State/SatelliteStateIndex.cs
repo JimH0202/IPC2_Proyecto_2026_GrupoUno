@@ -1,6 +1,6 @@
-using Orbinet.Web.Models.Enums;
+using OrbitNet.Web.Models.Enums;
 
-namespace Orbinet.Web.Services.SimulationEngine.State
+namespace OrbitNet.Web.Services.SimulationEngine.State
 {
     public class SatelliteStateIndex
     {

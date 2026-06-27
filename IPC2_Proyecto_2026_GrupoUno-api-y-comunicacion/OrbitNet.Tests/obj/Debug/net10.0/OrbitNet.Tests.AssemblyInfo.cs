@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OrbitNet.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+59c87e056391ed3413b6d76dbb963426a583bfed")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+692258c58cc5cf444b8847adb573a0ea41102c93")]
 [assembly: System.Reflection.AssemblyProductAttribute("OrbitNet.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OrbitNet.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

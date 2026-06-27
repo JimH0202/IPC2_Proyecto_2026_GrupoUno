@@ -1,4 +1,4 @@
-namespace Orbinet.Web.Models.Enums
+namespace OrbitNet.Web.Models.Enums
 {
     public enum OrbitType
     {

@@ -1,4 +1,4 @@
-namespace Orbinet.Web.Services.SimulationEngine
+namespace OrbitNet.Web.Services.SimulationEngine
 {
     public class OrbitalRotationResult
     {

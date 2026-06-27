@@ -1,9 +1,9 @@
-using Orbinet.Web.DataStructures.Matrix;
-using Orbinet.Web.Models.Entities;
-using Orbinet.Web.Models.Enums;
-using Orbinet.Web.Services.SimulationEngine.State;
+using OrbitNet.Web.DataStructures.Matrix;
+using OrbitNet.Web.Models.Entities;
+using OrbitNet.Web.Models.Enums;
+using OrbitNet.Web.Services.SimulationEngine.State;
 
-namespace Orbinet.Web.Services.SimulationEngine
+namespace OrbitNet.Web.Services.SimulationEngine
 {
     public class OrbitalRotator
     {

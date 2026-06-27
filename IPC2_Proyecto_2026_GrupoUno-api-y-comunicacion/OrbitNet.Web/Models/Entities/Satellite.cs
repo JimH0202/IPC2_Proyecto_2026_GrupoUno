@@ -1,6 +1,6 @@
-using Orbinet.Web.DataStructures.Buffer;
-using Orbinet.Web.DataStructures.Interfaces;
-using Orbinet.Web.Models.Enums;
+using OrbitNet.Web.DataStructures.Buffer;
+using OrbitNet.Web.DataStructures.Interfaces;
+using OrbitNet.Web.Models.Enums;
 
 namespace OrbitNet.Web.Models.Entities
 {

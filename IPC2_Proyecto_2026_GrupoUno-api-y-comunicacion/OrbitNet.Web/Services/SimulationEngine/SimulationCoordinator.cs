@@ -1,7 +1,7 @@
-using Orbinet.Web.DataStructures.Matrix;
-using Orbinet.Web.Models.Entities;
+using OrbitNet.Web.DataStructures.Matrix;
+using OrbitNet.Web.Models.Entities;
 
-namespace Orbinet.Web.Services.SimulationEngine
+namespace OrbitNet.Web.Services.SimulationEngine
 {
     public class SimulationCoordinator
     {
