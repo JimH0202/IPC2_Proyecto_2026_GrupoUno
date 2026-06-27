@@ -35,6 +35,6 @@ namespace Orbinet.Web.Models.Entities
         
         // Búfer estructurado (Árbol ABB) que gestiona los mensajes almacenados a bordo.
         /// Su implementación interna dependerá de las estructuras del equipo.
-        public IMessageBuffer? PaquetesABordo { get; set; }
+        public IMessageBuffer PaquetesABordo { get; set; }
     }
 }

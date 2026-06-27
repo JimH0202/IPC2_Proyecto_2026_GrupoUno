@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Orbinet.Web.Models.Entities;                // Para que encuentre MessagePacket
 using Orbinet.Web.Services.SimulationEngine;       // Para que encuentre TickProcessor
-
+using Orbinet.Web.Models.DTOs;
 
 namespace Orbinet.Web.Controllers
 {

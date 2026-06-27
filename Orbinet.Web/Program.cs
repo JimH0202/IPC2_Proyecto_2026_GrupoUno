@@ -37,6 +37,10 @@ builder.Services.AddSingleton<BasicAuthService>();
 builder.Services.AddSingleton<XmlIngestService>();
 builder.Services.AddSingleton<RelayHttpService>();
 builder.Services.AddSingleton<TickProcessor>();
+builder.Services.AddSingleton<OrbitalRotator>();
+builder.Services.AddSingleton<PriorityDispatcher>();
+builder.Services.AddSingleton<RoutingService>();
+builder.Services.AddSingleton<SimulationCoordinator>();
 
 var app = builder.Build();
 
