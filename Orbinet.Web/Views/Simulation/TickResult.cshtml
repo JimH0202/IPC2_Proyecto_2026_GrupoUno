@@ -22,19 +22,19 @@
         <div class="mcard">
             <div class="mtitle">@Localizer["TickResultProcessedMessages"]</div>
             <div class="mval green">@Model.ProcessedMessages</div>
-            <div class="msub">@Localizer["Messages processed in recent ticks"]</div>
+            <div class="msub">@Localizer["MessagesProcessedRecentTicks"]</div>
         </div>
 
         <div class="mcard">
             <div class="mtitle">@Localizer["TickResultActiveSatellites"]</div>
             <div class="mval orange">@Model.ActiveSatellites</div>
-            <div class="msub">@Localizer["Satellites currently active"]</div>
+            <div class="msub">@Localizer["SatellitesCurrentlyActive"]</div>
         </div>
 
         <div class="mcard">
             <div class="mtitle">@Localizer["TickResultPendingMessages"]</div>
             <div class="mval red">@Model.PendingMessages</div>
-            <div class="msub">@Localizer["Messages waiting in queue"]</div>
+            <div class="msub">@Localizer["MessagesWaitingQueue"]</div>
         </div>
     </div>
 
@@ -57,7 +57,7 @@
         </div>
 
         <div class="scard">
-            <div class="slabel">@Localizer["Simulation Status"]</div>
+            <div class="slabel">@Localizer["SimulationStatus"]</div>
             <div class="sval primary">@(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])</div>
             <div class="msub">@Localizer["TickResultCurrentTick"]: @Model.CurrentTick</div>
         </div>
@@ -65,7 +65,7 @@
         <div class="scard">
             <div class="slabel">@Localizer["Processed"]</div>
             <div class="sval">@Model.ProcessedMessages</div>
-            <div class="msub">@Localizer["Total messages processed"]</div>
+            <div class="msub">@Localizer["TotalMessagesProcessed"]</div>
         </div>
     </div>
 

@@ -5,12 +5,12 @@
         <h1>@Localizer["SystemLogs"]</h1>
         <p>@Localizer["SystemLogsDescription"]</p>
     </div>
-    <button class="btn btn-primary btn-sm" onclick="location.reload();">🔄 Actualizar</button>
+    <button class="btn btn-primary btn-sm" onclick="location.reload();">🔄 @Localizer["Refresh"]</button>
 </div>
 
 <div class="tbl-wrap">
     <div class="tbl-toolbar">
-        <input class="search-in" id="searchInput" placeholder="🔍 Buscar en registros..." />
+        <input class="search-in" id="searchInput" placeholder="@Localizer["SearchLogsPlaceholder"]" />
     </div>
     <table class="tbl" id="logsTable">
         <thead>
@@ -36,7 +36,7 @@
         </tbody>
     </table>
     <div class="pag-wrap">
-        <span>Mostrando 1 a @Model.Count de @Model.Count registros</span>
+        <span>@string.Format(Localizer["ShowingRecords"], Model.Count)</span>
         <div class="pag"><span class="cur">1</span></div>
     </div>
 </div>

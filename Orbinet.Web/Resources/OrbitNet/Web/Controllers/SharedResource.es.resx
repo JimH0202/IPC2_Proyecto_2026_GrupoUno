@@ -191,6 +191,39 @@
   <data name="UploadInstructions">
     <value>Selecciona un archivo XML con la configuración de satélites, órbitas y antenas.</value>
   </data>
+  <data name="UploadDragDropPrompt">
+    <value>Arrastra y suelta el archivo XML aquí</value>
+  </data>
+  <data name="UploadOrClickPrompt">
+    <value>o haz clic para seleccionar</value>
+  </data>
+  <data name="UploadSelectFileButton">
+    <value>Seleccionar archivo</value>
+  </data>
+  <data name="UploadAllowedFilesNote">
+    <value>Solo se permiten archivos .xml</value>
+  </data>
+  <data name="UploadSelectedFileLabel">
+    <value>Archivo seleccionado:</value>
+  </data>
+  <data name="UploadConfirmButton">
+    <value>Confirmar carga</value>
+  </data>
+  <data name="UploadChangeFileButton">
+    <value>Cambiar archivo</value>
+  </data>
+  <data name="UploadLastSuccessTitle">
+    <value>✅ Última carga</value>
+  </data>
+  <data name="UploadLastSuccessMeta">
+    <value>Satélites: {0} · Antenas: {1} · Órbitas: {2}</value>
+  </data>
+  <data name="UploadViewDetailButton">
+    <value>Ver detalle</value>
+  </data>
+  <data name="DownloadSvg">
+    <value>Descargar SVG</value>
+  </data>
   <data name="UploadResultTitle">
     <value>Resultado de la carga</value>
   </data>
@@ -421,5 +454,116 @@
   </data>
   <data name="TickResultSatellitesStatusTitle">
     <value>Estado de los Satélites</value>
+  </data>
+  <data name="SimulationDashboardHeader">
+    <value>Dashboard de Simulación</value>
+  </data>
+  <data name="HomeLastUpdated">
+    <value>Última actualización:</value>
+  </data>
+  <data name="HomeTotalSatellites">
+    <value>de {0} satélites totales</value>
+  </data>
+  <data name="HomeQueueStatus">
+    <value>en cola</value>
+  </data>
+  <data name="HomeTotalProcessed">
+    <value>total acumulado</value>
+  </data>
+  <data name="HomeCurrentHemisphere">
+    <value>Hemisferio Actual</value>
+  </data>
+  <data name="HomeSimulationStatus">
+    <value>Estado Simulación</value>
+  </data>
+  <data name="HomeQuickActions">
+    <value>Acciones Rápidas</value>
+  </data>
+  <data name="Refresh">
+    <value>Actualizar</value>
+  </data>
+  <data name="SearchLogsPlaceholder">
+    <value>🔍 Buscar en registros...</value>
+  </data>
+  <data name="SearchSatellitePlaceholder">
+    <value>🔍 Buscar satélite...</value>
+  </data>
+  <data name="ShowingRecords">
+    <value>Mostrando 1 a {0} de {0} registros</value>
+  </data>
+  <data name="ShowingSatellites">
+    <value>Mostrando 1 a {0} de {0} satélites</value>
+  </data>
+  <data name="Statistics">
+    <value>Estadísticas</value>
+  </data>
+  <data name="UploadResultStatus">
+    <value>Estado de carga</value>
+  </data>
+  <data name="UploadResultStatusSubtext">
+    <value>Resumen del resultado de la carga.</value>
+  </data>
+  <data name="UploadResultFileName">
+    <value>Nombre del archivo</value>
+  </data>
+  <data name="UploadResultFileSummary">
+    <value>Nombre y metadatos del archivo cargado</value>
+  </data>
+  <data name="UploadResultMessage">
+    <value>Mensaje</value>
+  </data>
+  <data name="UploadResultSatellitesLoadedDesc">
+    <value>Número de satélites importados desde el XML cargado.</value>
+  </data>
+  <data name="UploadResultAntennasLoadedDesc">
+    <value>Número de antenas importadas desde el XML cargado.</value>
+  </data>
+  <data name="UploadResultDescription">
+    <value>La carga fue procesada. Revisa el archivo y el estado de carga abajo.</value>
+  </data>
+  <data name="Success">
+    <value>Éxito</value>
+  </data>
+  <data name="Error">
+    <value>Error</value>
+  </data>
+  <data name="Details">
+    <value>Detalles</value>
+  </data>
+  <data name="Controls">
+    <value>Controles</value>
+  </data>
+  <data name="SimulationStatus">
+    <value>Estado de la simulación</value>
+  </data>
+  <data name="Processed">
+    <value>Procesado</value>
+  </data>
+  <data name="TotalMessagesProcessed">
+    <value>Mensajes procesados en total</value>
+  </data>
+  <data name="MessagesProcessedRecentTicks">
+    <value>Mensajes procesados en ticks recientes</value>
+  </data>
+  <data name="MessagesWaitingQueue">
+    <value>Mensajes esperando en cola</value>
+  </data>
+  <data name="SatellitesCurrentlyActive">
+    <value>Satélites actualmente activos</value>
+  </data>
+  <data name="Resends">
+    <value>Reenvíos</value>
+  </data>
+  <data name="DiscardedMessages">
+    <value>Mensajes descartados</value>
+  </data>
+  <data name="LastUpdate">
+    <value>Última actualización</value>
+  </data>
+  <data name="NoRecentHistory">
+    <value>No hay historial reciente disponible.</value>
+  </data>
+  <data name="Timestamp">
+    <value>Marca de tiempo</value>
   </data>
 </root>

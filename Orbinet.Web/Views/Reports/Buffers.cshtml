@@ -9,7 +9,7 @@
         <p>@Model.Description</p>
     </div>
     <a asp-controller="Reports" asp-action="ExportSvg" asp-route-report="@reportKey"
-       class="btn btn-primary btn-sm">Descargar SVG</a>
+       class="btn btn-primary btn-sm">@Localizer["DownloadSvg"]</a>
 </div>
 
 <div class="report-wrap">

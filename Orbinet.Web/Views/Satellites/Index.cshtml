@@ -5,12 +5,12 @@
         <h1>@Localizer["SatelliteList"]</h1>
         <p>@Localizer["SatelliteListDescription"]</p>
     </div>
-    <button class="btn btn-primary btn-sm" onclick="location.reload();">🔄 Actualizar</button>
+    <button class="btn btn-primary btn-sm" onclick="location.reload();">🔄 @Localizer["Refresh"]</button>
 </div>
 
 <div class="tbl-wrap">
     <div class="tbl-toolbar">
-        <input class="search-in" id="searchInput" placeholder="🔍 Buscar satélite..." />
+        <input class="search-in" id="searchInput" placeholder="@Localizer["SearchSatellitePlaceholder"]" />
     </div>
     <table class="tbl" id="satelliteTable">
         <thead>
@@ -48,7 +48,7 @@
         </tbody>
     </table>
     <div class="pag-wrap">
-        <span>Mostrando 1 a @Model.Count de @Model.Count satélites</span>
+        <span>@string.Format(Localizer["ShowingSatellites"], Model.Count)</span>
         <div class="pag"><span class="cur">1</span></div>
     </div>
 </div>

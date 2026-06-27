@@ -191,6 +191,39 @@
   <data name="UploadInstructions">
     <value>Select an XML file with satellite, orbit and antenna configuration.</value>
   </data>
+  <data name="UploadDragDropPrompt">
+    <value>Drag and drop the XML file here</value>
+  </data>
+  <data name="UploadOrClickPrompt">
+    <value>or click to select</value>
+  </data>
+  <data name="UploadSelectFileButton">
+    <value>Select file</value>
+  </data>
+  <data name="UploadAllowedFilesNote">
+    <value>Only .xml files are allowed</value>
+  </data>
+  <data name="UploadSelectedFileLabel">
+    <value>Selected file:</value>
+  </data>
+  <data name="UploadConfirmButton">
+    <value>Confirm upload</value>
+  </data>
+  <data name="UploadChangeFileButton">
+    <value>Change file</value>
+  </data>
+  <data name="UploadLastSuccessTitle">
+    <value>✅ Latest upload</value>
+  </data>
+  <data name="UploadLastSuccessMeta">
+    <value>Satellites: {0} · Antennas: {1} · Orbits: {2}</value>
+  </data>
+  <data name="UploadViewDetailButton">
+    <value>View Details</value>
+  </data>
+  <data name="DownloadSvg">
+    <value>Download SVG</value>
+  </data>
   <data name="UploadResultTitle">
     <value>Upload Result</value>
   </data>
@@ -421,5 +454,116 @@
   </data>
   <data name="TickResultSatellitesStatusTitle">
     <value>Satellite Status</value>
+  </data>
+  <data name="SimulationDashboardHeader">
+    <value>Simulation Dashboard</value>
+  </data>
+  <data name="HomeLastUpdated">
+    <value>Last updated:</value>
+  </data>
+  <data name="HomeTotalSatellites">
+    <value>of {0} total satellites</value>
+  </data>
+  <data name="HomeQueueStatus">
+    <value>in queue</value>
+  </data>
+  <data name="HomeTotalProcessed">
+    <value>total processed</value>
+  </data>
+  <data name="HomeCurrentHemisphere">
+    <value>Current Hemisphere</value>
+  </data>
+  <data name="HomeSimulationStatus">
+    <value>Simulation Status</value>
+  </data>
+  <data name="HomeQuickActions">
+    <value>Quick Actions</value>
+  </data>
+  <data name="Refresh">
+    <value>Refresh</value>
+  </data>
+  <data name="SearchLogsPlaceholder">
+    <value>🔍 Search logs...</value>
+  </data>
+  <data name="SearchSatellitePlaceholder">
+    <value>🔍 Search satellite...</value>
+  </data>
+  <data name="ShowingRecords">
+    <value>Showing 1 to {0} of {0} records</value>
+  </data>
+  <data name="ShowingSatellites">
+    <value>Showing 1 to {0} of {0} satellites</value>
+  </data>
+  <data name="Statistics">
+    <value>Statistics</value>
+  </data>
+  <data name="UploadResultStatus">
+    <value>Upload status</value>
+  </data>
+  <data name="UploadResultStatusSubtext">
+    <value>Upload process result summary.</value>
+  </data>
+  <data name="UploadResultFileName">
+    <value>File Name</value>
+  </data>
+  <data name="UploadResultFileSummary">
+    <value>Uploaded file name and metadata</value>
+  </data>
+  <data name="UploadResultMessage">
+    <value>Message</value>
+  </data>
+  <data name="UploadResultSatellitesLoadedDesc">
+    <value>Number of satellites imported from the uploaded XML.</value>
+  </data>
+  <data name="UploadResultAntennasLoadedDesc">
+    <value>Number of antennas imported from the uploaded XML.</value>
+  </data>
+  <data name="UploadResultDescription">
+    <value>The upload was processed. Review file and load states below.</value>
+  </data>
+  <data name="Success">
+    <value>Success</value>
+  </data>
+  <data name="Error">
+    <value>Error</value>
+  </data>
+  <data name="Details">
+    <value>Details</value>
+  </data>
+  <data name="Controls">
+    <value>Controls</value>
+  </data>
+  <data name="SimulationStatus">
+    <value>Simulation Status</value>
+  </data>
+  <data name="Processed">
+    <value>Processed</value>
+  </data>
+  <data name="TotalMessagesProcessed">
+    <value>Total messages processed</value>
+  </data>
+  <data name="MessagesProcessedRecentTicks">
+    <value>Messages processed in recent ticks</value>
+  </data>
+  <data name="MessagesWaitingQueue">
+    <value>Messages waiting in queue</value>
+  </data>
+  <data name="SatellitesCurrentlyActive">
+    <value>Satellites currently active</value>
+  </data>
+  <data name="Resends">
+    <value>Resends</value>
+  </data>
+  <data name="DiscardedMessages">
+    <value>Discarded messages</value>
+  </data>
+  <data name="LastUpdate">
+    <value>Last update</value>
+  </data>
+  <data name="NoRecentHistory">
+    <value>No recent history available.</value>
+  </data>
+  <data name="Timestamp">
+    <value>Timestamp</value>
   </data>
 </root>

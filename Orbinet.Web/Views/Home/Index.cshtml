@@ -1,7 +1,7 @@
 @model OrbitNet.Web.Models.ViewModels.DashboardViewModel
 
 <div class="page-header">
-    <h1>@Localizer["Dashboard"] de Simulación</h1>
+    <h1>@Localizer["SimulationDashboardTitle"]</h1>
     <p>@Localizer["HomeDescription"]</p>
 </div>
 
@@ -9,22 +9,22 @@
     <div class="mcard">
         <div class="mtitle">@Localizer["CurrentTick"]</div>
         <div class="mval blue">@Model.CurrentTick</div>
-        <div class="msub">Última actualización: @DateTime.Now.ToString("dd/MM/yyyy")</div>
+        <div class="msub">@Localizer["HomeLastUpdated"] @DateTime.Now.ToString("dd/MM/yyyy")</div>
     </div>
     <div class="mcard">
         <div class="mtitle">@Localizer["ActiveSatellites"]</div>
         <div class="mval green">@Model.ActiveSatellites</div>
-        <div class="msub">de @Model.Satellites.Count totales</div>
+        <div class="msub">@string.Format(Localizer["HomeTotalSatellites"], Model.Satellites.Count)</div>
     </div>
     <div class="mcard">
         <div class="mtitle">@Localizer["PendingMessages"]</div>
         <div class="mval orange">@Model.PendingMessages</div>
-        <div class="msub">en cola</div>
+        <div class="msub">@Localizer["HomeQueueStatus"]</div>
     </div>
     <div class="mcard">
         <div class="mtitle">@Localizer["ProcessedMessages"]</div>
         <div class="mval red">@Model.ProcessedMessages</div>
-        <div class="msub">total acumulado</div>
+        <div class="msub">@Localizer["HomeTotalProcessed"]</div>
     </div>
 </div>
 
@@ -34,11 +34,11 @@
         <div class="sval primary">@Model.TotalAntennas</div>
     </div>
     <div class="scard">
-        <div class="slabel">Hemisferio Actual</div>
+        <div class="slabel">@Localizer["HomeCurrentHemisphere"]</div>
         <div class="sval primary">@(Model.Hemisphere == "North" ? Localizer["HemisphereNorth"] : Localizer["HemisphereSouth"])</div>
     </div>
     <div class="scard">
-        <div class="slabel">Estado Simulación</div>
+        <div class="slabel">@Localizer["HomeSimulationStatus"]</div>
         <div style="margin-top:4px">
             <span class="badge badge-sim @(Model.IsSimulationRunning ? "" : "badge-inactive")">
                 @(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])
@@ -48,7 +48,7 @@
 </div>
 
 <div class="sec">
-    <h3>Acciones Rápidas</h3>
+    <h3>@Localizer["HomeQuickActions"]</h3>
     <div class="actions">
         <form asp-controller="Simulation" asp-action="TickResult" method="post" style="display:inline">
             <button type="submit" class="btn btn-secondary">@Localizer["ExecuteTick"]</button>
