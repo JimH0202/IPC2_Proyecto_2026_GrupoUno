@@ -49,6 +49,23 @@ public class ListaAntenas : IAbstractCollection
         return null;
     }
 
+    // El metodo busca una antena en la lista por su direccion IP.
+    public GroundAntenna? SearchByIp(string ip)
+    {
+        for (int i = 0; i < lista.Count; i++)
+        {
+            var antena = lista.Get(i);
+
+            if (antena != null && antena.Ip == ip)
+            {
+                return antena;
+            }
+        }
+
+        return null;
+    }
+
+
     // El metodo elimina todas las antenas terrestres de la lista enlazada, estableciendo head y tail a null y reiniciando el contador de elementos a cero.
     public void Clear()
     {
