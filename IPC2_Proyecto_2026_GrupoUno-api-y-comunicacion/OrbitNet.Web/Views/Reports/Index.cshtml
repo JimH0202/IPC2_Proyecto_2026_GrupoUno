@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = Localizer["ReportPageTitle"];
+}
+
+<div class="page-header">
+    <div>
+        <h1>@Localizer["ReportPageTitle"]</h1>
+        <p class="report-description">@Localizer["ReportsPageDescription"]</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["BackToDashboard"]</a>
+    </div>
+</div>
+
+<div class="reports-grid">
+    <div class="report-card">
+        <h3>@Localizer["ReportCardMemory"]</h3>
+        <p>@Localizer["ReportCardMemoryDescription"]</p>
+        <a asp-controller="Reports" asp-action="MemoryLayout" class="action-card">@Localizer["ViewReport"]</a>
+    </div>
+
+    <div class="report-card">
+        <h3>@Localizer["ReportCardMatrix"]</h3>
+        <p>@Localizer["ReportCardMatrixDescription"]</p>
+        <a asp-controller="Reports" asp-action="Matrix" class="action-card">@Localizer["ViewReport"]</a>
+    </div>
+
+    <div class="report-card">
+        <h3>@Localizer["ReportCardBuffers"]</h3>
+        <p>@Localizer["ReportCardBuffersDescription"]</p>
+        <a asp-controller="Reports" asp-action="Buffers" class="action-card">@Localizer["ViewReport"]</a>
+    </div>
+
+    <div class="report-card">
+        <h3>@Localizer["ReportCardRouting"]</h3>
+        <p>@Localizer["ReportCardRoutingDescription"]</p>
+        <a asp-controller="Reports" asp-action="Routing" class="action-card">@Localizer["ViewReport"]</a>
+    </div>
+</div>

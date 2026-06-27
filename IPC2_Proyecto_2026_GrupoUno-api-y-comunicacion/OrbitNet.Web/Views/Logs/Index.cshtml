@@ -1,0 +1,40 @@
+@model List<OrbitNet.Web.Models.ViewModels.LogViewModel>
+
+<div class="page-header">
+    <div>
+        <h1>@Localizer["SystemLogs"]</h1>
+        <p class="report-description">@Localizer["SystemLogsDescription"]</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["BackToDashboard"]</a>
+    </div>
+</div>
+
+<div class="log-summary">
+    <p>@Localizer["TotalLogs"] <strong>@Model.Count</strong></p>
+</div>
+
+<div class="section-card">
+    <h3>@Localizer["LatestLogs"]</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>@Localizer["Date"]</th>
+                <th>@Localizer["Level"]</th>
+                <th>@Localizer["Event"]</th>
+                <th>@Localizer["DetailsLabel"]</th>
+            </tr>
+        </thead>
+    <tbody>
+    @foreach (var log in Model)
+    {
+        <tr>
+            <td>@log.Timestamp.ToString("g")</td>
+            <td><span class="log-level log-@log.Level.ToLower()">@log.Level</span></td>
+            <td>@log.Event</td>
+            <td>@log.Details</td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
