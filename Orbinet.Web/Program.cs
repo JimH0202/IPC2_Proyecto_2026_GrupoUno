@@ -8,7 +8,26 @@ using System.Globalization;
 var builder = WebApplication.CreateBuilder(args);
 
 var portEnv = Environment.GetEnvironmentVariable("ASPNETCORE_PORT");
-var port = string.IsNullOrWhiteSpace(portEnv) ? "5000" : portEnv;
+var urlsEnv = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
+var port = string.Empty;
+
+if (!string.IsNullOrWhiteSpace(portEnv))
+{
+    port = portEnv;
+}
+else if (!string.IsNullOrWhiteSpace(urlsEnv))
+{
+    var firstUrl = urlsEnv.Split(';', StringSplitOptions.RemoveEmptyEntries)[0].Trim();
+    if (Uri.TryCreate(firstUrl, UriKind.Absolute, out var parsedUrl))
+    {
+        port = parsedUrl.Port.ToString();
+    }
+}
+
+if (string.IsNullOrWhiteSpace(port))
+{
+    port = "5000";
+}
 
 var hemisphere = Environment.GetEnvironmentVariable("HEMISPHERE");
 if (string.IsNullOrWhiteSpace(hemisphere))
