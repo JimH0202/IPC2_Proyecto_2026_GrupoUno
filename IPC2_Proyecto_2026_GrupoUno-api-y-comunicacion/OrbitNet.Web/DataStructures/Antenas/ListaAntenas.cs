@@ -19,6 +19,7 @@ public class ListaAntenas
         lista.Add(antena);
     }
 
+    // El metodo busca una antena en la lista por su identificador unico (id).
     public GroundAntenna? SearchById(string id)
     {
         for (int i = 0; i < lista.Count; i++)
@@ -27,6 +28,22 @@ public class ListaAntenas
             if (antena != null && antena.Id == id)
                 return antena;
         }
+        return null;
+    }
+
+    // El metodo busca una antena en la lista por su direccion IP.
+    public GroundAntenna? SearchByIp(string ip)
+    {
+        for (int i = 0; i < lista.Count; i++)
+        {
+            var antena = lista.Get(i);
+
+            if (antena != null && antena.Ip == ip)
+            {
+                return antena;
+            }
+        }
+
         return null;
     }
 
