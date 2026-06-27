@@ -39,6 +39,8 @@ namespace Orbinet.Web.Models.Entities
         
         // Contador de satélites detectados en la última iteración de rotación orbital.
         public SatelliteStateIndex SatelliteStates { get; set; }
+
+        public SatelliteRuntimeIndex SatelliteRuntime { get; set; }
         
         
         /// Inicializa una nueva instancia de <see cref="OrbitNetStore"/> con valores iniciales seguros.
@@ -57,6 +59,7 @@ namespace Orbinet.Web.Models.Entities
             RedSatellites = new RedSatelitalPlano();
             EstructuraAntenas = null;
             SatelliteStates = new SatelliteStateIndex();
+            SatelliteRuntime = new SatelliteRuntimeIndex();
         }
     }
 }
