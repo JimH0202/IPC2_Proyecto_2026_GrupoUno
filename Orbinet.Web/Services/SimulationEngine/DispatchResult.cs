@@ -13,6 +13,7 @@ namespace Orbinet.Web.Services.SimulationEngine
 
         public DispatchResult()
         {
+            
             Details = string.Empty;
         }
     }
