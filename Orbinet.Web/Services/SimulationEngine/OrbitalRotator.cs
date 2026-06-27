@@ -337,6 +337,5 @@ namespace Orbinet.Web.Services.SimulationEngine
                 current = current.Next;
             }
         }
-        }
     }
 }
