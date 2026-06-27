@@ -47,6 +47,10 @@ builder.Services.AddControllersWithViews()
 
 builder.Services.Configure<AppInstanceSettings>(builder.Configuration.GetSection("SystemConfiguration"));
 
+// Register communication services for cross-port relay
+builder.Services.AddSingleton<BasicAuthService>();
+builder.Services.AddHttpClient<RelayHttpService>();
+
 builder.WebHost.UseUrls($"http://localhost:{port}");
 
 var app = builder.Build();
