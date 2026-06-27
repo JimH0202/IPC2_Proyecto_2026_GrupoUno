@@ -3,9 +3,9 @@ namespace OrbitNet.Web.DataStructures.Antenas;
 using OrbitNet.Web.DataStructures.Listas;
 using OrbitNet.Web.Models.Entities;
 
-// Punto de integracion para Graphviz
-// La lista enlazada de antenas puede recorrerse iniciando desde 'head'
-// para generar la representacion grafica de la estructura.
+/// Punto de integracion para Graphviz:
+// La lista de antenas puede recorrerse desde la estructura ListaEnlazada
+// para generar la representacion grafica.
 
 public class ListaAntenas
 {
