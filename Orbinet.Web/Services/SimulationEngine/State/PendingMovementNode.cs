@@ -15,6 +15,8 @@ namespace Orbinet.Web.Services.SimulationEngine.State
 
         public bool IsValid { get; set; }
 
+        public double NextAngle { get; set; }
+
         public SatelliteStateNode? StateRef { get; set; }
         public PendingMovementNode? Next { get; set; }
 
@@ -23,6 +25,7 @@ namespace Orbinet.Web.Services.SimulationEngine.State
             SatelliteId = string.Empty;
             IpAddress = string.Empty;
             IsValid = true;
+            NextAngle = 0;
             Next = null;
         }
     }

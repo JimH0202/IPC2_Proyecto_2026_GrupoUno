@@ -76,6 +76,7 @@ namespace Orbinet.Web.Services.SimulationEngine
                             TargetRow = targetRow,
                             TargetColumn = targetColumn,
                             StateRef = state,
+                            NextAngle = nextAngle,
                             IsValid = true
                         };
 
@@ -275,7 +276,6 @@ namespace Orbinet.Web.Services.SimulationEngine
 
         private void ApplyMovements(PendingMovementNode? head, OrbitalRotationResult result)
         {
-            // Fase 1: eliminar posiciones anteriores válidas
             PendingMovementNode? current = head;
 
             while (current != null)
@@ -288,10 +288,7 @@ namespace Orbinet.Web.Services.SimulationEngine
                 {
                     if (current.StateRef != null)
                     {
-                        current.StateRef.OrbitalAngle = CalculateNextAngle(
-                            current.StateRef.OrbitalAngle,
-                            current.StateRef.OrbitType
-                        );
+                        current.StateRef.OrbitalAngle = current.NextAngle;
                     }
 
                     result.SkippedByCollision++;
@@ -300,7 +297,6 @@ namespace Orbinet.Web.Services.SimulationEngine
                 current = current.Next;
             }
 
-            // Fase 2: insertar nuevas posiciones válidas y actualizar estado interno
             current = head;
 
             while (current != null)
@@ -320,17 +316,13 @@ namespace Orbinet.Web.Services.SimulationEngine
                         {
                             current.StateRef.CurrentRow = current.TargetRow;
                             current.StateRef.CurrentColumn = current.TargetColumn;
-                            current.StateRef.OrbitalAngle = CalculateNextAngle(
-                                current.StateRef.OrbitalAngle,
-                                current.StateRef.OrbitType
-                            );
-                        }
+                            current.StateRef.OrbitalAngle = current.NextAngle;
+                    }
 
                         result.RotatedSuccessfully++;
                     }
                     else
                     {
-                        // Restauración mínima si el insert falla inesperadamente
                         _store.RedSatellites.Insert(
                             current.SourceRow,
                             current.SourceColumn,
@@ -344,6 +336,7 @@ namespace Orbinet.Web.Services.SimulationEngine
 
                 current = current.Next;
             }
+        }
         }
     }
 }
