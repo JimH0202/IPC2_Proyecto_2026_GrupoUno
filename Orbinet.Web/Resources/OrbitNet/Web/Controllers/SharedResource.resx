@@ -293,6 +293,9 @@
   <data name="ActiveSatellite">
     <value>Active Satellite</value>
   </data>
+  <data name="InactiveSatellite">
+    <value>Inactive Satellite</value>
+  </data>
   <data name="EmptySpace">
     <value>Empty Space</value>
   </data>
@@ -355,6 +358,9 @@
   </data>
   <data name="SatelliteDetailDescription">
     <value>Complete information about the selected satellite and its recent activity.</value>
+  </data>
+  <data name="RecentHistory">
+    <value>Recent History</value>
   </data>
   <data name="SatelliteSummary">
     <value>Satellite summary</value>

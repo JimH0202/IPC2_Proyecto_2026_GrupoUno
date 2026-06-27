@@ -17,7 +17,7 @@
         <div class="mval orange">@Model.PendingMessages</div>
     </div>
     <div class="mcard">
-        <div class="mtitle">Estado</div>
+        <div class="mtitle">@Localizer["Status"]</div>
         <div style="margin-top:6px">
             <span class="badge badge-sim @(Model.IsSimulationRunning ? "" : "badge-inactive")">
                 @(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])
