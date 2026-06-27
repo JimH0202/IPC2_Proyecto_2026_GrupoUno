@@ -3,6 +3,9 @@ using Orbinet.Web.Models.Enums;
 
 namespace Orbinet.Web.Services.SimulationEngine
 {
+    //Recibe el mensaje de MessagePacket, Busca si existe la IP en ListasAntenas
+    //Si existe lo entrega y lo mete en PaquetesRecibidos
+    //Si no existe lo deja como Reenviado y devuelve false.
     public class RoutingService
     {
         // Referencia al almacén central del sistema.
