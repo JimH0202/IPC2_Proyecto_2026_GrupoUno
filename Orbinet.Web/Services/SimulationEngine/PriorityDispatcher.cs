@@ -36,7 +36,7 @@ namespace Orbinet.Web.Services.SimulationEngine
                         continue;
                     }
 
-                    if (satellite.PaquetesABordo == null || satellite.PaquetesABordo.IsEmpty)
+                    if (satellite.PaquetesABordo.IsEmpty)
                     {
                         result.EmptyBuffers++;
                         current = current.Right;
@@ -47,22 +47,25 @@ namespace Orbinet.Web.Services.SimulationEngine
 
                     MessagePacket? packet = satellite.PaquetesABordo.ObtenerSiguiente();
 
-                    if (packet != null)
+                    if (packet == null)
                     {
-                        packet.Status = MessageStatus.EnTransito;
-                        packet.HopCount++;
+                        current = current.Right;
+                        continue;
+                    }
 
-                        result.MessagesDispatched++;
+                    packet.Status = MessageStatus.EnTransito;
+                    packet.HopCount++;
 
-                        if (EsEntregaLocal(packet.DestinationIp))
-                        {
-                            packet.Status = MessageStatus.Entregado;
-                            result.LocalDeliveries++;
-                        }
-                        else
-                        {
-                            result.CrossPortCandidates++;
-                        }
+                    result.MessagesDispatched++;
+
+                    if (EsEntregaLocal(packet.DestinationIp))
+                    {
+                        packet.Status = MessageStatus.Entregado;
+                        result.LocalDeliveries++;
+                    }
+                    else
+                    {
+                        result.CrossPortCandidates++;
                     }
 
                     current = current.Right;
@@ -78,7 +81,8 @@ namespace Orbinet.Web.Services.SimulationEngine
                 ", mensajes despachados: " + result.MessagesDispatched +
                 ", entregas locales: " + result.LocalDeliveries +
                 ", candidatos cross-port: " + result.CrossPortCandidates +
-                ", satélites sin runtime: " + result.MissingSatelliteRuntime + ".";
+                ", satélites sin runtime: " + result.MissingSatelliteRuntime +
+                ", buffers vacíos: " + result.EmptyBuffers + ".";
 
             return result;
         }
