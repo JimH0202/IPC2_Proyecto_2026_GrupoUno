@@ -1,5 +1,6 @@
 using Orbinet.Web.DataStructures.Matrix;
 using Orbinet.Web.Services.SimulationEngine.State;
+using Orbinet.Web.DataStructures.Antenas;
       
 // NOTA: Si las antenas se guardan en el AVL, aquí se importa su namespace corporativo
 
@@ -35,7 +36,7 @@ namespace Orbinet.Web.Models.Entities
         /// Referencia directa a la Matriz Dispersa que representa la red satelital física en el espacio.
         public RedSatelitalPlano RedSatellites { get; set; }
         /// Referencia a la estructura que almacena las antenas terrestres (se actualizará con el tipo AVL o Lista del Integrante 1).
-        public object? EstructuraAntenas { get; set; }
+        public ListaAntenas Antenas { get; set; }
         
         // Contador de satélites detectados en la última iteración de rotación orbital.
         public SatelliteStateIndex SatelliteStates { get; set; }
@@ -57,7 +58,7 @@ namespace Orbinet.Web.Models.Entities
 
             // Instanciamos la matriz dispersa para que el motor no de errores de referencia nula al iniciar
             RedSatellites = new RedSatelitalPlano();
-            EstructuraAntenas = null;
+            Antenas = new ListaAntenas();
             SatelliteStates = new SatelliteStateIndex();
             SatelliteRuntime = new SatelliteRuntimeIndex();
         }

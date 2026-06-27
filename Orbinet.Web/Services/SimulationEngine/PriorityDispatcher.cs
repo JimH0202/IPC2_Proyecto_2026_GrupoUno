@@ -90,14 +90,8 @@ namespace Orbinet.Web.Services.SimulationEngine
                 return false;
             }
 
-            if (_store.EstructuraAntenas == null)
-            {
-                return false;
-            }
-
-            // Aquí después puedes reemplazar esta lógica por la lista real de antenas.
-            // Por ahora dejamos un criterio mínimo no invasivo.
-            return destinationIp == "10.0.0.50" || destinationIp == "10.0.0.90";
+            GroundAntenna? antenna = _store.Antenas.SearchByIp(destinationIp);
+            return antenna != null;
         }
     }
 }
