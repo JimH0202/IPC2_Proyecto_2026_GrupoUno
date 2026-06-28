@@ -90,8 +90,23 @@ namespace OrbitNet.Web.Controllers
                 });
             }
 
-            // 3. Si no fue cross-port, significa que se queda en este hemisferio: lo encolamos
-            _store.EncolarPaquete(paquete);
+            // 3. Cambio para Reciente DOmingo 13:38 .
+            // Ahora sí lo insertamos en el buffer real del satélite receptor.
+            Satellite? sateliteReceptor = _store.SatelliteRuntime.FindSatellite(_store.ReceptorSatelliteId);
+
+            if (sateliteReceptor == null)
+            {
+                return StatusCode(500, new RelayErrorResponse
+                {
+                    Status = "Error",
+                    Details = "No se encontro el satelite receptor configurado en memoria: " + _store.ReceptorSatelliteId
+                });
+            }
+
+            sateliteReceptor.PaquetesABordo.Agregar(paquete);
+
+            // Actualizamos un valor simple de ocupación global para respuesta visual.
+            _store.QueueOccupancyPercentage = _store.CalcularOcupacionCola();
 
             return StatusCode(201, new RelaySuccessResponse
             {
