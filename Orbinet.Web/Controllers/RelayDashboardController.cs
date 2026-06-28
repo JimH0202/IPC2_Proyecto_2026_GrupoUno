@@ -83,6 +83,19 @@ public class RelayDashboardController : Controller
                 return StatusCode(502, new { status = "error", message = "No se pudo enviar el paquete al hemisferio hermano." });
             }
 
+            var route = _store.Routes.FirstOrDefault(x =>
+                string.Equals(x.FromSatellite, request.FromSatellite, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(x.ToAntenna, request.ToAntenna, StringComparison.OrdinalIgnoreCase));
+
+            if (route != null)
+            {
+                route.PacketCount += 1;
+                route.Status = "Resent";
+                route.LastSeen = DateTime.Now;
+                route.PacketData = $"{route.PacketCount} paquetes reenviados";
+                route.QueueOccupancyPercentage = Math.Min(100, route.QueueOccupancyPercentage + 5);
+            }
+
             return StatusCode(201, new
             {
                 status = "success",

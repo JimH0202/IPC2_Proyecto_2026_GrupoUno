@@ -218,7 +218,8 @@
                 row.innerHTML = `
                     <td>${route.fromSatellite}</td>
                     <td>${route.toAntenna}</td>
-                    <td><span class="badge badge-${route.status.toLowerCase()}">${route.status}</span></td>
+                    <td><span class="badge badge-${route.status.toLowerCase() === 'resent' ? 'resent' : route.status.toLowerCase()}">${route.status}</span></td>
+                    <td>${route.packetCount}</td>
                     <td>
                         <div class="progress-cell">
                             <div class="progress-bar" style="width:${route.queueOccupancyPercentage}%"></div>
@@ -322,6 +323,7 @@
                 }
 
                 showToast(payload.message, 'success');
+                fetchRefresh();
             } catch (error) {
                 showToast(error.message || 'Error al reenviar paquete', 'danger');
             }

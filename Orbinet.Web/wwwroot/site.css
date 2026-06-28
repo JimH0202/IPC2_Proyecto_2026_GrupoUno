@@ -407,12 +407,19 @@ body {
 .badge-warn,
 .badge-error,
 .badge-active,
-.badge-inactive {
+.badge-inactive,
+.badge-resent {
     padding: 4px 10px;
     border-radius: 999px;
     font-size: 10px;
     display: inline-flex;
     align-items: center;
+}
+
+.badge-resent {
+    background-color: #f8fafc;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
 }
 
 @media (max-width: 1024px) {
