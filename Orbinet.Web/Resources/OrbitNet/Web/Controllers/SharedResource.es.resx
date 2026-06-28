@@ -560,6 +560,177 @@
   <data name="Resends">
     <value>Reenvíos</value>
   </data>
+  <data name="RelayTitle">
+    <value>Comunicación Relay</value>
+  </data>
+  <data name="RelayDescription">
+    <value>Supervisa rutas relay, buffers y el reenvío de paquetes entre hemisferios.</value>
+  </data>
+  <data name="ActiveRelaysNote">
+    <value>Relays actualmente activos.</value>
+  </data>
+  <data name="InactiveRelaysNote">
+    <value>Relays actualmente inactivos.</value>
+  </data>
+  <data name="TotalPacketsNote">
+    <value>Total de paquetes que atraviesan la red relay.</value>
+  </data>
+  <data name="QueueOccupancyNote">
+    <value>Ocupación actual de cola para las rutas relay.</value>
+  </data>
+  <data name="AvgQueue">
+    <value>Cola media</value>
+  </data>
+  <data name="QueueHistory">
+    <value>Historial de cola</value>
+  </data>
+  <data name="QueueHistoryDescription">
+    <value>Vista histórica de la ocupación de colas relay.</value>
+  </data>
+  <data name="CurrentAverageOccupancy">
+    <value>Ocupación media actual</value>
+  </data>
+  <data name="AverageOccupancyDescription">
+    <value>Ocupación media actual de cola en todos los buffers relay.</value>
+  </data>
+  <data name="PacketDetail">
+    <value>Detalle del paquete</value>
+  </data>
+  <data name="PacketDetails">
+    <value>Detalles del paquete</value>
+  </data>
+  <data name="DetailPanelSubtitle">
+    <value>Inspecciona rutas de paquetes y toma acciones de control.</value>
+  </data>
+  <data name="QuickActions">
+    <value>Acciones rápidas</value>
+  </data>
+  <data name="ResendPendingPackets">
+    <value>Reenviar paquetes pendientes</value>
+  </data>
+  <data name="AutoRefresh">
+    <value>Actualización automática</value>
+  </data>
+  <data name="Interval">
+    <value>Intervalo</value>
+  </data>
+  <data name="RecentEvents">
+    <value>Eventos recientes</value>
+  </data>
+  <data name="DashboardUpdated">
+    <value>Panel actualizado</value>
+  </data>
+  <data name="AutoRefreshEnabled">
+    <value>Actualización automática activada</value>
+  </data>
+  <data name="AutoRefreshDisabled">
+    <value>Actualización automática desactivada</value>
+  </data>
+  <data name="CommunicationRoutesDescription">
+    <value>Visión general de rutas relay activas y flujo de paquetes.</value>
+  </data>
+  <data name="BuffersDescription">
+    <value>Vista detallada de la utilización y controles de buffers relay.</value>
+  </data>
+  <data name="BufferId">
+    <value>ID de buffer</value>
+  </data>
+  <data name="CapacityPercentage">
+    <value>Capacidad %</value>
+  </data>
+  <data name="ItemsInQueue">
+    <value>Elementos en cola</value>
+  </data>
+  <data name="FromSatellite">
+    <value>Desde satélite</value>
+  </data>
+  <data name="ToAntenna">
+    <value>Hacia antena</value>
+  </data>
+  <data name="QueueOccupancy">
+    <value>Ocupación de cola</value>
+  </data>
+  <data name="LastSeen">
+    <value>Última vez visto</value>
+  </data>
+  <data name="RouteId">
+    <value>ID de ruta</value>
+  </data>
+  <data name="Origin">
+    <value>Origen</value>
+  </data>
+  <data name="Destination">
+    <value>Destino</value>
+  </data>
+  <data name="ConfirmAction">
+    <value>Confirmar acción</value>
+  </data>
+  <data name="ConfirmActionMessage">
+    <value>¿Seguro que desea realizar esta acción?</value>
+  </data>
+  <data name="Confirm">
+    <value>Confirmar</value>
+  </data>
+  <data name="Cancel">
+    <value>Cancelar</value>
+  </data>
+  <data name="Close">
+    <value>Cerrar</value>
+  </data>
+  <data name="Copy">
+    <value>Copiar</value>
+  </data>
+  <data name="Information">
+    <value>Información</value>
+  </data>
+  <data name="Metadata">
+    <value>Metadatos</value>
+  </data>
+  <data name="Priority">
+    <value>Prioridad</value>
+  </data>
+  <data name="Free">
+    <value>Libre</value>
+  </data>
+  <data name="Used">
+    <value>Usado</value>
+  </data>
+  <data name="CurrentHemisphere">
+    <value>Hemisferio actual</value>
+  </data>
+  <data name="LastUpdated">
+    <value>Última actualización</value>
+  </data>
+  <data name="ActiveRelays">
+    <value>Relays activos</value>
+  </data>
+  <data name="InactiveRelays">
+    <value>Relays inactivos</value>
+  </data>
+  <data name="TotalPackets">
+    <value>Total de paquetes procesados</value>
+  </data>
+  <data name="AvgQueueOccupancy">
+    <value>Ocupación media de cola</value>
+  </data>
+  <data name="RoutesHeader">
+    <value>Rutas Relay</value>
+  </data>
+  <data name="BuffersHeader">
+    <value>Buffers Relay</value>
+  </data>
+  <data name="Resend">
+    <value>Reenviar</value>
+  </data>
+  <data name="ClearBuffer">
+    <value>Limpiar buffer</value>
+  </data>
+  <data name="ExportCsv">
+    <value>Exportar CSV</value>
+  </data>
+  <data name="ViewDetail">
+    <value>Ver detalle</value>
+  </data>
   <data name="DiscardedMessages">
     <value>Mensajes descartados</value>
   </data>

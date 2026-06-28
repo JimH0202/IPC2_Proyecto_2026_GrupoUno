@@ -4,7 +4,7 @@
 
 <div class="card table-card">
     <div class="card-header">
-        <h2>@Localizer["CommunicationRoutes"]</h2>
+        <h2>@Localizer["RoutesHeader"]</h2>
         <span class="card-subtitle">@Localizer["CommunicationRoutesDescription"]</span>
     </div>
 
@@ -35,7 +35,7 @@
                         </td>
                         <td>@route.LastSeen.ToString("dd/MM/yyyy HH:mm")</td>
                         <td>
-                            <button class="btn btn-secondary btn-sm" type="button" data-action="view-details" data-route-id="@route.FromSatellite">@Localizer["ViewDetails"]</button>
+                            <button class="btn btn-secondary btn-sm" type="button" data-action="view-details" data-route-id="@route.FromSatellite">@Localizer["ViewDetail"]</button>
                             <button class="btn btn-primary btn-sm" type="button" data-action="resend-route" data-from="@route.FromSatellite" data-to="@route.ToAntenna">@Localizer["Resend"]</button>
                             <button class="btn btn-outline btn-sm" type="button" data-action="copy-route" data-route-id="@route.FromSatellite">@Localizer["Copy"]</button>
                         </td>

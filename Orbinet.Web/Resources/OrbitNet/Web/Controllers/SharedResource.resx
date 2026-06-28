@@ -560,6 +560,177 @@
   <data name="Resends">
     <value>Resends</value>
   </data>
+  <data name="RelayTitle">
+    <value>Relay Communication</value>
+  </data>
+  <data name="RelayDescription">
+    <value>Monitor relay routes, buffers and packet forwarding between hemispheres.</value>
+  </data>
+  <data name="ActiveRelaysNote">
+    <value>Number of relays currently active.</value>
+  </data>
+  <data name="InactiveRelaysNote">
+    <value>Number of relays currently inactive.</value>
+  </data>
+  <data name="TotalPacketsNote">
+    <value>Total packets moving through the relay network.</value>
+  </data>
+  <data name="QueueOccupancyNote">
+    <value>Current queue occupancy for relay routes.</value>
+  </data>
+  <data name="AvgQueue">
+    <value>Average queue</value>
+  </data>
+  <data name="QueueHistory">
+    <value>Queue history</value>
+  </data>
+  <data name="QueueHistoryDescription">
+    <value>Historical view of relay queue occupancy.</value>
+  </data>
+  <data name="CurrentAverageOccupancy">
+    <value>Current average occupancy</value>
+  </data>
+  <data name="AverageOccupancyDescription">
+    <value>Current average queue occupancy across all relay buffers.</value>
+  </data>
+  <data name="PacketDetail">
+    <value>Packet detail</value>
+  </data>
+  <data name="PacketDetails">
+    <value>Packet details</value>
+  </data>
+  <data name="DetailPanelSubtitle">
+    <value>Inspect packet routes and take control actions.</value>
+  </data>
+  <data name="QuickActions">
+    <value>Quick actions</value>
+  </data>
+  <data name="ResendPendingPackets">
+    <value>Resend pending packets</value>
+  </data>
+  <data name="AutoRefresh">
+    <value>Auto refresh</value>
+  </data>
+  <data name="Interval">
+    <value>Interval</value>
+  </data>
+  <data name="RecentEvents">
+    <value>Recent events</value>
+  </data>
+  <data name="DashboardUpdated">
+    <value>Dashboard updated</value>
+  </data>
+  <data name="AutoRefreshEnabled">
+    <value>Auto-refresh enabled</value>
+  </data>
+  <data name="AutoRefreshDisabled">
+    <value>Auto-refresh disabled</value>
+  </data>
+  <data name="CommunicationRoutesDescription">
+    <value>Overview of active relay routes and packet flow.</value>
+  </data>
+  <data name="BuffersDescription">
+    <value>Detailed view of relay buffer utilization and controls.</value>
+  </data>
+  <data name="BufferId">
+    <value>Buffer ID</value>
+  </data>
+  <data name="CapacityPercentage">
+    <value>Capacity %</value>
+  </data>
+  <data name="ItemsInQueue">
+    <value>Items in queue</value>
+  </data>
+  <data name="FromSatellite">
+    <value>From satellite</value>
+  </data>
+  <data name="ToAntenna">
+    <value>To antenna</value>
+  </data>
+  <data name="QueueOccupancy">
+    <value>Queue occupancy</value>
+  </data>
+  <data name="LastSeen">
+    <value>Last seen</value>
+  </data>
+  <data name="RouteId">
+    <value>Route ID</value>
+  </data>
+  <data name="Origin">
+    <value>Origin</value>
+  </data>
+  <data name="Destination">
+    <value>Destination</value>
+  </data>
+  <data name="ConfirmAction">
+    <value>Confirm action</value>
+  </data>
+  <data name="ConfirmActionMessage">
+    <value>Are you sure you want to perform this action?</value>
+  </data>
+  <data name="Confirm">
+    <value>Confirm</value>
+  </data>
+  <data name="Cancel">
+    <value>Cancel</value>
+  </data>
+  <data name="Close">
+    <value>Close</value>
+  </data>
+  <data name="Copy">
+    <value>Copy</value>
+  </data>
+  <data name="Information">
+    <value>Information</value>
+  </data>
+  <data name="Metadata">
+    <value>Metadata</value>
+  </data>
+  <data name="Priority">
+    <value>Priority</value>
+  </data>
+  <data name="Free">
+    <value>Free</value>
+  </data>
+  <data name="Used">
+    <value>Used</value>
+  </data>
+  <data name="CurrentHemisphere">
+    <value>Current hemisphere</value>
+  </data>
+  <data name="LastUpdated">
+    <value>Last updated</value>
+  </data>
+  <data name="ActiveRelays">
+    <value>Active relays</value>
+  </data>
+  <data name="InactiveRelays">
+    <value>Inactive relays</value>
+  </data>
+  <data name="TotalPackets">
+    <value>Total packets processed</value>
+  </data>
+  <data name="AvgQueueOccupancy">
+    <value>Average queue occupancy</value>
+  </data>
+  <data name="RoutesHeader">
+    <value>Relay Routes</value>
+  </data>
+  <data name="BuffersHeader">
+    <value>Relay Buffers</value>
+  </data>
+  <data name="Resend">
+    <value>Resend</value>
+  </data>
+  <data name="ClearBuffer">
+    <value>Clear buffer</value>
+  </data>
+  <data name="ExportCsv">
+    <value>Export CSV</value>
+  </data>
+  <data name="ViewDetail">
+    <value>View detail</value>
+  </data>
   <data name="DiscardedMessages">
     <value>Discarded messages</value>
   </data>

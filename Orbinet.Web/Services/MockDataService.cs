@@ -242,6 +242,20 @@ public static class MockDataService
         };
     }
 
+    public static RelayStatusDto GetRelayStatus()
+    {
+        var routes = GetRoutesData();
+        var buffers = GetBuffersData();
+
+        return new RelayStatusDto
+        {
+            ActiveRelays = routes.ActiveRoutes,
+            InactiveRelays = Math.Max(0, routes.TotalRoutes - routes.ActiveRoutes),
+            TotalPacketsProcessed = routes.Routes.Sum(r => r.Packets),
+            AvgQueueOccupancy = buffers.AverageOccupancy
+        };
+    }
+
     // Datos para buffers (ABB)
     public static BufferReportData GetBuffersData()
     {

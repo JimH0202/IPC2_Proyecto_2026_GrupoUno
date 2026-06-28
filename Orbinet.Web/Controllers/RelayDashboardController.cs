@@ -10,17 +10,20 @@ public class RelayDashboardController : Controller
 {
     private readonly AppInstanceSettings _settings;
     private readonly RelayHttpService _relayHttpService;
+    private readonly BasicAuthService _basicAuthService;
     private readonly OrbitNetStore _store;
     private readonly ILogger<RelayDashboardController> _logger;
 
     public RelayDashboardController(
         IOptions<AppInstanceSettings> settings,
         RelayHttpService relayHttpService,
+        BasicAuthService basicAuthService,
         OrbitNetStore store,
         ILogger<RelayDashboardController> logger)
     {
         _settings = settings.Value;
         _relayHttpService = relayHttpService;
+        _basicAuthService = basicAuthService;
         _store = store;
         _logger = logger;
     }
@@ -146,18 +149,13 @@ public class RelayDashboardController : Controller
     {
         var routesData = MockDataService.GetRoutesData();
         var buffersData = MockDataService.GetBuffersData();
+        var status = MockDataService.GetRelayStatus();
 
         return new RelayDashboardViewModel
         {
             Hemisphere = _settings.Hemisphere,
             LastUpdated = DateTime.Now,
-            Status = new RelayStatusDto
-            {
-                ActiveRelays = routesData.ActiveRoutes,
-                InactiveRelays = Math.Max(0, routesData.TotalRoutes - routesData.ActiveRoutes),
-                TotalPacketsProcessed = routesData.Routes.Sum(r => r.Packets),
-                AvgQueueOccupancy = buffersData.AverageOccupancy
-            },
+            Status = status,
             Routes = routesData.Routes.Select(route => new RouteDto
             {
                 FromSatellite = route.Source,

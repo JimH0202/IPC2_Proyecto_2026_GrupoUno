@@ -62,6 +62,10 @@
                     @Localizer["Satellites"]
                 </a>
 
+                <a asp-controller="RelayDashboard" asp-action="Index"
+                   class="sidebar-link @(activeController == "RelayDashboard" ? "active" : "")">
+                    @Localizer["Communication"]
+                </a>
                 <div class="sidebar-menu-group">
                     <button type="button"
                             class="sidebar-link sidebar-menu-toggle @(isReports ? "active open" : "")"

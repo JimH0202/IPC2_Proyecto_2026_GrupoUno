@@ -3,13 +3,13 @@
 @inject IStringLocalizer<OrbitNet.Web.Controllers.SharedResource> Localizer
 
 @{
-    ViewData["Title"] = Localizer["RelayCommunication"];
+    ViewData["Title"] = Localizer["RelayTitle"];
 }
 
 <div class="page-header-row">
     <div>
-        <h1>@Localizer["RelayCommunication"]</h1>
-        <p>@Localizer["RelayCommunicationDescription"]</p>
+        <h1>@Localizer["RelayTitle"]</h1>
+        <p>@Localizer["RelayDescription"]</p>
     </div>
     <div class="header-actions">
         <span class="badge badge-info">@Localizer["CurrentHemisphere"]: @Model.Hemisphere</span>
@@ -35,7 +35,7 @@
             <div class="card-note">@Localizer["TotalPacketsNote"]</div>
         </div>
         <div class="card card-metric">
-            <div class="card-title">@Localizer["AvgQueueOccupancy"]</div>
+            <div class="card-title">@Localizer["AvgQueue"]</div>
             <div class="card-value" id="avgQueueCount">@Model.Status.AvgQueueOccupancy.ToString("0.0")% </div>
             <div class="card-note">@Localizer["QueueOccupancyNote"]</div>
         </div>
