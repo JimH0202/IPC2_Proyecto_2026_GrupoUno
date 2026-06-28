@@ -1,4 +1,3 @@
-﻿Orbinet.Web/bin/
-OrbitNet.Tests/bin/
-Orbinet.Web/obj/
-OrbitNet.Tests/obj/
+﻿# Ignorar todas las carpetas bin y obj en cualquier subcarpeta
+**/bin/
+**/obj/
