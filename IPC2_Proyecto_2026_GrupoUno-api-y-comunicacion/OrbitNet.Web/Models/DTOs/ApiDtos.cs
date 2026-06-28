@@ -65,8 +65,6 @@ public class RelayErrorResponse
     public string Details { get; set; }  = string.Empty;
 }
 
-public class SimulationStepRequestDto
-{
-    [JsonPropertyName("ticks")]
-    public int Ticks { get; set; }
-}
+//Eliminé dos clases porque ahora existen los archivos SimulationStepRequest.cs
+//También existe SimulationStepResponse.cs
+//Entonces ya no eran necesarias las clases.

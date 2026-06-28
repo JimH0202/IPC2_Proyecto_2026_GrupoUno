@@ -101,8 +101,10 @@ namespace OrbitNet.Web.Controllers
             });
         }
 
+        // Cambie SimulationStepRequestDto a esta clase SimulationStepRequest porque
+        //Ahora ya existe su versión mejorada.
         [HttpPost("simulation/step")]
-        public IActionResult AvanzarSimulacion([FromBody] SimulationStepRequestDto request)
+        public IActionResult AvanzarSimulacion([FromBody] SimulationStepRequest request)
         {
             if (!_store.ConfigLoaded)
             {
