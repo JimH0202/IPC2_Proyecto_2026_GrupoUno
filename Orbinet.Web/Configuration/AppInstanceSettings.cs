@@ -10,4 +10,7 @@ public class AppInstanceSettings
     
     // La variable de tu compañero para no romper su UI
     public string RemoteHemisphereUrl { get; set; } = "http://localhost:5001";
+
+    // Permite desactivar la comunicación entre hemisferios cuando no existe un servidor hermano activo.
+    public bool EnableCrossHemisphereRelay { get; set; } = false;
 }

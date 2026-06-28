@@ -35,6 +35,12 @@ public class RelayHttpService
                 Content = JsonContent.Create(paquete)
             };
 
+            if (!_settings.EnableCrossHemisphereRelay)
+            {
+                _logger.LogInformation("Relay cross-hemisphere deshabilitado por configuración.");
+                return false;
+            }
+
             request.Headers.Add("Authorization", _basicAuthService.CrearCabeceraAuthorization());
 
             _logger.LogInformation("Enviando paquete relay a {Url}", url);
