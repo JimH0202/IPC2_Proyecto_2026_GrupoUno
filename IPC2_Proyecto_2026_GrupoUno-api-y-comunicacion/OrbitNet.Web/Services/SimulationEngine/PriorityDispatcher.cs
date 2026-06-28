@@ -6,17 +6,27 @@ namespace OrbitNet.Web.Services.SimulationEngine
 {
     public class PriorityDispatcher
     {
+        // Almacén central del sistema en RAM.
         private readonly OrbitNetStore _store;
 
-        public PriorityDispatcher(OrbitNetStore store)
+        // Servicio encargado de decidir si el paquete
+        // se entrega localmente o queda marcado para reenvío.
+        private readonly RoutingService _routingService;
+
+        public PriorityDispatcher(OrbitNetStore store, RoutingService routingService)
         {
             _store = store;
+            _routingService = routingService;
         }
 
+        // Recorre todos los satélites de la matriz
+        // y despacha un mensaje por satélite en este tick.
         public DispatchResult DispatchOneMessagePerSatelliteTick()
         {
             DispatchResult result = new DispatchResult();
 
+            // Obtenemos el primer encabezado de fila
+            // para recorrer la matriz horizontalmente.
             HeaderNode? rowHeader = _store.RedSatellites.GetFirstRowHeader();
 
             while (rowHeader != null)
@@ -25,10 +35,14 @@ namespace OrbitNet.Web.Services.SimulationEngine
 
                 while (current != null)
                 {
+                    // Contamos que este satélite fue visitado.
                     result.SatellitesVisited++;
 
+                    // Buscamos el satélite real en el índice runtime.
                     Satellite? satellite = _store.SatelliteRuntime.FindSatellite(current.SatelliteId);
 
+                    // Si no existe el satélite en runtime,
+                    // no podemos acceder a su buffer real.
                     if (satellite == null)
                     {
                         result.MissingSatelliteRuntime++;
@@ -36,6 +50,7 @@ namespace OrbitNet.Web.Services.SimulationEngine
                         continue;
                     }
 
+                    // Si el buffer está vacío, contamos el caso y seguimos.
                     if (satellite.PaquetesABordo.IsEmpty)
                     {
                         result.EmptyBuffers++;
@@ -43,28 +58,38 @@ namespace OrbitNet.Web.Services.SimulationEngine
                         continue;
                     }
 
+                    // Este satélite sí tenía mensajes.
                     result.BuffersWithMessages++;
 
+                    // Extraemos solo un mensaje por tick.
                     MessagePacket? packet = satellite.PaquetesABordo.ObtenerSiguiente();
 
+                    // Si por alguna razón no salió paquete, seguimos.
                     if (packet == null)
                     {
                         current = current.Right;
                         continue;
                     }
 
+                    // El paquete ya salió del buffer y entra a tránsito.
                     packet.Status = MessageStatus.EnTransito;
                     packet.HopCount++;
 
+                    // Contabilizamos el despacho realizado.
                     result.MessagesDispatched++;
 
-                    if (EsEntregaLocal(packet.DestinationIp))
+                    // Aquí es donde RoutingService entra al ciclo real.
+                    bool fueEntregaLocal = _routingService.TryRouteMessage(packet);
+
+                    if (fueEntregaLocal)
                     {
-                        packet.Status = MessageStatus.Entregado;
+                        // El mensaje fue entregado localmente a una antena.
                         result.LocalDeliveries++;
                     }
                     else
                     {
+                        // El mensaje no era local y queda como candidato
+                        // para relay entre hemisferios.
                         result.CrossPortCandidates++;
                     }
 
@@ -85,17 +110,6 @@ namespace OrbitNet.Web.Services.SimulationEngine
                 ", buffers vacíos: " + result.EmptyBuffers + ".";
 
             return result;
-        }
-
-        private bool EsEntregaLocal(string destinationIp)
-        {
-            if (string.IsNullOrWhiteSpace(destinationIp))
-            {
-                return false;
-            }
-
-            GroundAntenna? antenna = _store.Antenas.SearchByIp(destinationIp);
-            return antenna != null;
         }
     }
 }

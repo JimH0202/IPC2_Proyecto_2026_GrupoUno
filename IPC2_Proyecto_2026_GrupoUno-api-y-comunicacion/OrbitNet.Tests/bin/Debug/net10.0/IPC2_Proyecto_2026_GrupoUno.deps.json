@@ -1,0 +1,28 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "IPC2_Proyecto_2026_GrupoUno/1.0.0": {
+        "runtime": {
+          "IPC2_Proyecto_2026_GrupoUno.dll": {}
+        },
+        "resources": {
+          "es/IPC2_Proyecto_2026_GrupoUno.resources.dll": {
+            "locale": "es"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "IPC2_Proyecto_2026_GrupoUno/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

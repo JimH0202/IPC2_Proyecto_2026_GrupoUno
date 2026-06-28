@@ -14,20 +14,14 @@ namespace OrbitNet.Web.Services.SimulationEngine
         // Servicio que saca un mensaje por satélite en cada tick.
         private readonly PriorityDispatcher _priorityDispatcher;
 
-        // Servicio que decide si el mensaje se entrega localmente
-        // o queda marcado para reenviarse.
-        private readonly RoutingService _routingService;
-
         public SimulationCoordinator(
             OrbitNetStore store,
             OrbitalRotator orbitalRotator,
-            PriorityDispatcher priorityDispatcher,
-            RoutingService routingService)
+            PriorityDispatcher priorityDispatcher)
         {
             _store = store;
             _orbitalRotator = orbitalRotator;
             _priorityDispatcher = priorityDispatcher;
-            _routingService = routingService;
         }
 
         // Ejecuta un tick completo de simulación.
@@ -61,8 +55,7 @@ namespace OrbitNet.Web.Services.SimulationEngine
 
             // 4. Actualizar métricas globales del store.
             _store.NodosProcesados += result.SatellitesVisited;
-            _store.EventsProcessed += result.MessagesDispatched;
-            _store.LogicalJumps += result.MessagesDispatched;
+            // Borré las dos lineas que estaban aquí porque estan dobles ya que aparecen en TickProcessor.cs
 
             // Si hubo satélites visitados, calculamos ocupación simple.
             if (result.SatellitesVisited > 0)
