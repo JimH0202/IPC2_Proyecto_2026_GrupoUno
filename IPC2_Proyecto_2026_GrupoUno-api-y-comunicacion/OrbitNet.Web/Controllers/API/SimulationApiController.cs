@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OrbitNet.Web.Services;
 using OrbitNet.Web.Models.DTOs;
+using OrbitNet.Web.Services.SimulationEngine;
 
 namespace OrbitNet.Web.Controllers.API;
 
@@ -10,9 +11,15 @@ public class SimulationApiController : ControllerBase
 {
     private readonly ILogger<SimulationApiController> _logger;
 
-    public SimulationApiController(ILogger<SimulationApiController> logger)
+     // Aquí estoy agregando el motor real de simulación
+        private readonly TickProcessor _tickProcessor;
+
+    public SimulationApiController(
+            ILogger<SimulationApiController> logger,
+            TickProcessor tickProcessor)
     {
         _logger = logger;
+        _tickProcessor = tickProcessor; // Aquí estamos asignando el motor real a la variable
     }
 
     [HttpGet("dashboard")]
@@ -129,24 +136,43 @@ public class SimulationApiController : ControllerBase
         }
     }
 
+    //Aquí estoy integrando el Step al motor de simulación real
     [HttpPost("step")]
-    public IActionResult StepSimulation([FromBody] SimulationStepRequestDto request)
+    public IActionResult StepSimulation([FromBody] SimulationStepRequest request)
     {
         try
         {
-            _logger.LogInformation($"Avanzando simulación {request.Ticks} ticks");
-            return Ok(new SimulationStepResponse
+            // Validación básica del body
+            if (request == null)
             {
-                Status = "success",
-                CurrentTick = 150 + request.Ticks,
-                EventsProcessed = request.Ticks * 5,
-                Details = $"Se procesaron correctamente {request.Ticks * 5} eventos"
-            });
+                return BadRequest(new
+                {
+                    status = "error",
+                    message = "La solicitud no puede venir vacía."
+                });
+            }
+
+            // Si mandan 0 o negativo, lo forzamos a 1 tick
+            if (request.Ticks < 1)
+            {
+                request.Ticks = 1;
+            }
+
+            _logger.LogInformation("Avanzando simulación {Ticks} tick(s)", request.Ticks);
+
+            // Aquí ya se llama al motor real
+            SimulationStepResponse response = _tickProcessor.AvanzarSimulacion(request.Ticks);
+
+            return Ok(response);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error al avanzar simulación");
-            return StatusCode(500, new { status = "error", message = ex.Message });
+            return StatusCode(500, new
+            {
+                status = "error",
+                message = "Ocurrió un error interno al avanzar la simulación."
+            });
         }
     }
 

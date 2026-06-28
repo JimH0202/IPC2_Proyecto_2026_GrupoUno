@@ -70,18 +70,3 @@ public class SimulationStepRequestDto
     [JsonPropertyName("ticks")]
     public int Ticks { get; set; }
 }
-
-public class SimulationStepResponse
-{
-    [JsonPropertyName("status")]
-    public string Status { get; set; }  = string.Empty;
-
-    [JsonPropertyName("current_tick")]
-    public int CurrentTick { get; set; }
-
-    [JsonPropertyName("events_processed")]
-    public int EventsProcessed { get; set; }
-
-    [JsonPropertyName("details")]
-    public string Details { get; set; }  = string.Empty;
-}
