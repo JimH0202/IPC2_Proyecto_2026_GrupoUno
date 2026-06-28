@@ -1,0 +1,30 @@
+namespace OrbitNet.Web.Models.ViewModels;
+
+public class SatelliteViewModel
+{
+    public string Id { get; set; } = string.Empty;
+
+    public string Name { get; set; } = string.Empty;
+
+    public string OrbitId { get; set; } = string.Empty;
+
+    public string Type { get; set; } = string.Empty;
+
+    public int X { get; set; }
+
+    public int Y { get; set; }
+
+    public bool IsActive { get; set; }
+
+    public int MessagesSent { get; set; }
+
+    public int MessagesReceived { get; set; }
+
+    public int Resends { get; set; }
+
+    public int DiscardedMessages { get; set; }
+
+    public DateTime LastUpdate { get; set; }
+
+    public List<LogViewModel> RecentHistory { get; set; } = new();
+}
