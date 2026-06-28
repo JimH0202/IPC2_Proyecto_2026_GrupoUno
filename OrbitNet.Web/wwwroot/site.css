@@ -1,0 +1,37 @@
+:root{
+    --primary:#2563eb;
+    --primary-dark:#1d4ed8;
+
+    --sidebar-start:#071426;
+    --sidebar-end:#0f2745;
+
+    --bg:#f4f7fb;
+    --card:#ffffff;
+
+    --text:#1e293b;
+    --muted:#64748b;
+
+    --border:#e5e7eb;
+
+    --success:#22c55e;
+    --danger:#ef4444;
+    --warning:#f59e0b;
+    --info:#3b82f6;
+
+    --radius-sm:8px;
+    --radius-md:12px;
+    --radius-lg:18px;
+
+    --shadow:
+        0 6px 16px rgba(0,0,0,.05);
+
+    --shadow-lg:
+        0 15px 35px rgba(0,0,0,.08);
+}
+
+body{
+    margin:0;
+    background:var(--bg);
+    font-family:Inter, sans-serif;
+    color:var(--text);
+}
