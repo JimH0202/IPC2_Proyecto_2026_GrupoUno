@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using OrbitNet.Web.Configuration;
-using OrbitNet.Web.Models.Entities;
 using OrbitNet.Web.Models.ViewModels;
 using OrbitNet.Web.Services;
 
@@ -117,6 +116,30 @@ public class RelayDashboardController : Controller
             _logger.LogError(ex, "Error al limpiar el buffer {BufferId}", bufferId);
             return StatusCode(500, new { status = "error", message = ex.Message });
         }
+    }
+
+    [HttpGet("exportbuffercsv")]
+    public IActionResult ExportBuffersCsv([FromQuery] string? bufferId)
+    {
+        var buffersData = MockDataService.GetBuffersData();
+        var buffers = string.IsNullOrWhiteSpace(bufferId)
+            ? buffersData.Buffers
+            : buffersData.Buffers.Where(x => x.Id.Equals(bufferId, StringComparison.OrdinalIgnoreCase)).ToList();
+
+        var csvLines = new List<string>
+        {
+            "BufferId,Type,ItemsInQueue,CapacityPercentage,Status"
+        };
+
+        csvLines.AddRange(buffers.Select(buffer =>
+            $"{buffer.Id},{buffer.Satellite},{buffer.Occupied},{buffer.OccupancyPercent},{buffer.Status}"));
+
+        var csvBytes = System.Text.Encoding.UTF8.GetBytes(string.Join("\n", csvLines));
+        var fileName = string.IsNullOrWhiteSpace(bufferId)
+            ? "relay-buffers.csv"
+            : $"relay-buffer-{bufferId}.csv";
+
+        return File(csvBytes, "text/csv", fileName);
     }
 
     private RelayDashboardViewModel BuildDashboardModel()

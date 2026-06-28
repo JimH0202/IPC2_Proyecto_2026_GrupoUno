@@ -1,19 +1,21 @@
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json;
+using System.Net.Http.Json;
 using Microsoft.Extensions.Options;
 using OrbitNet.Web.Configuration;
 
 public class RelayHttpService
 {
-    private readonly HttpClient _httpClient;
+    private readonly IHttpClientFactory _httpClientFactory;
     private readonly BasicAuthService _basicAuthService;
     private readonly AppInstanceSettings _settings;
     private readonly ILogger<RelayHttpService> _logger;
 
-    public RelayHttpService(HttpClient httpClient, BasicAuthService basicAuthService, IOptions<AppInstanceSettings> settings, ILogger<RelayHttpService> logger)
+    public RelayHttpService(
+        IHttpClientFactory httpClientFactory,
+        BasicAuthService basicAuthService,
+        IOptions<AppInstanceSettings> settings,
+        ILogger<RelayHttpService> logger)
     {
-        _httpClient = httpClient;
+        _httpClientFactory = httpClientFactory;
         _basicAuthService = basicAuthService;
         _settings = settings.Value;
         _logger = logger;
@@ -23,24 +25,20 @@ public class RelayHttpService
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(_settings.RemoteHemisphereUrl))
+            var url = string.IsNullOrWhiteSpace(_settings.RemoteHemisphereUrl)
+                ? "http://localhost:" + _settings.SiblingPort + "/api/v1/space/relay"
+                : _settings.RemoteHemisphereUrl.TrimEnd('/') + "/api/v1/space/relay";
+
+            using var client = _httpClientFactory.CreateClient();
+            using var request = new HttpRequestMessage(HttpMethod.Post, url)
             {
-                _logger.LogWarning("RemoteHemisphereUrl no configurada en AppInstanceSettings.");
-                return false;
-            }
+                Content = JsonContent.Create(paquete)
+            };
 
-            var target = _settings.RemoteHemisphereUrl.TrimEnd('/') + "/api/v1/space/relay";
+            request.Headers.Add("Authorization", _basicAuthService.CrearCabeceraAuthorization());
 
-            var json = JsonSerializer.Serialize(paquete);
-            using var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            // Add Basic Auth header
-            var auth = _basicAuthService.CrearCabeceraAuthorization();
-            _httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(auth);
-
-            _logger.LogInformation("Enviando paquete relay a {Target}", target);
-
-            var response = await _httpClient.PostAsync(target, content);
+            _logger.LogInformation("Enviando paquete relay a {Url}", url);
+            using var response = await client.SendAsync(request);
 
             if (response.IsSuccessStatusCode)
             {
@@ -56,38 +54,5 @@ public class RelayHttpService
             _logger.LogError(ex, "Error enviando paquete al hemisferio hermano");
             return false;
         }
-    }
-}
-using System.Net.Http.Json;
-using Microsoft.Extensions.Options;
-using OrbitNet.Web.Configuration;
-
-public class RelayHttpService
-{
-    private readonly IHttpClientFactory _httpClientFactory;
-    private readonly BasicAuthService _basicAuthService;
-    private readonly AppInstanceSettings _settings;
-
-    public RelayHttpService(
-        IHttpClientFactory httpClientFactory,
-        BasicAuthService basicAuthService,
-        IOptions<AppInstanceSettings> settings)
-    {
-        _httpClientFactory = httpClientFactory;
-        _basicAuthService = basicAuthService;
-        _settings = settings.Value;
-    }
-
-    public async Task<bool> EnviarPaqueteAlHemisferioHermanoAsync(MessagePacket paquete)
-    {
-        HttpClient client = _httpClientFactory.CreateClient();
-        string url = "http://localhost:" + _settings.SiblingPort + "/api/v1/space/relay";
-
-        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url);
-        request.Headers.Add("Authorization", _basicAuthService.CrearCabeceraAuthorization());
-        request.Content = JsonContent.Create(paquete);
-
-        HttpResponseMessage response = await client.SendAsync(request);
-        return response.IsSuccessStatusCode;
     }
 }
