@@ -1,7 +1,49 @@
-﻿bin/
+﻿# .NET
+bin/
 obj/
-<<<<<<< HEAD
-.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
 
-=======
->>>>>>> 452abdccb2b6bae569baa59b62b404df87697bd5
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# NuGet
+*.nuget.props
+*.nuget.targets
+.nuget/
+packages/
+*.nupkg
+
+# VS Code
+.vscode/
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Project specific
+OrbitNet.Web/bin/
+OrbitNet.Web/obj/
+OrbitNet.Tests/bin/
+OrbitNet.Tests/obj/
+OrbitNet.Web/wwwroot/
+OrbitNet.Web/Properties/
+OrbitNet.Web/check_localization.py
+OrbitNet.Web/out.html

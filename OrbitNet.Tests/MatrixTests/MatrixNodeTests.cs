@@ -1,5 +1,5 @@
 using Xunit;
-using Orbinet.Web.DataStructures.Matrix;
+using OrbitNet.Web.DataStructures.Matrix;
 
 namespace OrbitNet.Tests.MatrixTests;
 

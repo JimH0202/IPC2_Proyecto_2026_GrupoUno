@@ -1,4 +1,4 @@
-﻿namespace OrbitNet.Tests;
+namespace OrbitNet.Tests;
 
 public class UnitTest1
 {
