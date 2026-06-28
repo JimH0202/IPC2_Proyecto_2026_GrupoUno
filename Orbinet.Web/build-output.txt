@@ -1,0 +1,9 @@
+﻿  Determinando los proyectos que se van a restaurar...
+  Todos los proyectos est├ín actualizados para la restauraci├│n.
+  Orbinet.Web -> C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\bin\Debug\net10.0\Orbinet.Web.dll
+
+Compilaci├│n correcta.
+    0 Advertencia(s)
+    0 Errores
+
+Tiempo transcurrido 00:00:04.37

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Orbinet.Web")]
 [assembly: System.Reflection.AssemblyCopyrightAttribute(" ")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0d87f05e6cc5e69fb9ffbddbd12de045a0633df4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cc555dcba7b8dfbe97980d9ab59ab40e59835535")]
 [assembly: System.Reflection.AssemblyProductAttribute("Orbinet.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Orbinet.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -49,7 +49,8 @@ builder.Services.Configure<AppInstanceSettings>(builder.Configuration.GetSection
 
 // Register communication services for cross-port relay
 builder.Services.AddSingleton<BasicAuthService>();
-builder.Services.AddHttpClient<RelayHttpService>();
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<RelayHttpService>();
 builder.Services.AddSingleton<OrbitNetStore>();
 
 builder.WebHost.UseUrls($"http://localhost:{port}");

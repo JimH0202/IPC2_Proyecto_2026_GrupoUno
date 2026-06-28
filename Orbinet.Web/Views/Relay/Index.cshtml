@@ -65,8 +65,8 @@
 
     <section class="tables-section">
         <div class="tables-main">
-            @await Html.PartialAsync("_RelayRoutesTable", Model.Routes)
-            @await Html.PartialAsync("_RelayBuffersTable", Model.Buffers)
+            @await Html.PartialAsync("~/Views/Relay/_RelayRoutesTable.cshtml", Model.Routes)
+            @await Html.PartialAsync("~/Views/Relay/_RelayBuffersTable.cshtml", Model.Buffers)
         </div>
 
         <aside class="detail-panel">
@@ -117,7 +117,7 @@
 
     <div id="toastContainer" class="toast-container"></div>
 
-    @await Html.PartialAsync("_RelayModals")
+    @await Html.PartialAsync("~/Views/Relay/_RelayModals.cshtml")
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -228,9 +228,9 @@
                     </td>
                     <td>${new Date(route.lastSeen).toLocaleString()}</td>
                     <td>
-                        <button class="btn btn-secondary btn-sm" type="button" data-action="view-details" data-route-id="${route.fromSatellite}">${Localizer["ViewDetails"] ?? 'Ver detalle'}</button>
-                        <button class="btn btn-primary btn-sm" type="button" data-action="resend-route" data-from="${route.fromSatellite}" data-to="${route.toAntenna}">${Localizer["Resend"] ?? 'Reenviar'}</button>
-                        <button class="btn btn-outline btn-sm" type="button" data-action="copy-route" data-route-id="${route.fromSatellite}">${Localizer["Copy"] ?? 'Copiar'}</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-action="view-details" data-route-id="${route.fromSatellite}">Ver detalle</button>
+                        <button class="btn btn-primary btn-sm" type="button" data-action="resend-route" data-from="${route.fromSatellite}" data-to="${route.toAntenna}">Reenviar</button>
+                        <button class="btn btn-outline btn-sm" type="button" data-action="copy-route" data-route-id="${route.fromSatellite}">Copiar</button>
                     </td>
                 `;
                 routesTableBody.appendChild(row);
@@ -253,8 +253,8 @@
                         </div>
                     </td>
                     <td>
-                        <button class="btn btn-danger btn-sm" type="button" data-action="clear-buffer" data-buffer-id="${buffer.bufferId}">${Localizer["ClearBuffer"] ?? 'Vaciar buffer'}</button>
-                        <button class="btn btn-outline btn-sm" type="button" data-action="export-buffer" data-buffer-id="${buffer.bufferId}">${Localizer["ExportCsv"] ?? 'Exportar CSV'}</button>
+                        <button class="btn btn-danger btn-sm" type="button" data-action="clear-buffer" data-buffer-id="${buffer.bufferId}">${Localizer["ClearBuffer"] ?? "Vaciar buffer"}</button>
+                        <button class="btn btn-outline btn-sm" type="button" data-action="export-buffer" data-buffer-id="${buffer.bufferId}">${Localizer["ExportCsv"] ?? "Exportar CSV"}</button>
                     </td>
                 `;
                 buffersTableBody.appendChild(row);

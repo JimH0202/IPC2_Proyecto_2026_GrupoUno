@@ -34,7 +34,7 @@ public class RelayDashboardController : Controller
     {
         EnsureStoreInitialized();
         var model = BuildDashboardModel();
-        return View(model);
+        return View("~/Views/Relay/Index.cshtml", model);
     }
 
     [HttpGet("refresh")]
