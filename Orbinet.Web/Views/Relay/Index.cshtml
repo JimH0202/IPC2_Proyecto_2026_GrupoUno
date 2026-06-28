@@ -134,18 +134,73 @@
         const recentEventsList = document.querySelector('.event-list');
         const queueHistoryChartCtx = document.getElementById('queueHistoryChart').getContext('2d');
         const occupancyGaugeCtx = document.getElementById('occupancyGaugeChart').getContext('2d');
+        const relayDetailModal = document.getElementById('relayDetailModal');
+        const confirmModal = document.getElementById('confirmModal');
+        const modalTabs = document.querySelectorAll('.modal-tabs .tab');
+        const modalTabInfo = document.getElementById('modalTabInfo');
+        const modalTabMetadata = document.getElementById('modalTabMetadata');
 
         let pollingTimer = null;
         let historyBuffer = [];
         let queueHistoryChart;
         let occupancyGaugeChart;
+        let currentRoutes = [];
+        let currentBuffers = [];
+        let pendingBufferClearId = null;
 
         function showToast(message, type = 'success') {
             const alert = document.createElement('div');
             alert.className = `alert alert-${type}`;
+            alert.setAttribute('role', 'status');
+            alert.setAttribute('aria-live', 'polite');
             alert.textContent = message;
             toastContainer.appendChild(alert);
             setTimeout(() => alert.remove(), 5000);
+        }
+
+        function openModal(modal) {
+            if (!modal) return;
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeModal(modal) {
+            if (!modal) return;
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+
+        function setModalTab(tabName) {
+            modalTabs.forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.tab === tabName);
+            });
+            modalTabInfo.style.display = tabName === 'info' ? 'block' : 'none';
+            modalTabMetadata.style.display = tabName === 'metadata' ? 'block' : 'none';
+        }
+
+        function populateRouteDetail(routeId) {
+            const route = currentRoutes.find(item => item.fromSatellite === routeId || item.toAntenna === routeId);
+            if (!route) {
+                showToast('Ruta no encontrada.', 'danger');
+                return;
+            }
+
+            const detailJson = {
+                fromSatellite: route.fromSatellite,
+                toAntenna: route.toAntenna,
+                status: route.status,
+                queueOccupancyPercentage: route.queueOccupancyPercentage,
+                lastSeen: route.lastSeen,
+                packetData: route.packetData
+            };
+
+            const detailPre = relayDetailModal.querySelector('.code-block');
+            if (detailPre) {
+                detailPre.textContent = JSON.stringify(detailJson, null, 2);
+            }
+
+            setModalTab('info');
+            openModal(relayDetailModal);
         }
 
         function updateSummaryCards(data) {
@@ -156,6 +211,7 @@
         }
 
         function renderRoutes(routes) {
+            currentRoutes = routes;
             routesTableBody.innerHTML = '';
             routes.forEach(route => {
                 const row = document.createElement('tr');
@@ -181,6 +237,7 @@
         }
 
         function renderBuffers(buffers) {
+            currentBuffers = buffers;
             buffersTableBody.innerHTML = '';
             buffers.forEach(buffer => {
                 const row = document.createElement('tr');
@@ -302,6 +359,7 @@
                 const bufferId = button.getAttribute('data-buffer-id');
                 const fromSatellite = button.getAttribute('data-from');
                 const toAntenna = button.getAttribute('data-to');
+                const routeId = button.getAttribute('data-route-id');
 
                 if (action === 'resend-route') {
                     sendForce({
@@ -312,12 +370,56 @@
                     });
                 }
 
+                if (action === 'resend-all') {
+                    if (currentRoutes.length > 0) {
+                        const route = currentRoutes[0];
+                        sendForce({
+                            fromSatellite: route.fromSatellite,
+                            toAntenna: route.toAntenna,
+                            packetData: 'forced relay packet',
+                            priority: 1
+                        });
+                        showToast('${Localizer["ResendPendingPackets"] ?? "Solicitud de reenvío enviada"}', 'info');
+                    }
+                }
+
                 if (action === 'clear-buffer' && bufferId) {
-                    clearBuffer(bufferId);
+                    pendingBufferClearId = bufferId;
+                    openModal(confirmModal);
                 }
 
                 if (action === 'export-buffer' && bufferId) {
                     exportBuffer(bufferId);
+                }
+
+                if (action === 'view-details' && routeId) {
+                    populateRouteDetail(routeId);
+                }
+
+                if (action === 'copy-route' && routeId) {
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(routeId);
+                        showToast('${Localizer["CopiedToClipboard"] ?? "Copiado al portapapeles"}', 'success');
+                    } else {
+                        showToast('${Localizer["ClipboardNotSupported"] ?? "Portapapeles no disponible"}', 'danger');
+                    }
+                }
+
+                if (action === 'close-modal') {
+                    closeModal(button.closest('.modal'));
+                }
+
+                if (action === 'cancel-action') {
+                    pendingBufferClearId = null;
+                    closeModal(confirmModal);
+                }
+
+                if (action === 'confirm-action') {
+                    if (pendingBufferClearId) {
+                        clearBuffer(pendingBufferClearId);
+                        pendingBufferClearId = null;
+                    }
+                    closeModal(confirmModal);
                 }
             });
         }

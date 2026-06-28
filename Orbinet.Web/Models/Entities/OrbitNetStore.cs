@@ -1,5 +1,9 @@
+using OrbitNet.Web.Models.ViewModels;
+
 public class OrbitNetStore
 {
+    public List<RouteDto> Routes { get; set; } = new();
+    public List<BufferDto> Buffers { get; set; } = new();
     public int NodosProcesados { get; set; }
     public int CurrentTick { get; set; }
     public int EventsProcessed { get; set; }
