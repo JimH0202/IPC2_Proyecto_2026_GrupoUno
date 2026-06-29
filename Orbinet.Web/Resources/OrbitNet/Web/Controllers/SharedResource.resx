@@ -563,8 +563,17 @@
   <data name="Communication">
     <value>Communication</value>
   </data>
+  <data name="InterHemisphericCommunication">
+    <value>Inter-hemispheric communication</value>
+  </data>
+  <data name="RelayOverviewDescription">
+    <value>Monitor relay routes, buffers, and packet forwarding between hemispheres.</value>
+  </data>
   <data name="RelayTitle">
     <value>Relay Communication</value>
+  </data>
+  <data name="ExportFullStatusSvg">
+    <value>Export full status SVG</value>
   </data>
   <data name="RelayDescription">
     <value>Monitor relay routes, buffers and packet forwarding between hemispheres.</value>

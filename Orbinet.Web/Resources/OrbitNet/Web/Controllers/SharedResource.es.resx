@@ -563,8 +563,17 @@
   <data name="Communication">
     <value>Comunicación</value>
   </data>
+  <data name="InterHemisphericCommunication">
+    <value>Comunicación interhemisférica</value>
+  </data>
+  <data name="RelayOverviewDescription">
+    <value>Supervisa rutas relay, buffers y el reenvío de paquetes entre hemisferios.</value>
+  </data>
   <data name="RelayTitle">
     <value>Comunicación Relay</value>
+  </data>
+  <data name="ExportFullStatusSvg">
+    <value>Exportar estado completo SVG</value>
   </data>
   <data name="RelayDescription">
     <value>Supervisa rutas relay, buffers y el reenvío de paquetes entre hemisferios.</value>
