@@ -73,4 +73,31 @@ public class ListaEnlazada<T> : IAbstractCollection
         }
         return false;
     }
+
+    public void ForEach(Action<T> action)
+    {
+        var actual = cabeza;
+        while (actual != null)
+        {
+            action(actual.Valor);
+            actual = actual.Siguiente;
+        }
+    }
+
+    public T? Find(Predicate<T> match)
+    {
+        var actual = cabeza;
+        while (actual != null)
+        {
+            if (match(actual.Valor))
+                return actual.Valor;
+            actual = actual.Siguiente;
+        }
+        return default;
+    }
+
+    public NodoLista<T>? GetHead()
+    {
+        return cabeza;
+    }
 }

@@ -84,7 +84,7 @@ public class RelayDashboardController : Controller
                 return StatusCode(502, new { status = "error", message = "No se pudo enviar el paquete al hemisferio hermano." });
             }
 
-            var route = _store.Routes.FirstOrDefault(x =>
+            var route = _store.Routes.Find(x =>
                 string.Equals(x.FromSatellite, request.FromSatellite, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(x.ToAntenna, request.ToAntenna, StringComparison.OrdinalIgnoreCase));
 
@@ -121,7 +121,7 @@ public class RelayDashboardController : Controller
 
         try
         {
-            var buffer = _store.Buffers.FirstOrDefault(x => string.Equals(x.BufferId, bufferId, StringComparison.OrdinalIgnoreCase));
+            var buffer = _store.Buffers.Find(x => string.Equals(x.BufferId, bufferId, StringComparison.OrdinalIgnoreCase));
             if (buffer == null)
             {
                 return NotFound(new { status = "error", message = $"Buffer {bufferId} no encontrado." });
@@ -130,7 +130,10 @@ public class RelayDashboardController : Controller
             buffer.ItemsInQueue = 0;
             buffer.CapacityPercentage = 0;
             _store.EventsProcessed += 1;
-            _store.QueueOccupancyPercentage = _store.Buffers.Any() ? _store.Buffers.Average(x => x.CapacityPercentage) : 0.0;
+            var totalCap = 0.0;
+            var bufCount = 0;
+            _store.Buffers.ForEach(b => { totalCap += b.CapacityPercentage; bufCount++; });
+            _store.QueueOccupancyPercentage = bufCount > 0 ? totalCap / bufCount : 0.0;
 
             return Ok(new
             {
@@ -149,17 +152,27 @@ public class RelayDashboardController : Controller
     [HttpGet("exportbuffercsv")]
     public IActionResult ExportBuffersCsv([FromQuery] string? bufferId)
     {
-        var buffers = string.IsNullOrWhiteSpace(bufferId)
-            ? _store.Buffers
-            : _store.Buffers.Where(x => x.BufferId.Equals(bufferId, StringComparison.OrdinalIgnoreCase)).ToList();
+        var filteredBuffers = new List<BufferDto>();
+        if (string.IsNullOrWhiteSpace(bufferId))
+        {
+            _store.Buffers.ForEach(b => filteredBuffers.Add(b));
+        }
+        else
+        {
+            _store.Buffers.ForEach(b =>
+            {
+                if (b.BufferId.Equals(bufferId, StringComparison.OrdinalIgnoreCase))
+                    filteredBuffers.Add(b);
+            });
+        }
 
         var csvLines = new List<string>
         {
             "BufferId,Type,ItemsInQueue,CapacityPercentage"
         };
 
-        csvLines.AddRange(buffers.Select(buffer =>
-            $"{buffer.BufferId},{buffer.Type},{buffer.ItemsInQueue},{buffer.CapacityPercentage}"));
+        filteredBuffers.ForEach(buffer =>
+            csvLines.Add($"{buffer.BufferId},{buffer.Type},{buffer.ItemsInQueue},{buffer.CapacityPercentage}"));
 
         var csvBytes = System.Text.Encoding.UTF8.GetBytes(string.Join("\n", csvLines));
         var fileName = string.IsNullOrWhiteSpace(bufferId)
@@ -171,32 +184,36 @@ public class RelayDashboardController : Controller
 
     private RelayDashboardViewModel BuildDashboardModel()
     {
-        var routes = _store.Satellites.Select(s => new RouteDto
-        {
-            FromSatellite = s.Id,
-            ToAntenna = "ANT-" + s.Id,
-            Status = "active",
-            PacketCount = 0,
-            QueueOccupancyPercentage = 0,
-            LastSeen = DateTime.Now,
-            PacketData = ""
-        }).ToList();
+        var routes = new List<RouteDto>();
+        var buffers = new List<BufferDto>();
+        double totalCapPct = 0;
 
-        var buffers = _store.Satellites.Select(s =>
+        _store.Satellites.ForEach(s =>
         {
+            routes.Add(new RouteDto
+            {
+                FromSatellite = s.Id,
+                ToAntenna = "ANT-" + s.Id,
+                Status = "active",
+                PacketCount = 0,
+                QueueOccupancyPercentage = 0,
+                LastSeen = DateTime.Now,
+                PacketData = ""
+            });
             int occupied = s.PaquetesABordo?.Count ?? 0;
             int capacity = 100;
             double percent = capacity > 0 ? (double)occupied / capacity * 100 : 0;
-            return new BufferDto
+            buffers.Add(new BufferDto
             {
                 BufferId = $"BUF-{s.Id}",
                 Type = percent >= 80 ? "critico" : percent >= 50 ? "normal" : "bajo",
                 ItemsInQueue = occupied,
                 CapacityPercentage = percent
-            };
-        }).ToList();
+            });
+            totalCapPct += percent;
+        });
 
-        _store.QueueOccupancyPercentage = buffers.Any() ? buffers.Average(x => x.CapacityPercentage) : 0.0;
+        _store.QueueOccupancyPercentage = buffers.Count > 0 ? totalCapPct / buffers.Count : 0.0;
 
         var model = new RelayDashboardViewModel
         {

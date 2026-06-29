@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OrbitNet.Web.Services;
+using OrbitNet.Web.Services.Communication;
 
 namespace OrbitNet.Web.Controllers.API;
 
@@ -10,18 +11,27 @@ public class DataController : ControllerBase
     private readonly ILogger<DataController> _logger;
     private readonly OrbitNetDataService _dataService;
     private readonly XmlIngestService _xmlIngestService;
+    private readonly BasicAuthService _basicAuthService;
     private readonly OrbitNetStore _store;
 
     public DataController(
         ILogger<DataController> logger,
         OrbitNetDataService dataService,
         XmlIngestService xmlIngestService,
+        BasicAuthService basicAuthService,
         OrbitNetStore store)
     {
         _logger = logger;
         _dataService = dataService;
         _xmlIngestService = xmlIngestService;
+        _basicAuthService = basicAuthService;
         _store = store;
+    }
+
+    private bool Autenticar()
+    {
+        string? authHeader = Request.Headers.Authorization.FirstOrDefault();
+        return _basicAuthService.EsCabeceraValida(authHeader);
     }
 
     [HttpGet("matrix")]
@@ -97,6 +107,9 @@ public class DataController : ControllerBase
     [HttpPost("upload-config")]
     public IActionResult UploadConfiguration([FromForm] IFormFile file)
     {
+        if (!Autenticar())
+            return Unauthorized(new { status = "error", message = "Autenticación Basic Auth requerida" });
+
         try
         {
             if (file == null || file.Length == 0)

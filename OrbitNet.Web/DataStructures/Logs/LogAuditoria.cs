@@ -1,6 +1,5 @@
 namespace OrbitNet.Web.DataStructures.Logs;
-using System;
-using System.Collections.Generic;
+
 using System.Text.RegularExpressions;
 using OrbitNet.Web.DataStructures.Interfaces;
 
@@ -37,16 +36,19 @@ public class LogAuditoria
         cantidad++;
     }
 
-    public List<LogNode> GetAll()
+    public LogNode? GetHead()
     {
-        var result = new List<LogNode>();
+        return cabeza;
+    }
+
+    public void ForEach(Action<LogNode> action)
+    {
         var actual = cabeza;
         while (actual != null)
         {
-            result.Add(actual);
+            action(actual);
             actual = actual.Next;
         }
-        return result;
     }
 
     public string SearchLogRegex(string pattern)

@@ -95,7 +95,7 @@ namespace OrbitNet.Web.Controllers
                 });
             }
 
-            var receptor = _store.Satellites.FirstOrDefault(s => s.Id == _store.ReceptorSatelliteId);
+            var receptor = _store.Satellites.Find(s => s.Id == _store.ReceptorSatelliteId);
             if (receptor?.PaquetesABordo != null)
             {
                 receptor.PaquetesABordo.Agregar(paquete);

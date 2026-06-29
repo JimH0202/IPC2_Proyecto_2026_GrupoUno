@@ -746,4 +746,10 @@
   <data name="Communication">
     <value>Communication</value>
   </data>
+  <data name="CopiedToClipboard">
+    <value>Copied to clipboard</value>
+  </data>
+  <data name="ClipboardNotSupported">
+    <value>Clipboard not supported</value>
+  </data>
 </root>

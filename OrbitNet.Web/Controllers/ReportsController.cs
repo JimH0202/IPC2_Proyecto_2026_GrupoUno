@@ -34,4 +34,25 @@ public class ReportsController : Controller
         var model = _dataService.GetReportViewModel("Buffers");
         return View(model);
     }
+
+    public IActionResult ExportSvg(string report)
+    {
+        string svg = report switch
+        {
+            "MemoryLayout" => _dataService.GetReportViewModel("MemoryLayout").SvgContent,
+            "Routing" => _dataService.GetReportViewModel("Routing").SvgContent,
+            "Buffers" => _dataService.GetReportViewModel("Buffers").SvgContent,
+            "Matrix" => _dataService.GetMatrixViewModel().SvgContent,
+            _ => ""
+        };
+
+        if (string.IsNullOrWhiteSpace(svg))
+            return NotFound();
+
+        return File(
+            System.Text.Encoding.UTF8.GetBytes(svg),
+            "image/svg+xml",
+            $"{report}.svg"
+        );
+    }
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OrbitNet.Web.Services;
+using OrbitNet.Web.Services.Communication;
 using OrbitNet.Web.Models.Entities;
 using OrbitNet.Web.Models.Enums;
 
@@ -11,16 +12,25 @@ public class RelayController : ControllerBase
 {
     private readonly ILogger<RelayController> _logger;
     private readonly OrbitNetDataService _dataService;
+    private readonly BasicAuthService _basicAuthService;
     private readonly OrbitNetStore _store;
 
     public RelayController(
         ILogger<RelayController> logger,
         OrbitNetDataService dataService,
+        BasicAuthService basicAuthService,
         OrbitNetStore store)
     {
         _logger = logger;
         _dataService = dataService;
+        _basicAuthService = basicAuthService;
         _store = store;
+    }
+
+    private bool Autenticar()
+    {
+        string? authHeader = Request.Headers.Authorization.FirstOrDefault();
+        return _basicAuthService.EsCabeceraValida(authHeader);
     }
 
     [HttpGet("routes")]
@@ -56,6 +66,9 @@ public class RelayController : ControllerBase
     [HttpPost("send-packet")]
     public IActionResult SendPacket([FromBody] RelayRequestDto request)
     {
+        if (!Autenticar())
+            return Unauthorized(new { status = "error", message = "Autenticación Basic Auth requerida" });
+
         try
         {
             _logger.LogInformation($"Enviando paquete desde {request.FromSatellite} a {request.ToAntenna}");
@@ -69,7 +82,7 @@ public class RelayController : ControllerBase
                 Content = request.PacketData
             };
 
-            var receptor = _store.Satellites.FirstOrDefault(s => s.Id == _store.ReceptorSatelliteId);
+            var receptor = _store.Satellites.Find(s => s.Id == _store.ReceptorSatelliteId);
             receptor?.PaquetesABordo?.Agregar(packet);
 
             return Ok(new RelaySuccessResponse

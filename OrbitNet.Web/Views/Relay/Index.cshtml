@@ -148,6 +148,18 @@
         let currentBuffers = [];
         let pendingBufferClearId = null;
 
+        const Localizer = {
+            clearBuffer: '@Localizer["ClearBuffer"]',
+            exportCsv: '@Localizer["ExportCsv"]',
+            dashboardUpdated: '@Localizer["DashboardUpdated"]',
+            resendPendingPackets: '@Localizer["ResendPendingPackets"]',
+            copiedToClipboard: '@Localizer["CopiedToClipboard"]',
+            clipboardNotSupported: '@Localizer["ClipboardNotSupported"]',
+            autoRefreshEnabled: '@Localizer["AutoRefreshEnabled"]',
+            autoRefreshDisabled: '@Localizer["AutoRefreshDisabled"]',
+            queueOccupancy: '@Localizer["QueueOccupancy"]'
+        };
+
         function showToast(message, type = 'success') {
             const alert = document.createElement('div');
             alert.className = `alert alert-${type}`;

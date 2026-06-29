@@ -20,11 +20,11 @@ public class OrbitNetStore
     public bool IsSimulationRunning { get; set; }
     public ListaEnlazada<MessagePacket> PaquetesEnCola { get; } = new();
 
-    public List<RouteDto> Routes { get; set; } = new();
-    public List<BufferDto> Buffers { get; set; } = new();
+    public ListaEnlazada<RouteDto> Routes { get; set; } = new();
+    public ListaEnlazada<BufferDto> Buffers { get; set; } = new();
 
-    public List<Satellite> Satellites { get; } = new();
-    public List<PolarOrbit> PolarOrbits { get; } = new();
+    public ListaEnlazada<Satellite> Satellites { get; } = new();
+    public ListaEnlazada<PolarOrbit> PolarOrbits { get; } = new();
     public ListaAntenas Antenas { get; set; }
     public RedSatelitalPlano RedSatellites { get; set; }
     public LogAuditoria LogAuditoria { get; } = new();

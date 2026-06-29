@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OrbitNet.Web.Services;
+using OrbitNet.Web.Services.Communication;
 
 namespace OrbitNet.Web.Controllers.API;
 
@@ -9,21 +10,33 @@ public class ConfigController : ControllerBase
 {
     private readonly ILogger<ConfigController> _logger;
     private readonly XmlIngestService _xmlIngestService;
+    private readonly BasicAuthService _basicAuthService;
     private readonly OrbitNetStore _store;
 
     public ConfigController(
         ILogger<ConfigController> logger,
         XmlIngestService xmlIngestService,
+        BasicAuthService basicAuthService,
         OrbitNetStore store)
     {
         _logger = logger;
         _xmlIngestService = xmlIngestService;
+        _basicAuthService = basicAuthService;
         _store = store;
+    }
+
+    private bool Autenticar()
+    {
+        string? authHeader = Request.Headers.Authorization.FirstOrDefault();
+        return _basicAuthService.EsCabeceraValida(authHeader);
     }
 
     [HttpPost("load-xml")]
     public IActionResult LoadXmlConfiguration([FromBody] ConfigRequestDto request)
     {
+        if (!Autenticar())
+            return Unauthorized(new { status = "error", message = "Autenticación Basic Auth requerida" });
+
         try
         {
             if (string.IsNullOrEmpty(request.XmlData))
@@ -96,6 +109,9 @@ public class ConfigController : ControllerBase
     [HttpPost("validate")]
     public IActionResult ValidateConfiguration([FromBody] ConfigRequestDto request)
     {
+        if (!Autenticar())
+            return Unauthorized(new { status = "error", message = "Autenticación Basic Auth requerida" });
+
         try
         {
             if (string.IsNullOrEmpty(request.XmlData))
