@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet>
+    <constelaciones_ecuatoriales>
+        <satelite id="SAT-ECU-0001" nombre="Unico-Ecuatorial">
+            <enlace_ip>10.0.0.1</enlace_ip>
+        </satelite>
+    </constelaciones_ecuatoriales>
+    <orbitas_polares>
+        <orbita id="ORB-1" nombre="Unica-Polar">
+            <satelite id="SAT-POL-1001" nombre="Unico-Polar">
+                <enlace_ip>10.0.0.2</enlace_ip>
+            </satelite>
+        </orbita>
+    </orbitas_polares>
+    <antenas_terrestres>
+        <antena id="ANT-GTM-001" nombre="Unica-Antena">
+            <coordenadas>14.5891,-90.5514</coordenadas>
+            <ip_nodo>10.0.0.3</ip_nodo>
+        </antena>
+    </antenas_terrestres>
+</orbitnet>

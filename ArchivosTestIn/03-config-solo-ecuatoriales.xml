@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet>
+    <constelaciones_ecuatoriales>
+        <satelite id="SAT-ECU-0001" nombre="Ecuatorial-A">
+            <enlace_ip>10.0.0.1</enlace_ip>
+        </satelite>
+        <satelite id="SAT-ECU-0002" nombre="Ecuatorial-B">
+            <enlace_ip>10.0.0.2</enlace_ip>
+        </satelite>
+        <satelite id="SAT-ECU-0003" nombre="Ecuatorial-C">
+            <enlace_ip>10.0.0.3</enlace_ip>
+        </satelite>
+    </constelaciones_ecuatoriales>
+</orbitnet>

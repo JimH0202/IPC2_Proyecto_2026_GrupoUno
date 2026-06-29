@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet>
+    <antenas_terrestres>
+        <antena id="ANT-GTM-001" nombre="Guatemala">
+            <coordenadas>14.5891,-90.5514</coordenadas>
+            <ip_nodo>10.0.0.10</ip_nodo>
+        </antena>
+        <antena id="ANT-GTM-002" nombre="Santiago">
+            <coordenadas>-33.4569,-70.6483</coordenadas>
+            <ip_nodo>10.0.0.11</ip_nodo>
+        </antena>
+        <antena id="ANT-GTM-003" nombre="Madrid">
+            <coordenadas>40.4168,-3.7038</coordenadas>
+            <ip_nodo>10.0.0.12</ip_nodo>
+        </antena>
+        <antena id="ANT-GTM-004" nombre="Tokio">
+            <coordenadas>35.6762,139.6503</coordenadas>
+            <ip_nodo>10.0.0.13</ip_nodo>
+        </antena>
+        <antena id="ANT-GTM-005" nombre="Sydney">
+            <coordenadas>-33.8688,151.2093</coordenadas>
+            <ip_nodo>10.0.0.14</ip_nodo>
+        </antena>
+    </antenas_terrestres>
+</orbitnet>

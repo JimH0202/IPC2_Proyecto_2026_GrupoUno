@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet>
+    <constelaciones_ecuatoriales>
+        <satelite id="SAT-ECU-0001" nombre="Starlink-Norte-A">
+            <enlace_ip>192.168.1.10</enlace_ip>
+        </satelite>
+        <satelite id="SAT-ECU-0002" nombre="Starlink-Norte-B">
+            <enlace_ip>192.168.1.11</enlace_ip>
+        </satelite>
+        <satelite id="SAT-ECU-0003" nombre="Starlink-Norte-C">
+            <enlace_ip>192.168.1.12</enlace_ip>
+        </satelite>
+    </constelaciones_ecuatoriales>
+    <orbitas_polares>
+        <orbita id="ORB-1" nombre="Polar A">
+            <satelite id="SAT-POL-1001" nombre="Polar-Node-1">
+                <enlace_ip>10.0.0.1</enlace_ip>
+            </satelite>
+            <satelite id="SAT-POL-1002" nombre="Polar-Node-2">
+                <enlace_ip>10.0.0.2</enlace_ip>
+            </satelite>
+            <satelite id="SAT-POL-1003" nombre="Polar-Node-3">
+                <enlace_ip>10.0.0.3</enlace_ip>
+            </satelite>
+        </orbita>
+        <orbita id="ORB-2" nombre="Polar B">
+            <satelite id="SAT-POL-2001" nombre="Polar-Sur-1">
+                <enlace_ip>10.0.1.1</enlace_ip>
+            </satelite>
+            <satelite id="SAT-POL-2002" nombre="Polar-Sur-2">
+                <enlace_ip>10.0.1.2</enlace_ip>
+            </satelite>
+        </orbita>
+    </orbitas_polares>
+    <antenas_terrestres>
+        <antena id="ANT-GTM-401" nombre="Estacion Central">
+            <coordenadas>14.5891,-90.5514</coordenadas>
+            <ip_nodo>10.0.0.50</ip_nodo>
+        </antena>
+        <antena id="ANT-GTM-402" nombre="Estacion Secundaria">
+            <coordenadas>-33.4569,-70.6483</coordenadas>
+            <ip_nodo>10.0.0.51</ip_nodo>
+        </antena>
+    </antenas_terrestres>
+</orbitnet>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet>
+    <constelaciones_ecuatoriales>
+        <satelite id="SAT-ECU-0001" nombre="IP-mal-formada">
+            <enlace_ip>999.999.999.999</enlace_ip>
+        </satelite>
+        <satelite id="SAT-ECU-0002" nombre="IP-sin-puntos">
+            <enlace_ip>19216811</enlace_ip>
+        </satelite>
+        <satelite id="SAT-ECU-0003" nombre="IP-vacia">
+            <enlace_ip></enlace_ip>
+        </satelite>
+    </constelaciones_ecuatoriales>
+    <antenas_terrestres>
+        <antena id="ANT-GTM-001" nombre="IP-antena-mala">
+            <coordenadas>14.5891,-90.5514</coordenadas>
+            <ip_nodo>256.0.0.1</ip_nodo>
+        </antena>
+    </antenas_terrestres>
+</orbitnet>

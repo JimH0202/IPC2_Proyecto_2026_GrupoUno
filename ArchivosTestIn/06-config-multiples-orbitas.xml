@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet>
+    <constelaciones_ecuatoriales>
+        <satelite id="SAT-ECU-0001" nombre="Ecuatorial-1">
+            <enlace_ip>10.0.0.1</enlace_ip>
+        </satelite>
+    </constelaciones_ecuatoriales>
+    <orbitas_polares>
+        <orbita id="ORB-01" nombre="Polar Alpha">
+            <satelite id="SAT-POL-1001" nombre="Alpha-1">
+                <enlace_ip>10.0.1.1</enlace_ip>
+            </satelite>
+            <satelite id="SAT-POL-1002" nombre="Alpha-2">
+                <enlace_ip>10.0.1.2</enlace_ip>
+            </satelite>
+        </orbita>
+        <orbita id="ORB-02" nombre="Polar Beta">
+            <satelite id="SAT-POL-2001" nombre="Beta-1">
+                <enlace_ip>10.0.2.1</enlace_ip>
+            </satelite>
+            <satelite id="SAT-POL-2002" nombre="Beta-2">
+                <enlace_ip>10.0.2.2</enlace_ip>
+            </satelite>
+            <satelite id="SAT-POL-2003" nombre="Beta-3">
+                <enlace_ip>10.0.2.3</enlace_ip>
+            </satelite>
+        </orbita>
+        <orbita id="ORB-03" nombre="Polar Gamma">
+            <satelite id="SAT-POL-3001" nombre="Gamma-1">
+                <enlace_ip>10.0.3.1</enlace_ip>
+            </satelite>
+        </orbita>
+        <orbita id="ORB-04" nombre="Polar Delta">
+            <satelite id="SAT-POL-4001" nombre="Delta-1">
+                <enlace_ip>10.0.4.1</enlace_ip>
+            </satelite>
+            <satelite id="SAT-POL-4002" nombre="Delta-2">
+                <enlace_ip>10.0.4.2</enlace_ip>
+            </satelite>
+        </orbita>
+        <orbita id="ORB-05" nombre="Polar Epsilon">
+            <satelite id="SAT-POL-5001" nombre="Epsilon-1">
+                <enlace_ip>10.0.5.1</enlace_ip>
+            </satelite>
+        </orbita>
+    </orbitas_polares>
+    <antenas_terrestres>
+        <antena id="ANT-GTM-001" nombre="Base Central">
+            <coordenadas>14.5891,-90.5514</coordenadas>
+            <ip_nodo>10.0.0.100</ip_nodo>
+        </antena>
+    </antenas_terrestres>
+</orbitnet>

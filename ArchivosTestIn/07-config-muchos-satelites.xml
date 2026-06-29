@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet>
+    <constelaciones_ecuatoriales>
+        <satelite id="SAT-ECU-0001" nombre="ECU-1"><enlace_ip>10.0.0.1</enlace_ip></satelite>
+        <satelite id="SAT-ECU-0002" nombre="ECU-2"><enlace_ip>10.0.0.2</enlace_ip></satelite>
+        <satelite id="SAT-ECU-0003" nombre="ECU-3"><enlace_ip>10.0.0.3</enlace_ip></satelite>
+        <satelite id="SAT-ECU-0004" nombre="ECU-4"><enlace_ip>10.0.0.4</enlace_ip></satelite>
+        <satelite id="SAT-ECU-0005" nombre="ECU-5"><enlace_ip>10.0.0.5</enlace_ip></satelite>
+    </constelaciones_ecuatoriales>
+    <orbitas_polares>
+        <orbita id="ORB-01" nombre="Polar-A">
+            <satelite id="SAT-POL-1001" nombre="A-1"><enlace_ip>10.0.1.1</enlace_ip></satelite>
+            <satelite id="SAT-POL-1002" nombre="A-2"><enlace_ip>10.0.1.2</enlace_ip></satelite>
+            <satelite id="SAT-POL-1003" nombre="A-3"><enlace_ip>10.0.1.3</enlace_ip></satelite>
+            <satelite id="SAT-POL-1004" nombre="A-4"><enlace_ip>10.0.1.4</enlace_ip></satelite>
+        </orbita>
+        <orbita id="ORB-02" nombre="Polar-B">
+            <satelite id="SAT-POL-2001" nombre="B-1"><enlace_ip>10.0.2.1</enlace_ip></satelite>
+            <satelite id="SAT-POL-2002" nombre="B-2"><enlace_ip>10.0.2.2</enlace_ip></satelite>
+            <satelite id="SAT-POL-2003" nombre="B-3"><enlace_ip>10.0.2.3</enlace_ip></satelite>
+            <satelite id="SAT-POL-2004" nombre="B-4"><enlace_ip>10.0.2.4</enlace_ip></satelite>
+        </orbita>
+        <orbita id="ORB-03" nombre="Polar-C">
+            <satelite id="SAT-POL-3001" nombre="C-1"><enlace_ip>10.0.3.1</enlace_ip></satelite>
+            <satelite id="SAT-POL-3002" nombre="C-2"><enlace_ip>10.0.3.2</enlace_ip></satelite>
+        </orbita>
+        <orbita id="ORB-04" nombre="Polar-D">
+            <satelite id="SAT-POL-4001" nombre="D-1"><enlace_ip>10.0.4.1</enlace_ip></satelite>
+            <satelite id="SAT-POL-4002" nombre="D-2"><enlace_ip>10.0.4.2</enlace_ip></satelite>
+        </orbita>
+        <orbita id="ORB-05" nombre="Polar-E">
+            <satelite id="SAT-POL-5001" nombre="E-1"><enlace_ip>10.0.5.1</enlace_ip></satelite>
+            <satelite id="SAT-POL-5002" nombre="E-2"><enlace_ip>10.0.5.2</enlace_ip></satelite>
+        </orbita>
+    </orbitas_polares>
+    <antenas_terrestres>
+        <antena id="ANT-GTM-001" nombre="Base-1"><coordenadas>14.5891,-90.5514</coordenadas><ip_nodo>10.0.0.100</ip_nodo></antena>
+        <antena id="ANT-GTM-002" nombre="Base-2"><coordenadas>-33.4569,-70.6483</coordenadas><ip_nodo>10.0.0.101</ip_nodo></antena>
+    </antenas_terrestres>
+</orbitnet>
