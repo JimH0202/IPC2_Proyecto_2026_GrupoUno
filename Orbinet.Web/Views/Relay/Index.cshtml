@@ -8,24 +8,24 @@
 
 <div class="page-header-row">
     <div class="header-summary">
-        <h1>Comunicación entre Hemisferios</h1>
-        <p>Monitoreo de comunicación entre hemisferios y estado de relays</p>
+        <h1>@Localizer["InterHemisphericCommunication"]</h1>
+        <p>@Localizer["RelayOverviewDescription"]</p>
         <div class="header-controls">
             <label class="refresh-toggle">
                 <input type="checkbox" id="autoRefreshToggleTop" checked />
-                Auto-refresh
+                @Localizer["AutoRefresh"]
             </label>
             <select id="refreshIntervalTop" class="select-small">
                 <option value="5000">5s</option>
                 <option value="10000">10s</option>
                 <option value="15000">15s</option>
             </select>
-            <button id="refreshDashboardBtn" class="btn btn-primary btn-sm" type="button" data-action="refresh-dashboard">Actualizar</button>
+            <button id="refreshDashboardBtn" class="btn btn-primary btn-sm" type="button" data-action="refresh-dashboard">@Localizer["Refresh"]</button>
         </div>
     </div>
     <div class="header-meta-group">
-        <span class="badge badge-info">Hemisferio actual: @(Model.Hemisphere == "North" ? "Norte" : "Sur")</span>
-        <span class="header-meta">Última actualización: @Model.LastUpdated.ToString("dd/MM/yyyy HH:mm:ss")</span>
+        <span class="badge badge-info">@Localizer["CurrentHemisphere"]: @(Model.Hemisphere == "North" ? Localizer["North"].Value : Localizer["South"].Value)</span>
+        <span class="header-meta">@Localizer["LastUpdated"]: @Model.LastUpdated.ToString("dd/MM/yyyy HH:mm:ss")</span>
     </div>
 </div>
 
@@ -35,33 +35,33 @@
             <div class="card card-metric">
                 <span class="metric-icon metric-icon-active">🛰️</span>
                 <div>
-                    <div class="card-title">Relays activos</div>
+                    <div class="card-title">@Localizer["ActiveRelays"]</div>
                     <div class="card-value" id="activeRelaysCount">@Model.Status.ActiveRelays</div>
-                    <div class="card-note">Relays activos</div>
+                    <div class="card-note">@Localizer["ActiveRelaysNote"]</div>
                 </div>
             </div>
             <div class="card card-metric">
                 <span class="metric-icon metric-icon-inactive">⛔</span>
                 <div>
-                    <div class="card-title">Relays inactivos</div>
+                    <div class="card-title">@Localizer["InactiveRelays"]</div>
                     <div class="card-value" id="inactiveRelaysCount">@Model.Status.InactiveRelays</div>
-                    <div class="card-note">Relays inactivos</div>
+                    <div class="card-note">@Localizer["InactiveRelaysNote"]</div>
                 </div>
             </div>
             <div class="card card-metric">
                 <span class="metric-icon metric-icon-packets">📦</span>
                 <div>
-                    <div class="card-title">Total de paquetes</div>
+                    <div class="card-title">@Localizer["TotalPackets"]</div>
                     <div class="card-value" id="totalPacketsCount">@Model.Status.TotalPacketsProcessed</div>
-                    <div class="card-note">Total de paquetes procesados</div>
+                    <div class="card-note">@Localizer["TotalPacketsNote"]</div>
                 </div>
             </div>
             <div class="card card-metric">
                 <span class="metric-icon metric-icon-queue">📊</span>
                 <div>
-                    <div class="card-title">Ocupación promedio</div>
+                    <div class="card-title">@Localizer["AvgQueueOccupancy"]</div>
                     <div class="card-value" id="avgQueueCount">@Model.Status.AvgQueueOccupancy.ToString("0.0")% </div>
-                    <div class="card-note">Promedio de ocupación de cola</div>
+                    <div class="card-note">@Localizer["QueueOccupancyNote"]</div>
                 </div>
             </div>
         </section>
@@ -70,8 +70,8 @@
             <div class="chart-column">
                 <div class="card chart-card">
                     <div class="card-header chart-header">
-                        <h2>Ocupación histórica de colas (%)</h2>
-                        <span class="card-subtitle">Comparación de Hemisferio Norte y Sur</span>
+                        <h2>@Localizer["QueueHistory"]</h2>
+                        <span class="card-subtitle">@Localizer["QueueHistoryDescription"]</span>
                     </div>
                     <div class="chart-container">
                         <canvas id="queueHistoryChart" height="320"></canvas>
@@ -80,15 +80,15 @@
             </div>
             <div class="card gauge-card status-card">
                 <div class="card-header gauge-header">
-                    <h2>Ocupación actual promedio</h2>
-                    <span class="card-subtitle">Estado general de ocupación de la red</span>
+                    <h2>@Localizer["CurrentAverageOccupancy"]</h2>
+                    <span class="card-subtitle">@Localizer["AverageOccupancyDescription"]</span>
                 </div>
                 <div class="chart-container gauge-container">
                     <canvas id="occupancyGaugeChart" height="320"></canvas>
                 </div>
                 <div class="gauge-footer">
                     <div class="gauge-value">@Model.Status.AvgQueueOccupancy.ToString("0.0")%</div>
-                    <div class="gauge-label">Ocupación promedio</div>
+                    <div class="gauge-label">@Localizer["AvgQueueOccupancy"]</div>
                 </div>
             </div>
         </section>
@@ -105,13 +105,13 @@
         <div class="panel-card detail-card">
             <div class="panel-header panel-header-compact">
                 <div>
-                    <h2>Detalles del paquete</h2>
-                    <span class="panel-subtitle">Datos y metadatos del paquete seleccionado</span>
+                    <h2>@Localizer["PacketDetails"]</h2>
+                    <span class="panel-subtitle">@Localizer["DetailPanelSubtitle"]</span>
                 </div>
             </div>
             <div class="panel-section detail-tabs">
-                <button class="tab active" data-detail-tab="info">Información</button>
-                <button class="tab" data-detail-tab="metadata">Metadata</button>
+                <button class="tab active" data-detail-tab="info">@Localizer["Information"]</button>
+                <button class="tab" data-detail-tab="metadata">@Localizer["Metadata"]</button>
             </div>
             <div class="panel-tab-content">
                 <div class="tab-panel tab-info active">
@@ -125,19 +125,19 @@
                         @{
                             var route = Model.Routes.FirstOrDefault();
                         }
-                        <dt>Hemisferio actual</dt>
-                        <dd>@Model.Hemisphere</dd>
-                        <dt>Puerto</dt>
+                        <dt>@Localizer["CurrentHemisphere"]</dt>
+                        <dd>@(Model.Hemisphere == "North" ? Localizer["North"].Value : Localizer["South"].Value)</dd>
+                        <dt>@Localizer["CurrentPort"]</dt>
                         <dd>@(Model.Hemisphere == "North" ? "5000" : "5001")</dd>
-                        <dt>Última actualización</dt>
+                        <dt>@Localizer["LastUpdated"]</dt>
                         <dd>@Model.LastUpdated.ToString("dd/MM/yyyy HH:mm:ss")</dd>
-                        <dt>Ruta origen</dt>
+                        <dt>@Localizer["Origin"]</dt>
                         <dd id="detailRouteOrigin">@route?.FromSatellite ?? "-"</dd>
-                        <dt>Ruta destino</dt>
+                        <dt>@Localizer["Destination"]</dt>
                         <dd id="detailRouteDestination">@route?.ToAntenna ?? "-"</dd>
-                        <dt>Estado</dt>
+                        <dt>@Localizer["Status"]</dt>
                         <dd id="detailRouteStatus">@route?.Status ?? "-"</dd>
-                        <dt>Ocupación cola</dt>
+                        <dt>@Localizer["QueueOccupancy"]</dt>
                         <dd id="detailRouteOccupancy">@(route != null ? route.QueueOccupancyPercentage.ToString("0") + "%" : "-")</dd>
                     </div>
                 </div>
@@ -146,12 +146,12 @@
 
         <div class="panel-card events-card">
             <div class="panel-header panel-header-compact">
-                <h2>Eventos recientes</h2>
+                <h2>@Localizer["RecentEvents"]</h2>
             </div>
             <div class="panel-section">
                 <div class="events-header-row">
-                    <span class="panel-subtitle">Últimos eventos del sistema</span>
-                    <button class="btn-link btn-sm" type="button" data-action="clear-events">Limpiar vista</button>
+                    <span class="panel-subtitle">@Localizer["RecentEvents"]</span>
+                    <button class="btn-link btn-sm" type="button" data-action="clear-events">@Localizer["ClearView"]</button>
                 </div>
                 <div class="event-list">
                     @foreach (var evt in Model.RecentEvents)
@@ -165,18 +165,18 @@
                         </div>
                     }
                 </div>
-                <button class="btn-link btn-block" type="button" data-action="view-all-events">Ver todos los eventos</button>
+                <button class="btn-link btn-block" type="button" data-action="view-all-events">@Localizer["ViewAllEvents"]</button>
             </div>
         </div>
 
         <div class="panel-card quick-actions-card">
             <div class="panel-header panel-header-compact">
-                <h2>Acciones rápidas</h2>
+                <h2>@Localizer["QuickActions"]</h2>
             </div>
             <div class="panel-side-actions">
-                <button class="btn btn-primary btn-large btn-icon" type="button" data-action="resend-all">📡 Reenviar todos los paquetes pendientes</button>
-                <button class="btn btn-secondary btn-large btn-icon" type="button" data-action="test-connectivity">🌐 Probar comunicación entre puertos</button>
-                <button class="btn btn-outline btn-large btn-icon" type="button" data-action="export-status-svg">📄 Exportar estado completo (CSV)</button>
+                <button class="btn btn-primary btn-large btn-icon" type="button" data-action="resend-all">📡 @Localizer["ResendPendingPackets"]</button>
+                <button class="btn btn-secondary btn-large btn-icon" type="button" data-action="test-connectivity">🌐 @Localizer["TestConnectivity"]</button>
+                <button class="btn btn-outline btn-large btn-icon" type="button" data-action="export-status-svg">📄 @Localizer["ExportFullStatusSvg"]</button>
             </div>
         </div>
     </aside>
@@ -240,7 +240,28 @@
             statusExported: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["StatusExported"].Value)),
             queueOccupancy: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["QueueOccupancy"].Value)),
             used: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["Used"].Value)),
-            free: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["Free"].Value))
+            free: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["Free"].Value)),
+            active: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["Active"].Value)),
+            inactive: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["Inactive"].Value)),
+            currentHemisphere: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["CurrentHemisphere"].Value)),
+            currentPort: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["CurrentPort"].Value)),
+            lastUpdated: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["LastUpdated"].Value)),
+            packetDetailsTitle: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["PacketDetails"].Value)),
+            packetInformation: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["Information"].Value)),
+            packetMetadata: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["Metadata"].Value)),
+            clearView: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["ClearView"].Value)),
+            viewAllEvents: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["ViewAllEvents"].Value)),
+            eventViewCleared: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["EventViewCleared"].Value)),
+            relayStatusExportTitle: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["RelayStatusExportTitle"].Value)),
+            hemisphere: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["CurrentHemisphere"].Value)),
+            processedPackets: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["TotalPackets"].Value)),
+            averageOccupancy: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["AvgQueueOccupancy"].Value)),
+            northQueueOccupancy: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["NorthHemisphereQueueOccupancy"].Value)),
+            southQueueOccupancy: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["SouthHemisphereQueueOccupancy"].Value)),
+            currentAverageOccupancy: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["CurrentAverageOccupancy"].Value)),
+            currentAverageOccupancySubtitle: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["AverageOccupancyDescription"].Value)),
+            queueHistoryTitle: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["QueueHistory"].Value)),
+            queueHistorySubtitle: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["QueueHistoryDescription"].Value))
         };
 
         let pollingTimer = null;
@@ -309,18 +330,18 @@
     .badge { font: 600 12px Inter, sans-serif; fill: #ffffff; }
   </style>
   <rect width="100%" height="100%" fill="#f8fafc" rx="24" />
-  <text x="32" y="42" class="title">Relay status export</text>
-  <text x="32" y="88" class="label">Hemisferio</text>
+  <text x="32" y="42" class="title">${locale.relayStatusExportTitle}</text>
+  <text x="32" y="88" class="label">${locale.hemisphere}</text>
   <text x="32" y="112" class="value">${status.hemisphere}</text>
-  <text x="260" y="88" class="label">Relays activos</text>
+  <text x="260" y="88" class="label">${locale.active}</text>
   <text x="260" y="112" class="value">${status.activeRelays}</text>
-  <text x="460" y="88" class="label">Relays inactivos</text>
+  <text x="460" y="88" class="label">${locale.inactive}</text>
   <text x="460" y="112" class="value">${status.inactiveRelays}</text>
-  <text x="32" y="168" class="label">Paquetes procesados</text>
+  <text x="32" y="168" class="label">${locale.processedPackets}</text>
   <text x="32" y="194" class="value">${status.totalPackets}</text>
-  <text x="260" y="168" class="label">Ocupación promedio</text>
+  <text x="260" y="168" class="label">${locale.averageOccupancy}</text>
   <text x="260" y="194" class="value">${status.avgQueue}</text>
-  <text x="32" y="270" class="label">Última actualización</text>
+  <text x="32" y="270" class="label">${locale.lastUpdated}</text>
   <text x="32" y="294" class="value">${status.lastUpdated}</text>
 </svg>`;
 
@@ -380,8 +401,8 @@
 
             routesTableBody.innerHTML = '';
             currentRoutes.forEach(route => {
-                const statusText = String(route.status ?? '').toLowerCase().includes('inactive') || String(route.status ?? '').toLowerCase().includes('inactiva') ? 'Inactiva' : 'Activa';
-                const statusClass = statusText === 'Inactiva' ? 'status-inactive' : 'status-active';
+                const statusText = String(route.status ?? '').toLowerCase().includes('inactive') || String(route.status ?? '').toLowerCase().includes('inactiva') ? locale.inactive : locale.active;
+                const statusClass = statusText === locale.inactive ? 'status-inactive' : 'status-active';
                 const occupancy = Math.round(Number(route.queueOccupancyPercentage ?? 0));
                 const lastSeen = route.lastSeen ? new Date(route.lastSeen).toLocaleString() : '-';
 
@@ -402,8 +423,8 @@
                     <td>${lastSeen}</td>
                     <td class="action-buttons">
                         <div class="action-buttons-inner">
-                            <button class="btn btn-table btn-sm" type="button" data-action="view-details" data-route-id="${route.fromSatellite ?? ''}">Ver detalle</button>
-                            <button class="btn btn-table btn-sm btn-primary" type="button" data-action="resend-route" data-from="${route.fromSatellite ?? ''}" data-to="${route.toAntenna ?? ''}">Reenviar</button>
+                            <button class="btn btn-table btn-sm" type="button" data-action="view-details" data-route-id="${route.fromSatellite ?? ''}">${locale.viewDetail}</button>
+                            <button class="btn btn-table btn-sm btn-primary" type="button" data-action="resend-route" data-from="${route.fromSatellite ?? ''}" data-to="${route.toAntenna ?? ''}">${locale.resend}</button>
                         </div>
                     </td>`;
                 routesTableBody.appendChild(row);
@@ -644,7 +665,7 @@
                 if (action === 'clear-events') {
                     if (recentEventsList) {
                         recentEventsList.innerHTML = '';
-                        showToast('Vista de eventos limpiada', 'success');
+                        showToast(locale.eventViewCleared, 'success');
                     }
                 }
 
@@ -696,14 +717,14 @@
                     labels: [initialHistoryTime],
                     datasets: [
                         {
-                            label: 'Ocupación cola hemisferio norte',
+                            label: locale.northQueueOccupancy,
                             borderColor: '#2563eb',
                             backgroundColor: 'rgba(37,99,235,0.15)',
                             tension: 0.3,
                             data: [Number(@Model.Status.NorthQueueOccupancy.ToString(System.Globalization.CultureInfo.InvariantCulture))]
                         },
                         {
-                            label: 'Ocupación cola hemisferio sur',
+                            label: locale.southQueueOccupancy,
                             borderColor: '#d97706',
                             backgroundColor: 'rgba(249,115,22,0.15)',
                             tension: 0.3,

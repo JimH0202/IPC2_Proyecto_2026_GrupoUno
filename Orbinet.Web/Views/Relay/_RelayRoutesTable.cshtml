@@ -4,20 +4,20 @@
 
 <div class="card table-card">
     <div class="card-header">
-            <h2>Rutas de comunicación</h2>
-            <span class="card-subtitle">Estado y ocupación de cada enlace</span>
+            <h2>@Localizer["RoutesHeader"]</h2>
+            <span class="card-subtitle">@Localizer["CommunicationRoutesDescription"]</span>
     </div>
     <div class="tbl-wrap">
         <table class="tbl tbl-relay">
             <thead>
                 <tr>
-                    <th>Desde satélite</th>
-                    <th>A antena</th>
-                    <th>Estado</th>
-                    <th>Paquetes</th>
-                    <th>Ocupación cola</th>
-                    <th>Último visto</th>
-                    <th>Acciones</th>
+                    <th>@Localizer["FromSatellite"]</th>
+                    <th>@Localizer["ToAntenna"]</th>
+                    <th>@Localizer["Status"]</th>
+                    <th>@Localizer["Packets"]</th>
+                    <th>@Localizer["QueueOccupancy"]</th>
+                    <th>@Localizer["LastSeen"]</th>
+                    <th>@Localizer["Actions"]</th>
                 </tr>
             </thead>
             <tbody id="routesTableBody">
@@ -28,7 +28,7 @@
                         <td>@route.ToAntenna</td>
                         @{
                             var isInactive = route.Status.Contains("inactive", StringComparison.OrdinalIgnoreCase) || route.Status.Contains("inactiva", StringComparison.OrdinalIgnoreCase);
-                            var statusText = isInactive ? "Inactiva" : "Activa";
+                            var statusText = isInactive ? Localizer["Inactive"].Value : Localizer["Active"].Value;
                             var statusClass = isInactive ? "status-inactive" : "status-active";
                         }
                         <td><span class="status-badge @statusClass">@statusText</span></td>
@@ -44,8 +44,8 @@
                         <td>@route.LastSeen.ToString("dd/MM/yyyy HH:mm")</td>
                         <td class="action-buttons">
                             <div class="action-buttons-inner">
-                                <button class="btn btn-table btn-sm" type="button" data-action="view-details" data-route-id="@route.FromSatellite">Ver detalle</button>
-                                <button class="btn btn-table btn-sm btn-primary" type="button" data-action="resend-route" data-from="@route.FromSatellite" data-to="@route.ToAntenna">Reenviar</button>
+                                <button class="btn btn-table btn-sm" type="button" data-action="view-details" data-route-id="@route.FromSatellite">@Localizer["ViewDetail"]</button>
+                                <button class="btn btn-table btn-sm btn-primary" type="button" data-action="resend-route" data-from="@route.FromSatellite" data-to="@route.ToAntenna">@Localizer["Resend"]</button>
                             </div>
                         </td>
                     </tr>

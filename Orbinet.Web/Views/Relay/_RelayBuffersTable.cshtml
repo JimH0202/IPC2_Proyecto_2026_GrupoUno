@@ -4,18 +4,18 @@
 
 <div class="card table-card">
     <div class="card-header">
-            <h2>Buffers</h2>
-            <span class="card-subtitle">Capacidad y estado de colas</span>
+            <h2>@Localizer["BuffersHeader"]</h2>
+            <span class="card-subtitle">@Localizer["BuffersDescription"]</span>
     </div>
     <div class="tbl-wrap">
         <table class="tbl tbl-relay">
             <thead>
                 <tr>
-                    <th>ID buffer</th>
-                    <th>Tipo</th>
-                    <th>Ítems en cola</th>
-                    <th>Capacidad (%)</th>
-                    <th>Acciones</th>
+                    <th>@Localizer["BufferId"]</th>
+                    <th>@Localizer["Type"]</th>
+                    <th>@Localizer["ItemsInQueue"]</th>
+                    <th>@Localizer["CapacityPercentage"]</th>
+                    <th>@Localizer["Actions"]</th>
                 </tr>
             </thead>
             <tbody id="buffersTableBody">
@@ -34,8 +34,8 @@
                             </div>
                         </td>
                         <td>
-                            <button class="btn btn-danger btn-sm" type="button" data-action="clear-buffer" data-buffer-id="@buffer.BufferId">Vaciar buffer</button>
-                            <button class="btn btn-outline btn-sm" type="button" data-action="export-buffer" data-buffer-id="@buffer.BufferId">Exportar CSV</button>
+                            <button class="btn btn-danger btn-sm" type="button" data-action="clear-buffer" data-buffer-id="@buffer.BufferId">@Localizer["ClearBuffer"]</button>
+                            <button class="btn btn-outline btn-sm" type="button" data-action="export-buffer" data-buffer-id="@buffer.BufferId">@Localizer["ExportCsv"]</button>
                         </td>
                     </tr>
                 }

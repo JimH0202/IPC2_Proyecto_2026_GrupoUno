@@ -560,6 +560,9 @@
   <data name="Resends">
     <value>Resends</value>
   </data>
+  <data name="Communication">
+    <value>Communication</value>
+  </data>
   <data name="RelayTitle">
     <value>Relay Communication</value>
   </data>
@@ -742,5 +745,35 @@
   </data>
   <data name="Timestamp">
     <value>Timestamp</value>
+  </data>
+  <data name="CurrentPort">
+    <value>Port</value>
+  </data>
+  <data name="North">
+    <value>North</value>
+  </data>
+  <data name="South">
+    <value>South</value>
+  </data>
+  <data name="ClearView">
+    <value>Clear view</value>
+  </data>
+  <data name="ViewAllEvents">
+    <value>View all events</value>
+  </data>
+  <data name="EventViewCleared">
+    <value>Event view cleared</value>
+  </data>
+  <data name="NorthHemisphereQueueOccupancy">
+    <value>North hemisphere queue occupancy</value>
+  </data>
+  <data name="SouthHemisphereQueueOccupancy">
+    <value>South hemisphere queue occupancy</value>
+  </data>
+  <data name="RelayStatusExportTitle">
+    <value>Relay status export</value>
+  </data>
+  <data name="TestConnectivity">
+    <value>Test communication between ports</value>
   </data>
 </root>

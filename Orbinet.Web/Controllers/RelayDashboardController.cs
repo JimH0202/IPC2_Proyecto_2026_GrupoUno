@@ -150,6 +150,16 @@ public class RelayDashboardController : Controller
     [HttpGet("testconnectivity")]
     public async Task<IActionResult> TestConnectivity()
     {
+        if (!_settings.EnableCrossHemisphereRelay)
+        {
+            return Ok(new
+            {
+                status = "success",
+                connected = false,
+                message = "La conectividad relay está deshabilitada por configuración."
+            });
+        }
+
         try
         {
             var targetPort = _settings.Hemisphere.Equals("North", StringComparison.OrdinalIgnoreCase) ? 5001 : 5000;
