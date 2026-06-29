@@ -1,0 +1,3 @@
+dotnet run --launch-profile "OrbitNet-South"
+
+dotnet run --launch-profile "OrbitNet-North"

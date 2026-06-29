@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet>
+    <constelaciones_ecuatoriales>
+        <satelite id="SAT-ECU-0101">
+            <nombre>Starlink-Sur-A</nombre>
+            <enlace_ip>127.0.0.1</enlace_ip>
+        </satelite>
+        <satelite id="SAT-ECU-0102">
+            <nombre>Starlink-Sur-B</nombre>
+            <enlace_ip>127.0.0.1</enlace_ip>
+        </satelite>
+    </constelaciones_ecuatoriales>
+    <orbitas_polares>
+        <polar id="POLAR-SUR-S">
+            <satelite id="SAT-POL-2001">
+                <nombre>Polar-Sur-1</nombre>
+                <frecuencia>480.15</frecuencia>
+            </satelite>
+            <satelite id="SAT-POL-2002">
+                <nombre>Polar-Sur-2</nombre>
+                <frecuencia>480.30</frecuencia>
+            </satelite>
+        </polar>
+    </orbitas_polares>
+    <antenas_terrestres>
+        <antena id="ANT-ARG-501">
+            <nombre>Subestación Regional Argentina</nombre>
+            <coordenadas>-34.6037,-58.3816</coordenadas>
+            <ip_nodo>10.0.0.90</ip_nodo>
+        </antena>
+    </antenas_terrestres>
+</orbitnet>
