@@ -7,112 +7,179 @@
 }
 
 <div class="page-header-row">
-    <div>
-        <h1>@Localizer["RelayTitle"]</h1>
-        <p>@Localizer["RelayDescription"]</p>
+    <div class="header-summary">
+        <h1>Comunicación entre Hemisferios</h1>
+        <p>Monitoreo de comunicación entre hemisferios y estado de relays</p>
+        <div class="header-controls">
+            <label class="refresh-toggle">
+                <input type="checkbox" id="autoRefreshToggleTop" checked />
+                Auto-refresh
+            </label>
+            <select id="refreshIntervalTop" class="select-small">
+                <option value="5000">5s</option>
+                <option value="10000">10s</option>
+                <option value="15000">15s</option>
+            </select>
+            <button id="refreshDashboardBtn" class="btn btn-primary btn-sm" type="button" data-action="refresh-dashboard">Actualizar</button>
+        </div>
     </div>
-    <div class="header-actions">
-        <span class="badge badge-info">@Localizer["CurrentHemisphere"]: @Model.Hemisphere</span>
-        <span class="header-meta">@Localizer["LastUpdated"]: @Model.LastUpdated.ToString("dd/MM/yyyy HH:mm:ss")</span>
+    <div class="header-meta-group">
+        <span class="badge badge-info">Hemisferio actual: @(Model.Hemisphere == "North" ? "Norte" : "Sur")</span>
+        <span class="header-meta">Última actualización: @Model.LastUpdated.ToString("dd/MM/yyyy HH:mm:ss")</span>
     </div>
 </div>
 
 <div class="relay-dashboard-grid">
-    <section class="summary-cards">
-        <div class="card card-metric">
-            <div class="card-title">@Localizer["ActiveRelays"]</div>
-            <div class="card-value" id="activeRelaysCount">@Model.Status.ActiveRelays</div>
-            <div class="card-note">@Localizer["ActiveRelaysNote"]</div>
-        </div>
-        <div class="card card-metric">
-            <div class="card-title">@Localizer["InactiveRelays"]</div>
-            <div class="card-value" id="inactiveRelaysCount">@Model.Status.InactiveRelays</div>
-            <div class="card-note">@Localizer["InactiveRelaysNote"]</div>
-        </div>
-        <div class="card card-metric">
-            <div class="card-title">@Localizer["TotalPackets"]</div>
-            <div class="card-value" id="totalPacketsCount">@Model.Status.TotalPacketsProcessed</div>
-            <div class="card-note">@Localizer["TotalPacketsNote"]</div>
-        </div>
-        <div class="card card-metric">
-            <div class="card-title">@Localizer["AvgQueue"]</div>
-            <div class="card-value" id="avgQueueCount">@Model.Status.AvgQueueOccupancy.ToString("0.0")% </div>
-            <div class="card-note">@Localizer["QueueOccupancyNote"]</div>
-        </div>
-    </section>
-
-    <section class="relay-charts">
-        <div class="card chart-card">
-            <div class="card-header">
-                <h2>@Localizer["QueueHistory"]</h2>
-                <span class="card-subtitle">@Localizer["QueueHistoryDescription"]</span>
-            </div>
-            <div class="chart-container">
-                <canvas id="queueHistoryChart" height="220"></canvas>
-            </div>
-        </div>
-
-        <div class="card status-card">
-            <div class="card-header">
-                <h2>@Localizer["CurrentAverageOccupancy"]</h2>
-                <span class="card-subtitle">@Localizer["AverageOccupancyDescription"]</span>
-            </div>
-            <div class="chart-container gauge-container">
-                <canvas id="occupancyGaugeChart" height="220"></canvas>
-            </div>
-        </div>
-    </section>
-
-    <section class="tables-section">
-        <div class="tables-main">
-            @await Html.PartialAsync("~/Views/Relay/_RelayRoutesTable.cshtml", Model.Routes)
-            @await Html.PartialAsync("~/Views/Relay/_RelayBuffersTable.cshtml", Model.Buffers)
-        </div>
-
-        <aside class="detail-panel">
-            <div class="panel-header">
-                <h2>@Localizer["PacketDetail"]</h2>
-                <span class="panel-subtitle">@Localizer["DetailPanelSubtitle"]</span>
-            </div>
-
-            <div class="panel-card">
-                <div class="panel-section">
-                    <h3>@Localizer["QuickActions"]</h3>
-                    <button class="btn btn-secondary btn-block" type="button" data-action="refresh-dashboard">@Localizer["Refresh"]</button>
-                    <button class="btn btn-primary btn-block" type="button" data-action="resend-all">@Localizer["ResendPendingPackets"]</button>
+    <main class="relay-main">
+        <section class="summary-cards">
+            <div class="card card-metric">
+                <span class="metric-icon metric-icon-active">📶</span>
+                <div>
+                    <div class="card-title">Relays activos</div>
+                    <div class="card-value" id="activeRelaysCount">@Model.Status.ActiveRelays</div>
+                    <div class="card-note">Relays activos</div>
                 </div>
-                <div class="panel-section">
-                    <h3>@Localizer["AutoRefresh"]</h3>
-                    <div class="refresh-controls">
-                        <label>
-                            <input type="checkbox" id="autoRefreshToggle" data-action="toggle-auto-refresh" checked /> @Localizer["AutoRefresh"]
-                        </label>
-                        <label>
-                            @Localizer["Interval"]
-                            <select id="refreshInterval" class="select-small">
-                                <option value="5000">5s</option>
-                                <option value="10000">10s</option>
-                                <option value="15000">15s</option>
-                            </select>
-                        </label>
+            </div>
+            <div class="card card-metric">
+                <span class="metric-icon metric-icon-inactive">🚫</span>
+                <div>
+                    <div class="card-title">Relays inactivos</div>
+                    <div class="card-value" id="inactiveRelaysCount">@Model.Status.InactiveRelays</div>
+                    <div class="card-note">Relays inactivos</div>
+                </div>
+            </div>
+            <div class="card card-metric">
+                <span class="metric-icon metric-icon-packets">📦</span>
+                <div>
+                    <div class="card-title">Total de paquetes</div>
+                    <div class="card-value" id="totalPacketsCount">@Model.Status.TotalPacketsProcessed</div>
+                    <div class="card-note">Total de paquetes procesados</div>
+                </div>
+            </div>
+            <div class="card card-metric">
+                <span class="metric-icon metric-icon-queue">⏱️</span>
+                <div>
+                    <div class="card-title">Ocupación promedio</div>
+                    <div class="card-value" id="avgQueueCount">@Model.Status.AvgQueueOccupancy.ToString("0.0")% </div>
+                    <div class="card-note">Promedio de ocupación de cola</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="relay-charts">
+            <div class="chart-column">
+                <div class="card chart-card">
+                    <div class="card-header chart-header">
+                        <h2>Ocupación histórica de colas (%)</h2>
+                        <span class="card-subtitle">Comparación de Hemisferio Norte y Sur</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="queueHistoryChart" height="320"></canvas>
                     </div>
                 </div>
-
-                <div class="panel-section">
-                    <h3>@Localizer["RecentEvents"]</h3>
-                    <ul class="event-list">
-                        @foreach (var evt in Model.RecentEvents)
-                        {
-                            <li class="event-item event-@evt.Level.ToLower()">
-                                <span class="event-time">@evt.Timestamp.ToString("HH:mm")</span>
-                                <strong>@evt.Level</strong> - @evt.Message
-                            </li>
-                        }
-                    </ul>
+            </div>
+            <div class="card gauge-card status-card">
+                <div class="card-header gauge-header">
+                    <h2>Ocupación actual promedio</h2>
+                    <span class="card-subtitle">Estado general de ocupación de la red</span>
+                </div>
+                <div class="chart-container gauge-container">
+                    <canvas id="occupancyGaugeChart" height="320"></canvas>
+                </div>
+                <div class="gauge-footer">
+                    <div class="gauge-value">@Model.Status.AvgQueueOccupancy.ToString("0.0")%</div>
+                    <div class="gauge-label">Ocupación promedio</div>
                 </div>
             </div>
-        </aside>
-    </section>
+        </section>
+
+        <section class="tables-section">
+            <div class="tables-main">
+                @await Html.PartialAsync("~/Views/Relay/_RelayRoutesTable.cshtml", Model.Routes)
+                @await Html.PartialAsync("~/Views/Relay/_RelayBuffersTable.cshtml", Model.Buffers)
+            </div>
+        </section>
+    </main>
+
+    <aside class="detail-panel relay-side">
+        <div class="panel-card detail-card">
+            <div class="panel-header panel-header-compact">
+                <div>
+                    <h2>Detalles del paquete</h2>
+                    <span class="panel-subtitle">Datos y metadatos del paquete seleccionado</span>
+                </div>
+            </div>
+            <div class="panel-section detail-tabs">
+                <button class="tab active" data-detail-tab="info">Información</button>
+                <button class="tab" data-detail-tab="metadata">Metadata</button>
+            </div>
+            <div class="panel-tab-content">
+                <div class="tab-panel tab-info active">
+                    <div class="panel-json">
+                        <div class="json-label">JSON</div>
+                        <pre class="code-block">@System.Text.Json.JsonSerializer.Serialize(Model.Routes.FirstOrDefault() ?? new OrbitNet.Web.Models.ViewModels.RouteDto(), new System.Text.Json.JsonSerializerOptions { WriteIndented = true })</pre>
+                    </div>
+                </div>
+                <div class="tab-panel tab-metadata">
+                    <div class="meta-grid">
+                        @{
+                            var route = Model.Routes.FirstOrDefault();
+                        }
+                        <dt>Hemisferio actual</dt>
+                        <dd>@Model.Hemisphere</dd>
+                        <dt>Puerto</dt>
+                        <dd>@(Model.Hemisphere == "North" ? "5000" : "5001")</dd>
+                        <dt>Última actualización</dt>
+                        <dd>@Model.LastUpdated.ToString("dd/MM/yyyy HH:mm:ss")</dd>
+                        <dt>Ruta origen</dt>
+                        <dd>@route?.FromSatellite ?? "-"</dd>
+                        <dt>Ruta destino</dt>
+                        <dd>@route?.ToAntenna ?? "-"</dd>
+                        <dt>Estado</dt>
+                        <dd>@route?.Status ?? "-"</dd>
+                        <dt>Ocupación cola</dt>
+                        <dd>@(route != null ? route.QueueOccupancyPercentage.ToString("0") + "%" : "-")</dd>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-card events-card">
+            <div class="panel-header panel-header-compact">
+                <h2>Eventos recientes</h2>
+            </div>
+            <div class="panel-section">
+                <div class="events-header-row">
+                    <span class="panel-subtitle">Últimos eventos del sistema</span>
+                    <button class="btn-link btn-sm" type="button" data-action="clear-events">Limpiar vista</button>
+                </div>
+                <div class="event-list">
+                    @foreach (var evt in Model.RecentEvents)
+                    {
+                        <div class="event-item event-@evt.Level.ToLower()">
+                            <div class="event-item-header">
+                                <span class="status-tag status-@evt.Level.ToLower()">@evt.Level</span>
+                                <span class="event-time">@evt.Timestamp.ToString("HH:mm:ss")</span>
+                            </div>
+                            <div class="event-message">@evt.Message</div>
+                        </div>
+                    }
+                </div>
+                <button class="btn-link btn-block" type="button" data-action="view-all-events">Ver todos los eventos</button>
+            </div>
+        </div>
+
+        <div class="panel-card quick-actions-card">
+            <div class="panel-header panel-header-compact">
+                <h2>Acciones rápidas</h2>
+            </div>
+            <div class="panel-side-actions">
+                <button class="btn btn-primary btn-large btn-icon" type="button" data-action="resend-all">📡 Reenviar todos los paquetes pendientes</button>
+                <button class="btn btn-secondary btn-large btn-icon" type="button" data-action="test-connectivity">🌐 Probar comunicación entre puertos</button>
+                <button class="btn btn-outline btn-large btn-icon" type="button" data-action="export-status-svg">📄 Exportar estado completo (CSV)</button>
+            </div>
+        </div>
+    </aside>
 </div>
 
     <div id="toastContainer" class="toast-container"></div>
@@ -121,8 +188,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const refreshIntervalInput = document.getElementById('refreshInterval');
-        const autoRefreshToggle = document.getElementById('autoRefreshToggle');
+        const refreshIntervalTop = document.getElementById('refreshIntervalTop');
+        const autoRefreshToggleTop = document.getElementById('autoRefreshToggleTop');
         const refreshButton = document.querySelector('[data-action="refresh-dashboard"]');
         const toastContainer = document.getElementById('toastContainer');
         const activeRelaysCount = document.getElementById('activeRelaysCount');
@@ -139,6 +206,34 @@
         const modalTabs = document.querySelectorAll('.modal-tabs .tab');
         const modalTabInfo = document.getElementById('modalTabInfo');
         const modalTabMetadata = document.getElementById('modalTabMetadata');
+        const detailTabs = document.querySelectorAll('.detail-tabs .tab');
+        const detailTabInfo = document.querySelector('.tab-info');
+        const detailTabMetadata = document.querySelector('.tab-metadata');
+
+        const locale = {
+            clearBuffer: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["ClearBuffer"].Value)),
+            exportCsv: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["ExportCsv"].Value)),
+            refreshNow: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["RefreshNow"].Value)),
+            dashboardUpdated: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["DashboardUpdated"].Value)),
+            resendPendingPackets: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["ResendPendingPackets"].Value)),
+            autoRefreshEnabled: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["AutoRefreshEnabled"].Value)),
+            autoRefreshDisabled: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["AutoRefreshDisabled"].Value)),
+            copiedToClipboard: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["CopiedToClipboard"].Value)),
+            clipboardNotSupported: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["ClipboardNotSupported"].Value)),
+            routeNotFound: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["RouteNotFound"].Value)),
+            viewDetail: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["ViewDetail"].Value)),
+            resend: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["Resend"].Value)),
+            copy: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["Copy"].Value)),
+            refreshFailed: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["RefreshFailed"].Value)),
+            resendFailed: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["ResendFailed"].Value)),
+            bufferClearFailed: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["BufferClearFailed"].Value)),
+            communicationTested: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["CommunicationTested"].Value)),
+            exportStatusSvg: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["ExportFullStatusSvg"].Value)),
+            statusExported: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["StatusExported"].Value)),
+            queueOccupancy: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["QueueOccupancy"].Value)),
+            used: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["Used"].Value)),
+            free: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["Free"].Value))
+        };
 
         let pollingTimer = null;
         let historyBuffer = [];
@@ -161,13 +256,80 @@
         function openModal(modal) {
             if (!modal) return;
             modal.classList.add('open');
+            modal.style.display = 'flex';
             modal.setAttribute('aria-hidden', 'false');
         }
 
         function closeModal(modal) {
             if (!modal) return;
             modal.classList.remove('open');
+            modal.style.display = 'none';
             modal.setAttribute('aria-hidden', 'true');
+        }
+
+        function getRefreshInterval() {
+            const value = refreshIntervalTop?.value;
+            return parseInt(value, 10) || 5000;
+        }
+
+        function syncRefreshInterval(value) {
+            if (refreshIntervalTop) refreshIntervalTop.value = value;
+        }
+
+        function syncAutoRefreshToggles(enabled) {
+            if (autoRefreshToggleTop) {
+                autoRefreshToggleTop.checked = enabled;
+            }
+        }
+
+        function exportStatusSvg() {
+            const status = {
+                hemisphere: '@Model.Hemisphere',
+                activeRelays: activeRelaysCount.textContent,
+                inactiveRelays: inactiveRelaysCount.textContent,
+                totalPackets: totalPacketsCount.textContent,
+                avgQueue: avgQueueCount.textContent,
+                lastUpdated: '@Model.LastUpdated.ToString("dd/MM/yyyy HH:mm:ss")'
+            };
+
+            const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="380" viewBox="0 0 720 380">
+  <style>
+    .title { font: 700 18px Inter, sans-serif; fill: #0f172a; }
+    .label { font: 500 13px Inter, sans-serif; fill: #475569; }
+    .value { font: 800 22px Inter, sans-serif; fill: #1d4ed8; }
+    .badge { font: 600 12px Inter, sans-serif; fill: #ffffff; }
+  </style>
+  <rect width="100%" height="100%" fill="#f8fafc" rx="24" />
+  <text x="32" y="42" class="title">Relay status export</text>
+  <text x="32" y="88" class="label">Hemisferio</text>
+  <text x="32" y="112" class="value">${status.hemisphere}</text>
+  <text x="260" y="88" class="label">Relays activos</text>
+  <text x="260" y="112" class="value">${status.activeRelays}</text>
+  <text x="460" y="88" class="label">Relays inactivos</text>
+  <text x="460" y="112" class="value">${status.inactiveRelays}</text>
+  <text x="32" y="168" class="label">Paquetes procesados</text>
+  <text x="32" y="194" class="value">${status.totalPackets}</text>
+  <text x="260" y="168" class="label">Ocupación promedio</text>
+  <text x="260" y="194" class="value">${status.avgQueue}</text>
+  <text x="32" y="270" class="label">Última actualización</text>
+  <text x="32" y="294" class="value">${status.lastUpdated}</text>
+</svg>`;
+
+            const blob = new Blob([svg], { type: 'image/svg+xml' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'relay-status.svg';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast(locale.statusExported, 'success');
+        }
+
+        function getProgressColor(percent) {
+            if (percent >= 80) return 'linear-gradient(90deg, var(--danger), #fca5a5)';
+            if (percent >= 60) return 'linear-gradient(90deg, var(--warning), #fbbf24)';
+            return 'linear-gradient(90deg, var(--primary), var(--primary-dark))';
         }
 
         function setModalTab(tabName) {
@@ -178,11 +340,22 @@
             modalTabMetadata.style.display = tabName === 'metadata' ? 'block' : 'none';
         }
 
+        function setDetailTab(tabName) {
+            detailTabs.forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.detailTab === tabName);
+            });
+            if (detailTabInfo) detailTabInfo.classList.toggle('active', tabName === 'info');
+            if (detailTabMetadata) detailTabMetadata.classList.toggle('active', tabName === 'metadata');
+        }
+
+        detailTabs.forEach(tab => {
+            tab.addEventListener('click', () => setDetailTab(tab.dataset.detailTab));
+        });
+
         function populateRouteDetail(routeId) {
             const route = currentRoutes.find(item => item.fromSatellite === routeId || item.toAntenna === routeId);
             if (!route) {
-                showToast('Ruta no encontrada.', 'danger');
-                return;
+                showToast(locale.routeNotFound, 'danger');
             }
 
             const detailJson = {
@@ -222,15 +395,15 @@
                     <td>${route.packetCount}</td>
                     <td>
                         <div class="progress-cell">
-                            <div class="progress-bar" style="width:${route.queueOccupancyPercentage}%"></div>
+                            <div class="progress-bar" style="width:${route.queueOccupancyPercentage}%; background: ${getProgressColor(route.queueOccupancyPercentage)}"></div>
                             <span>${Math.round(route.queueOccupancyPercentage)}%</span>
                         </div>
                     </td>
                     <td>${new Date(route.lastSeen).toLocaleString()}</td>
                     <td>
-                        <button class="btn btn-secondary btn-sm" type="button" data-action="view-details" data-route-id="${route.fromSatellite}">Ver detalle</button>
-                        <button class="btn btn-primary btn-sm" type="button" data-action="resend-route" data-from="${route.fromSatellite}" data-to="${route.toAntenna}">Reenviar</button>
-                        <button class="btn btn-outline btn-sm" type="button" data-action="copy-route" data-route-id="${route.fromSatellite}">Copiar</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-action="view-details" data-route-id="${route.fromSatellite}">${locale.viewDetail || 'Ver detalle'}</button>
+                        <button class="btn btn-primary btn-sm" type="button" data-action="resend-route" data-from="${route.fromSatellite}" data-to="${route.toAntenna}">${locale.resend || 'Reenviar'}</button>
+                        <button class="btn btn-outline btn-sm" type="button" data-action="copy-route" data-route-id="${route.fromSatellite}">${locale.copy || 'Copiar'}</button>
                     </td>
                 `;
                 routesTableBody.appendChild(row);
@@ -248,13 +421,13 @@
                     <td>${buffer.itemsInQueue}</td>
                     <td>
                         <div class="progress-cell">
-                            <div class="progress-bar" style="width:${buffer.capacityPercentage}%"></div>
+                            <div class="progress-bar" style="width:${buffer.capacityPercentage}%; background: ${getProgressColor(buffer.capacityPercentage)}"></div>
                             <span>${Math.round(buffer.capacityPercentage)}%</span>
                         </div>
                     </td>
                     <td>
-                        <button class="btn btn-danger btn-sm" type="button" data-action="clear-buffer" data-buffer-id="${buffer.bufferId}">${Localizer["ClearBuffer"] ?? "Vaciar buffer"}</button>
-                        <button class="btn btn-outline btn-sm" type="button" data-action="export-buffer" data-buffer-id="${buffer.bufferId}">${Localizer["ExportCsv"] ?? "Exportar CSV"}</button>
+                        <button class="btn btn-danger btn-sm" type="button" data-action="clear-buffer" data-buffer-id="${buffer.bufferId}">${locale.clearBuffer}</button>
+                        <button class="btn btn-outline btn-sm" type="button" data-action="export-buffer" data-buffer-id="${buffer.bufferId}">${locale.exportCsv}</button>
                     </td>
                 `;
                 buffersTableBody.appendChild(row);
@@ -295,7 +468,7 @@
                 const payload = await response.json();
 
                 if (payload.status !== 'success') {
-                    throw new Error(payload.message || 'Refresh failed');
+                    throw new Error(payload.message || locale.refreshFailed);
                 }
 
                 updateSummaryCards(payload.data);
@@ -303,9 +476,9 @@
                 renderBuffers(payload.data.buffers);
                 renderEvents(payload.data.recentEvents);
                 updateCharts(payload.data);
-                showToast('${Localizer["DashboardUpdated"] ?? "Dashboard actualizado"}', 'success');
+                showToast(locale.dashboardUpdated, 'success');
             } catch (error) {
-                showToast(error.message || 'Error al refrescar', 'danger');
+                showToast(error.message || locale.refreshFailed, 'danger');
             }
         }
 
@@ -319,13 +492,13 @@
                 const payload = await response.json();
 
                 if (!response.ok || payload.status !== 'success') {
-                    throw new Error(payload.message || 'Error al reenviar paquete');
+                    throw new Error(payload.message || locale.refreshFailed);
                 }
 
                 showToast(payload.message, 'success');
                 fetchRefresh();
             } catch (error) {
-                showToast(error.message || 'Error al reenviar paquete', 'danger');
+                showToast(error.message || locale.resendFailed, 'danger');
             }
         }
 
@@ -337,13 +510,13 @@
                 const payload = await response.json();
 
                 if (!response.ok || payload.status !== 'success') {
-                    throw new Error(payload.message || 'Error al limpiar el buffer');
+                    throw new Error(payload.message || locale.bufferClearFailed);
                 }
 
                 showToast(payload.message, 'success');
                 fetchRefresh();
             } catch (error) {
-                showToast(error.message || 'Error al limpiar el buffer', 'danger');
+                showToast(error.message || locale.bufferClearFailed, 'danger');
             }
         }
 
@@ -381,8 +554,17 @@
                             packetData: 'forced relay packet',
                             priority: 1
                         });
-                        showToast('${Localizer["ResendPendingPackets"] ?? "Solicitud de reenvío enviada"}', 'info');
+                        showToast(locale.resendPendingPackets, 'info');
                     }
+                }
+
+                if (action === 'test-connectivity') {
+                    fetchRefresh();
+                    showToast(locale.communicationTested, 'success');
+                }
+
+                if (action === 'export-status-svg') {
+                    exportStatusSvg();
                 }
 
                 if (action === 'clear-buffer' && bufferId) {
@@ -398,12 +580,16 @@
                     populateRouteDetail(routeId);
                 }
 
+                if (action === 'refresh-dashboard') {
+                    fetchRefresh();
+                }
+
                 if (action === 'copy-route' && routeId) {
                     if (navigator.clipboard) {
                         navigator.clipboard.writeText(routeId);
-                        showToast('${Localizer["CopiedToClipboard"] ?? "Copiado al portapapeles"}', 'success');
+                        showToast(locale.copiedToClipboard, 'success');
                     } else {
-                        showToast('${Localizer["ClipboardNotSupported"] ?? "Portapapeles no disponible"}', 'danger');
+                        showToast(locale.clipboardNotSupported, 'danger');
                     }
                 }
 
@@ -432,7 +618,7 @@
                 data: {
                     labels: [],
                     datasets: [{
-                        label: '${Localizer["QueueOccupancy"] ?? "Ocupación"}',
+                        label: locale.queueOccupancy,
                         borderColor: '#2563eb',
                         backgroundColor: 'rgba(37,99,235,0.15)',
                         tension: 0.3,
@@ -450,7 +636,7 @@
             occupancyGaugeChart = new Chart(occupancyGaugeCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['@Localizer["Used"]', '@Localizer["Free"]'],
+                    labels: [locale.used, locale.free],
                     datasets: [{
                         data: [@Model.Status.AvgQueueOccupancy, @(100 - Model.Status.AvgQueueOccupancy)],
                         backgroundColor: ['#2563eb', '#e5e7eb'],
@@ -468,7 +654,7 @@
         }
 
         function startPolling() {
-            const interval = parseInt(refreshIntervalInput.value, 10) || 5000;
+            const interval = getRefreshInterval();
             if (pollingTimer) {
                 clearInterval(pollingTimer);
             }
@@ -480,23 +666,32 @@
             createCharts();
 
             refreshButton.addEventListener('click', fetchRefresh);
-            autoRefreshToggle.addEventListener('change', () => {
-                if (autoRefreshToggle.checked) {
-                    startPolling();
-                    showToast('${Localizer["AutoRefreshEnabled"] ?? "Auto-refresh activado"}', 'success');
-                } else {
-                    clearInterval(pollingTimer);
-                    showToast('${Localizer["AutoRefreshDisabled"] ?? "Auto-refresh desactivado"}', 'info');
-                }
+
+            if (autoRefreshToggleTop) {
+                autoRefreshToggleTop.addEventListener('change', () => {
+                    if (autoRefreshToggleTop.checked) {
+                        startPolling();
+                        showToast(locale.autoRefreshEnabled, 'success');
+                    } else {
+                        clearInterval(pollingTimer);
+                        showToast(locale.autoRefreshDisabled, 'info');
+                    }
+                });
+            }
+
+            if (refreshIntervalTop) {
+                refreshIntervalTop.addEventListener('change', () => {
+                    if (autoRefreshToggleTop?.checked) {
+                        startPolling();
+                    }
+                });
+            }
+
+            modalTabs.forEach(tab => {
+                tab.addEventListener('click', () => setModalTab(tab.dataset.tab));
             });
 
-            refreshIntervalInput.addEventListener('change', () => {
-                if (autoRefreshToggle.checked) {
-                    startPolling();
-                }
-            });
-
-            if (autoRefreshToggle.checked) {
+            if (autoRefreshToggleTop?.checked) {
                 startPolling();
             }
         });
