@@ -213,8 +213,11 @@
         const detailRouteDestination = document.getElementById('detailRouteDestination');
         const detailRouteStatus = document.getElementById('detailRouteStatus');
         const detailRouteOccupancy = document.getElementById('detailRouteOccupancy');
+        const gaugeValue = document.querySelector('.gauge-value');
 
         const logsIndexUrl = '@Url.Action("Index", "Logs")';
+        const initialRoutes = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Routes));
+        const initialBuffers = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Buffers));
         const locale = {
             clearBuffer: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["ClearBuffer"].Value)),
             exportCsv: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["ExportCsv"].Value)),
@@ -352,6 +355,59 @@
             });
             if (detailTabInfo) detailTabInfo.classList.toggle('active', tabName === 'info');
             if (detailTabMetadata) detailTabMetadata.classList.toggle('active', tabName === 'metadata');
+        }
+
+        function updateSummaryCards(data) {
+            const status = data?.status;
+            if (!status) return;
+
+            if (activeRelaysCount) activeRelaysCount.textContent = status.activeRelays ?? 0;
+            if (inactiveRelaysCount) inactiveRelaysCount.textContent = status.inactiveRelays ?? 0;
+            if (totalPacketsCount) totalPacketsCount.textContent = status.totalPacketsProcessed ?? 0;
+
+            const avgQueue = Number(status.avgQueueOccupancy ?? 0);
+            if (avgQueueCount) avgQueueCount.textContent = `${avgQueue.toFixed(1)}%`;
+            if (gaugeValue) gaugeValue.textContent = `${avgQueue.toFixed(1)}%`;
+
+            if (queueHistoryChart && occupancyGaugeChart) {
+                updateCharts(data);
+            }
+        }
+
+        function renderRoutes(routes) {
+            currentRoutes = Array.isArray(routes) ? routes : [];
+            if (!routesTableBody) return;
+
+            routesTableBody.innerHTML = '';
+            currentRoutes.forEach(route => {
+                const statusText = String(route.status ?? '').toLowerCase().includes('inactive') || String(route.status ?? '').toLowerCase().includes('inactiva') ? 'Inactiva' : 'Activa';
+                const statusClass = statusText === 'Inactiva' ? 'status-inactive' : 'status-active';
+                const occupancy = Math.round(Number(route.queueOccupancyPercentage ?? 0));
+                const lastSeen = route.lastSeen ? new Date(route.lastSeen).toLocaleString() : '-';
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${route.fromSatellite ?? ''}</td>
+                    <td>${route.toAntenna ?? ''}</td>
+                    <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                    <td>${route.packetCount ?? 0}</td>
+                    <td>
+                        <div class="progress-cell">
+                            <div class="progress-track">
+                                <div class="progress-bar" style="width:${occupancy}%; background: ${getProgressColor(occupancy)}"></div>
+                            </div>
+                            <span>${occupancy}%</span>
+                        </div>
+                    </td>
+                    <td>${lastSeen}</td>
+                    <td class="action-buttons">
+                        <div class="action-buttons-inner">
+                            <button class="btn btn-table btn-sm" type="button" data-action="view-details" data-route-id="${route.fromSatellite ?? ''}">Ver detalle</button>
+                            <button class="btn btn-table btn-sm btn-primary" type="button" data-action="resend-route" data-from="${route.fromSatellite ?? ''}" data-to="${route.toAntenna ?? ''}">Reenviar</button>
+                        </div>
+                    </td>`;
+                routesTableBody.appendChild(row);
+            });
         }
 
         detailTabs.forEach(tab => {
@@ -507,6 +563,21 @@
             }
         }
 
+        async function testConnectivity() {
+            try {
+                const response = await fetch('/Relay/TestConnectivity');
+                const payload = await response.json();
+
+                if (!response.ok || payload.status !== 'success') {
+                    throw new Error(payload.message || 'No fue posible comprobar la conectividad.');
+                }
+
+                showToast(payload.message, payload.connected ? 'success' : 'warning');
+            } catch (error) {
+                showToast(error.message, 'warning');
+            }
+        }
+
         function exportBuffer(bufferId) {
             const url = `/Relay/ExportBuffersCsv?bufferId=${encodeURIComponent(bufferId)}`;
             window.location.href = url;
@@ -546,8 +617,7 @@
                 }
 
                 if (action === 'test-connectivity') {
-                    fetchRefresh();
-                    showToast(locale.communicationTested, 'success');
+                    testConnectivity();
                 }
 
                 if (action === 'export-status-svg') {
@@ -680,9 +750,19 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             bindActionButtons();
+            renderRoutes(initialRoutes);
+            renderBuffers(initialBuffers);
             createCharts();
+            updateSummaryCards({ status: {
+                activeRelays: @Model.Status.ActiveRelays,
+                inactiveRelays: @Model.Status.InactiveRelays,
+                totalPacketsProcessed: @Model.Status.TotalPacketsProcessed,
+                avgQueueOccupancy: @Model.Status.AvgQueueOccupancy.ToString(System.Globalization.CultureInfo.InvariantCulture)
+            }});
 
-            refreshButton.addEventListener('click', fetchRefresh);
+            if (refreshButton) {
+                refreshButton.addEventListener('click', fetchRefresh);
+            }
 
             if (autoRefreshToggleTop) {
                 autoRefreshToggleTop.addEventListener('change', () => {

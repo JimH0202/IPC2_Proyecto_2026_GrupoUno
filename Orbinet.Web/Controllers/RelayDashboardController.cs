@@ -147,6 +147,47 @@ public class RelayDashboardController : Controller
         }
     }
 
+    [HttpGet("testconnectivity")]
+    public async Task<IActionResult> TestConnectivity()
+    {
+        try
+        {
+            var targetPort = _settings.Hemisphere.Equals("North", StringComparison.OrdinalIgnoreCase) ? 5001 : 5000;
+            var targetHemisphere = _settings.Hemisphere.Equals("North", StringComparison.OrdinalIgnoreCase) ? "Sur" : "Norte";
+            var targetUrl = $"http://127.0.0.1:{targetPort}/Relay/Refresh";
+
+            using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(2) };
+            using var response = await client.GetAsync(targetUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return Ok(new
+                {
+                    status = "success",
+                    connected = true,
+                    message = $"Conexión disponible con el puerto del hemisferio {targetHemisphere} ({targetPort})."
+                });
+            }
+
+            return Ok(new
+            {
+                status = "success",
+                connected = false,
+                message = $"No fue posible conectar con el puerto del hemisferio {targetHemisphere} ({targetPort})."
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "No se pudo validar la conectividad relay");
+            return Ok(new
+            {
+                status = "success",
+                connected = false,
+                message = "No fue posible completar la prueba de conectividad."
+            });
+        }
+    }
+
     [HttpGet("exportbuffercsv")]
     public IActionResult ExportBuffersCsv([FromQuery] string? bufferId)
     {
