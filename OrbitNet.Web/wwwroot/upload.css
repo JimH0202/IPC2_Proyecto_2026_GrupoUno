@@ -1,0 +1,62 @@
+/* ===========================
+   UPLOAD
+=========================== */
+.upload-box {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-lg);
+    padding: 36px 20px;
+    background: #f8fafc;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+}
+
+.upload-box:hover,
+.upload-box.dragover {
+    border-color: var(--primary);
+    background: rgba(37,99,235,.03);
+}
+
+.upload-icon { font-size: 30px; margin-bottom: 8px; }
+.upload-box p { font-size: 12px; color: var(--muted); margin: 4px 0; }
+
+.info-box {
+    background: rgba(37,99,235,.04);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 12px 14px;
+    margin-top: 12px;
+}
+
+.info-box h3 { font-size: 12px; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+.info-box p  { font-size: 11.5px; color: var(--text-secondary); margin: 3px 0; }
+
+.last-up {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-top: 10px;
+}
+
+.last-up h4 {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text);
+}
+
+.lu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    background: #f8fafc;
+    border-radius: 7px;
+}
+
+.lu-name { font-size: 12px; font-weight: 600; color: var(--text); }
+.lu-meta { font-size: 10.5px; color: var(--muted); }
