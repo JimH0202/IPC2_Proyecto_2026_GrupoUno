@@ -1,0 +1,63 @@
+@model List<OrbitNet.Web.Models.ViewModels.SatelliteViewModel>
+
+<div class="page-header" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap">
+    <div>
+        <h1>@Localizer["SatelliteList"]</h1>
+        <p>@Localizer["SatelliteListDescription"]</p>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="location.reload();">🔄 @Localizer["Refresh"]</button>
+</div>
+
+<div class="table-card">
+    <div style="padding:12px 20px;border-bottom:1px solid var(--border)">
+        <input id="searchInput" placeholder="@Localizer["SearchSatellitePlaceholder"]"
+               style="padding:8px 14px;border:1px solid var(--border);border-radius:10px;width:100%;max-width:320px;outline:none;font-size:.95rem" />
+    </div>
+    <table class="table" id="satelliteTable">
+        <thead>
+            <tr>
+                <th>@Localizer["Id"]</th>
+                <th>@Localizer["Name"]</th>
+                <th>@Localizer["Orbit"]</th>
+                <th>@Localizer["Type"]</th>
+                <th>@Localizer["Status"]</th>
+                <th>@Localizer["MessagesSent"]</th>
+                <th>@Localizer["MessagesReceived"]</th>
+                <th>@Localizer["Actions"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sat in Model)
+            {
+                <tr>
+                    <td>@sat.Id</td>
+                    <td>@sat.Name</td>
+                    <td>@sat.OrbitId</td>
+                    <td>@sat.Type</td>
+                    <td>
+                        <span class="@(sat.IsActive ? "badge-active" : "badge-inactive")">
+                            @(sat.IsActive ? Localizer["ActiveStatus"] : Localizer["InactiveStatus"])
+                        </span>
+                    </td>
+                    <td>@sat.MessagesSent</td>
+                    <td>@sat.MessagesReceived</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@sat.Id" class="btn btn-primary btn-sm">@Localizer["ViewDetails"]</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div style="padding:12px 20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:var(--muted)">
+        <span>@string.Format(Localizer["ShowingSatellites"], Model.Count)</span>
+    </div>
+</div>
+
+<script>
+document.getElementById('searchInput').addEventListener('keyup', function () {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('#satelliteTable tbody tr').forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+});
+</script>

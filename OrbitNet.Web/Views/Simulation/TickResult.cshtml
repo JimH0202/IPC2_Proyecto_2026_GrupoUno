@@ -1,0 +1,89 @@
+@model OrbitNet.Web.Models.ViewModels.SimulationViewModel
+
+<div class="page-header" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap">
+    <div>
+        <h1>@Localizer["TickResultTitle"]</h1>
+        <p class="report-description">@Localizer["TickResultDescription"]</p>
+    </div>
+    <div class="page-actions" style="margin-top:0">
+        <a asp-controller="Simulation" asp-action="Dashboard" class="btn btn-primary">@Localizer["BackToDashboard"]</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["Home"]</a>
+    </div>
+</div>
+
+<div class="reports-grid" role="region" aria-label="Simulation metrics">
+    <div class="stat-card">
+        <strong>@Localizer["TickResultCurrentTick"]</strong>
+        <div class="stat-value" style="color:var(--primary)">@Model.CurrentTick</div>
+        <small style="color:var(--muted)">@Localizer["TickResultSimulation"]: @(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])</small>
+    </div>
+    <div class="stat-card">
+        <strong>@Localizer["TickResultProcessedMessages"]</strong>
+        <div class="stat-value" style="color:var(--success)">@Model.ProcessedMessages</div>
+        <small style="color:var(--muted)">@Localizer["MessagesProcessedRecentTicks"]</small>
+    </div>
+    <div class="stat-card">
+        <strong>@Localizer["TickResultActiveSatellites"]</strong>
+        <div class="stat-value" style="color:var(--warning)">@Model.ActiveSatellites</div>
+        <small style="color:var(--muted)">@Localizer["SatellitesCurrentlyActive"]</small>
+    </div>
+    <div class="stat-card">
+        <strong>@Localizer["TickResultPendingMessages"]</strong>
+        <div class="stat-value" style="color:var(--danger)">@Model.PendingMessages</div>
+        <small style="color:var(--muted)">@Localizer["MessagesWaitingQueue"]</small>
+    </div>
+</div>
+
+<div class="reports-grid" style="margin-top:24px">
+    <div class="stat-card">
+        <strong>@Localizer["Controls"]</strong>
+        <div class="page-actions" style="margin-top:8px">
+            <form asp-controller="Simulation" asp-action="TickResult" method="post" style="display:inline">
+                <button type="submit" class="btn btn-secondary">@Localizer["ExecuteTick"]</button>
+            </form>
+            <form asp-controller="Simulation" asp-action="ExecuteTicks" method="post" style="display:inline">
+                <input type="hidden" name="count" value="10" />
+                <button type="submit" class="btn btn-secondary">@Localizer["Execute10Ticks"]</button>
+            </form>
+            <form asp-controller="Simulation" asp-action="ExecuteTicks" method="post" style="display:inline">
+                <input type="hidden" name="count" value="100" />
+                <button type="submit" class="btn btn-secondary">@Localizer["Execute100Ticks"]</button>
+            </form>
+        </div>
+    </div>
+    <div class="stat-card">
+        <strong>@Localizer["SimulationStatus"]</strong>
+        <div class="stat-value" style="color:var(--primary)">@(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])</div>
+        <small style="color:var(--muted)">@Localizer["TickResultCurrentTick"]: @Model.CurrentTick</small>
+    </div>
+    <div class="stat-card">
+        <strong>@Localizer["Processed"]</strong>
+        <div class="stat-value">@Model.ProcessedMessages</div>
+        <small style="color:var(--muted)">@Localizer["TotalMessagesProcessed"]</small>
+    </div>
+</div>
+
+<h3>@Localizer["TickResultSatellitesStatusTitle"]</h3>
+<div class="reports-grid">
+    @foreach (var sat in Model.Satellites)
+    {
+        <div class="stat-card">
+            <strong>@Localizer["Name"]</strong>
+            <div class="stat-value">@sat.Name (@sat.Id)</div>
+            <dl style="margin:8px 0 0;font-size:.9rem">
+                <dt style="color:var(--muted);font-size:.8rem">@Localizer["Orbit"]</dt>
+                <dd style="margin:0">@sat.OrbitId</dd>
+            </dl>
+            <dl style="margin:4px 0 0;font-size:.9rem">
+                <dt style="color:var(--muted);font-size:.8rem">@Localizer["Status"]</dt>
+                <dd style="margin:0">
+                    <span class="@(sat.IsActive ? "badge-active" : "badge-inactive")">
+                        @(sat.IsActive ? Localizer["ActiveStatus"] : Localizer["InactiveStatus"])
+                    </span>
+                </dd>
+            </dl>
+        </div>
+    }
+</div>
+
+ 

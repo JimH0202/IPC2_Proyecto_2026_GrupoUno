@@ -1,0 +1,26 @@
+@model OrbitNet.Web.Models.ViewModels.ReportViewModel
+@{
+    var reportKey = ViewContext.RouteData.Values["action"]?.ToString() ?? "MemoryLayout";
+}
+
+<div class="page-header" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap">
+    <div>
+        <h1>@Model.Title</h1>
+        <p>@Model.Description</p>
+    </div>
+    <a asp-controller="Reports" asp-action="ExportSvg" asp-route-report="@reportKey"
+       class="btn btn-primary btn-sm">@Localizer["DownloadSvg"]</a>
+</div>
+
+<div class="report-wrap">
+    <div class="report-svg-area">
+        @if (!string.IsNullOrWhiteSpace(Model.SvgContent))
+        {
+            @Html.Raw(Model.SvgContent)
+        }
+        else
+        {
+            <span style="color:var(--muted);font-size:13px">@Localizer["NoSvgContent"]</span>
+        }
+    </div>
+</div>

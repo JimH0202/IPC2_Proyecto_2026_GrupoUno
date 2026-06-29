@@ -1,0 +1,74 @@
+@model OrbitNet.Web.Models.ViewModels.UploadViewModel
+
+<div class="page-header">
+    <h1>@Localizer["UploadPageTitle"]</h1>
+    <p>@Localizer["UploadPageDescription"]</p>
+</div>
+
+<h3>@Localizer["UploadSectionTitle"]</h3>
+<form asp-action="Result" asp-controller="Upload" method="post" enctype="multipart/form-data">
+    <div class="upload-box" id="uploadBox">
+        <div class="upload-icon">☁️</div>
+        <p><strong>@Localizer["UploadDragDropPrompt"]</strong></p>
+        <p>@Localizer["UploadOrClickPrompt"]</p>
+        <input type="file" id="xmlFile" name="xmlFile" accept=".xml" required style="display:none;" />
+        <button type="button" class="btn btn-primary" style="margin-top:8px"
+                onclick="document.getElementById('xmlFile').click();">
+            @Localizer["UploadSelectFileButton"]
+        </button>
+        <p style="margin-top:8px;font-size:10.5px;color:#94a3b8">@Localizer["UploadAllowedFilesNote"]</p>
+    </div>
+    <div style="display:none;" id="filePreview">
+        <p style="margin-top:10px"><strong>@Localizer["UploadSelectedFileLabel"]</strong> <span id="fileName"></span></p>
+        <div class="page-actions" style="margin-top:8px">
+            <button type="submit" class="btn btn-primary">@Localizer["UploadConfirmButton"]</button>
+            <button type="button" class="btn btn-secondary"
+                    onclick="document.getElementById('xmlFile').value='';document.getElementById('filePreview').style.display='none';document.getElementById('uploadBox').style.display='block';">
+                @Localizer["UploadChangeFileButton"]
+            </button>
+        </div>
+    </div>
+</form>
+
+<div class="info-box">
+    <h3>@Localizer["UploadInstructionsTitle"]</h3>
+    <p>@Localizer["UploadInstructions"]</p>
+    <p>@Localizer["UploadInstructionsDetail"]</p>
+</div>
+
+@if (Model?.Success == true && !string.IsNullOrEmpty(Model.FileName))
+{
+    <div class="last-up">
+        <h4>@Localizer["UploadLastSuccessTitle"]</h4>
+        <div class="lu-item">
+            <div>
+                <div class="lu-name">@Model.FileName</div>
+                <div class="lu-meta">@string.Format(Localizer["UploadLastSuccessMeta"], Model.SatellitesLoaded, Model.AntennasLoaded, Model.PolarOrbitsLoaded)</div>
+            </div>
+            <button class="btn btn-secondary btn-sm">@Localizer["UploadViewDetailButton"]</button>
+        </div>
+    </div>
+}
+
+<script>
+const uploadBox = document.getElementById('uploadBox');
+const xmlFile = document.getElementById('xmlFile');
+const filePreview = document.getElementById('filePreview');
+const fileName = document.getElementById('fileName');
+uploadBox.addEventListener('dragover', e => { e.preventDefault(); uploadBox.classList.add('dragover'); });
+uploadBox.addEventListener('dragleave', () => uploadBox.classList.remove('dragover'));
+uploadBox.addEventListener('drop', e => {
+    e.preventDefault(); uploadBox.classList.remove('dragover');
+    if (e.dataTransfer.files.length > 0) {
+        xmlFile.files = e.dataTransfer.files;
+        fileName.textContent = e.dataTransfer.files[0].name;
+        uploadBox.style.display = 'none'; filePreview.style.display = 'block';
+    }
+});
+xmlFile.addEventListener('change', () => {
+    if (xmlFile.files.length > 0) {
+        fileName.textContent = xmlFile.files[0].name;
+        uploadBox.style.display = 'none'; filePreview.style.display = 'block';
+    }
+});
+</script>

@@ -1,0 +1,43 @@
+@model OrbitNet.Web.Models.ViewModels.MatrixViewModel
+
+<div class="page-header">
+    <h1>@Localizer["SparseMatrix"]</h1>
+    <p>@Localizer["SparseMatrixDescription"]</p>
+</div>
+
+<div class="matrix-toolbar-row">
+    <div class="reports-grid" style="flex:1;margin-bottom:0">
+        <div class="stat-card" style="padding:16px">
+            <strong>@Localizer["Rows"]</strong>
+            <div class="stat-value">@Model.Rows</div>
+        </div>
+        <div class="stat-card" style="padding:16px">
+            <strong>@Localizer["Columns"]</strong>
+            <div class="stat-value">@Model.Columns</div>
+        </div>
+        <div class="stat-card" style="padding:16px">
+            <strong>@Localizer["OccupiedNodes"]</strong>
+            <div class="stat-value" style="color:var(--primary)">@Model.OccupiedNodes</div>
+        </div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <select class="msel">
+            <option>@Localizer["NorthernHemisphere"]</option>
+            <option>@Localizer["SouthernHemisphere"]</option>
+        </select>
+        <a asp-controller="Reports" asp-action="ExportSvg" asp-route-report="Matrix"
+           class="btn btn-primary btn-sm">@Localizer["ExportSvg"]</a>
+    </div>
+</div>
+
+<div class="matrix-layout">
+    <div class="mat-canvas">
+        @Html.Raw(Model.SvgContent)
+    </div>
+    <div class="mat-legend">
+        <h4>@Localizer["Legend"]</h4>
+        <div class="legend-item"><span class="ld active"></span>@Localizer["ActiveSatellite"]</div>
+        <div class="legend-item"><span class="ld inactive"></span>@Localizer["InactiveSatellite"]</div>
+        <div class="legend-item"><span class="ld empty"></span>@Localizer["EmptySpace"]</div>
+    </div>
+</div>
