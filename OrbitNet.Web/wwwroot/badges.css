@@ -28,3 +28,20 @@
     background:#fee2e2;
     color:#991b1b;
 }
+
+.badge-sim{
+    background:var(--success-bg);
+    color:var(--success);
+    padding:5px 12px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.badge-success{
+    background:var(--success-bg);
+    color:var(--success);
+    padding:3px 10px;
+    border-radius:999px;
+    font-size:12px;
+}

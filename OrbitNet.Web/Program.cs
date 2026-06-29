@@ -27,8 +27,10 @@ builder.WebHost.UseUrls($"http://localhost:{port}");
 // ------------------------------------------------------------------------
 
 // 1. Configuraciones compartidas (MVC + API)
-builder.Services.AddLocalization();
-builder.Services.AddControllersWithViews(); // Soporta Vistas Razor y Endpoints de API
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddControllersWithViews()
+    .AddDataAnnotationsLocalization()
+    .AddViewLocalization(); // Soporta Vistas Razor y Endpoints de API
 builder.Services.AddHttpClient(); // Requisito para comunicación entre puertos
 
 // 2. Inyección de tus servicios y configuraciones del sistema
@@ -50,6 +52,20 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
     app.UseHttpsRedirection();
 }
+
+// Configurar localización (idioma)
+var supportedCultures = new[] { "es", "en" };
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture("es")
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+localizationOptions.RequestCultureProviders.Clear();
+localizationOptions.RequestCultureProviders.Add(new Microsoft.AspNetCore.Localization.CookieRequestCultureProvider { CookieName = ".AspNetCore.Culture" });
+localizationOptions.RequestCultureProviders.Add(new Microsoft.AspNetCore.Localization.QueryStringRequestCultureProvider());
+localizationOptions.RequestCultureProviders.Add(new Microsoft.AspNetCore.Localization.AcceptLanguageHeaderRequestCultureProvider());
+
+app.UseRequestLocalization(localizationOptions);
 
 app.UseStaticFiles(); // Soporte para CSS, JS e imágenes del frontend
 app.UseRouting();

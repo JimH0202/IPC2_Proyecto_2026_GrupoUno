@@ -1,37 +1,89 @@
-:root{
-    --primary:#2563eb;
-    --primary-dark:#1d4ed8;
+/* ===========================
+   DESIGN TOKENS - OrbitNet
+=========================== */
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #dbeafe;
 
-    --sidebar-start:#071426;
-    --sidebar-end:#0f2745;
+    --sidebar-start: #071426;
+    --sidebar-end: #0d2240;
+    --sidebar-width: 200px;
 
-    --bg:#f4f7fb;
-    --card:#ffffff;
+    --bg: #f0f4f8;
+    --card: #ffffff;
+    --card-border: rgba(0,0,0,.06);
 
-    --text:#1e293b;
-    --muted:#64748b;
+    --text: #0f172a;
+    --text-secondary: #475569;
+    --muted: #64748b;
+    --border: #e2e8f0;
 
-    --border:#e5e7eb;
+    --success: #16a34a;
+    --success-bg: #dcfce7;
+    --danger: #dc2626;
+    --danger-bg: #fee2e2;
+    --warning: #d97706;
+    --warning-bg: #fef3c7;
+    --info: #2563eb;
+    --info-bg: #dbeafe;
 
-    --success:#22c55e;
-    --danger:#ef4444;
-    --warning:#f59e0b;
-    --info:#3b82f6;
+    --metric-blue: #2563eb;
+    --metric-green: #16a34a;
+    --metric-orange: #ea580c;
+    --metric-red: #dc2626;
 
-    --radius-sm:8px;
-    --radius-md:12px;
-    --radius-lg:18px;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
 
-    --shadow:
-        0 6px 16px rgba(0,0,0,.05);
-
-    --shadow-lg:
-        0 15px 35px rgba(0,0,0,.08);
+    --shadow: 0 1px 4px rgba(0,0,0,.05);
+    --shadow-lg: 0 4px 20px rgba(0,0,0,.08);
 }
 
-body{
-    margin:0;
-    background:var(--bg);
-    font-family:Inter, sans-serif;
-    color:var(--text);
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--bg);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
 }
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+/* ===========================
+   COLOR UTILITIES
+=========================== */
+.blue   { color:var(--metric-blue); }
+.green  { color:var(--metric-green); }
+.orange { color:var(--metric-orange); }
+.red    { color:var(--metric-red); }
+.primary{ color:var(--primary); }
+.muted  { color:var(--muted); }
+
+/* ===========================
+   LOGS
+=========================== */
+.log-summary{
+    margin-bottom:16px;
+    font-size:14px;
+    color:var(--text-secondary);
+}
+
+.log-level{
+    display:inline-block;
+    padding:3px 10px;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:600;
+    text-transform:uppercase;
+}
+
+.log-level.log-info    { background:var(--info-bg); color:var(--info); }
+.log-level.log-warn    { background:var(--warning-bg); color:var(--warning); }
+.log-level.log-error   { background:var(--danger-bg); color:var(--danger); }
+.log-level.log-debug   { background:#f1f5f9; color:#475569; }
