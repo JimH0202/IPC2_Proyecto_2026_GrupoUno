@@ -1,58 +1,58 @@
 @model OrbitNet.Web.Models.ViewModels.UploadViewModel
 
-<div class="page-header" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap">
+<div class="page-header-row">
     <div>
         <h1>@Localizer["UploadResultTitle"]</h1>
         <p>@Localizer["UploadResultDescription"]</p>
     </div>
-    <div class="page-actions" style="margin-top:0">
+    <div class="page-actions">
         <a asp-controller="Upload" asp-action="Index" class="btn btn-primary">@Localizer["UploadAnotherFile"]</a>
         <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["BackToDashboard"]</a>
     </div>
 </div>
 
-<div class="reports-grid">
-    <div class="stat-card">
-        <strong>@Localizer["UploadResultStatus"]</strong>
-        <div class="stat-value" style="color:@(Model.Success ? "var(--success)" : "var(--danger)")">@(Model.Success ? Localizer["Success"] : Localizer["Error"])</div>
-        <small style="color:var(--muted)">@Localizer["UploadResultStatusSubtext"]</small>
+<div class="metrics">
+    <div class="mcard">
+        <div class="mtitle">@Localizer["UploadResultStatus"]</div>
+        <div class="mval @(Model.Success ? "green" : "red")">@(Model.Success ? Localizer["Success"] : Localizer["Error"])</div>
+        <div class="msub">@Localizer["UploadResultStatusSubtext"]</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["UploadResultFile"]</strong>
-        <div class="stat-value" style="color:var(--primary)">@Model.FileName</div>
-        <small style="color:var(--muted)">@Localizer["UploadResultFileSummary"]</small>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["UploadResultFile"]</div>
+        <div class="mval blue">@Model.FileName</div>
+        <div class="msub">@Localizer["UploadResultFileSummary"]</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["UploadResultSatellitesLoaded"]</strong>
-        <div class="stat-value" style="color:var(--success)">@Model.SatellitesLoaded</div>
-        <small style="color:var(--muted)">@Localizer["UploadResultSatellitesLoadedDesc"]</small>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["UploadResultSatellitesLoaded"]</div>
+        <div class="mval green">@Model.SatellitesLoaded</div>
+        <div class="msub">@Localizer["UploadResultSatellitesLoadedDesc"]</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["UploadResultAntennasLoaded"]</strong>
-        <div class="stat-value" style="color:var(--warning)">@Model.AntennasLoaded</div>
-        <small style="color:var(--muted)">@Localizer["UploadResultAntennasLoadedDesc"]</small>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["UploadResultAntennasLoaded"]</div>
+        <div class="mval orange">@Model.AntennasLoaded</div>
+        <div class="msub">@Localizer["UploadResultAntennasLoadedDesc"]</div>
     </div>
 </div>
 
-<div class="reports-grid" style="margin-top:24px">
-    <div class="stat-card">
-        <strong>@Localizer["UploadResultPolarOrbitsLoaded"]</strong>
-        <div class="stat-value" style="color:var(--primary)">@Model.PolarOrbitsLoaded</div>
+<div class="stats2">
+    <div class="scard">
+        <div class="slabel">@Localizer["UploadResultPolarOrbitsLoaded"]</div>
+        <div class="sval primary">@Model.PolarOrbitsLoaded</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["UploadResultMessage"]</strong>
-        <div class="stat-value">@Model.Message</div>
+    <div class="scard">
+        <div class="slabel">@Localizer["UploadResultMessage"]</div>
+        <div class="sval">@Model.Message</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["UploadResultFileName"]</strong>
-        <div class="stat-value">@Model.FileName</div>
+    <div class="scard">
+        <div class="slabel">@Localizer["UploadResultFileName"]</div>
+        <div class="sval">@Model.FileName</div>
     </div>
 </div>
 
 @if (Model.Errors?.Any() == true)
 {
-    <div class="table-card" style="margin-top:24px;padding:20px">
-        <h3 style="margin-top:0">@Localizer["UploadErrorsFound"]</h3>
+    <div class="sec">
+        <h3>@Localizer["UploadErrorsFound"]</h3>
         <ul>
             @foreach (var error in Model.Errors)
             {

@@ -8,21 +8,25 @@ using OrbitNet.Web.Services.Communication;
 
 namespace OrbitNet.Web.Controllers;
 
+[Route("Relay")]
 public class RelayDashboardController : Controller
 {
     private readonly AppInstanceSettings _settings;
     private readonly RelayHttpService _relayHttpService;
+    private readonly BasicAuthService _basicAuthService;
     private readonly OrbitNetStore _store;
     private readonly ILogger<RelayDashboardController> _logger;
 
     public RelayDashboardController(
         IOptions<AppInstanceSettings> settings,
         RelayHttpService relayHttpService,
+        BasicAuthService basicAuthService,
         OrbitNetStore store,
         ILogger<RelayDashboardController> logger)
     {
         _settings = settings.Value;
         _relayHttpService = relayHttpService;
+        _basicAuthService = basicAuthService;
         _store = store;
         _logger = logger;
     }
@@ -30,16 +34,18 @@ public class RelayDashboardController : Controller
     [HttpGet]
     public IActionResult Index()
     {
+        EnsureStoreInitialized();
         var model = BuildDashboardModel();
-        return View(model);
+        return View("~/Views/Relay/Index.cshtml", model);
     }
 
     [HttpGet("refresh")]
     public IActionResult Refresh()
     {
+        EnsureStoreInitialized();
         var model = BuildDashboardModel();
 
-        return Json(new
+        return Ok(new
         {
             status = "success",
             data = new
@@ -79,7 +85,20 @@ public class RelayDashboardController : Controller
                 return StatusCode(502, new { status = "error", message = "No se pudo enviar el paquete al hemisferio hermano." });
             }
 
-            return Ok(new
+            var route = _store.Routes.FirstOrDefault(x =>
+                string.Equals(x.FromSatellite, request.FromSatellite, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(x.ToAntenna, request.ToAntenna, StringComparison.OrdinalIgnoreCase));
+
+            if (route != null)
+            {
+                route.PacketCount += 1;
+                route.Status = "Resent";
+                route.LastSeen = DateTime.Now;
+                route.PacketData = $"{route.PacketCount} paquetes reenviados";
+                route.QueueOccupancyPercentage = Math.Min(100, route.QueueOccupancyPercentage + 5);
+            }
+
+            return StatusCode(201, new
             {
                 status = "success",
                 message = $"Paquete enviado desde {request.FromSatellite} hacia {request.ToAntenna}.",
@@ -103,8 +122,18 @@ public class RelayDashboardController : Controller
 
         try
         {
-            _store.QueueOccupancyPercentage = 0.0;
+            EnsureStoreInitialized();
+
+            var buffer = _store.Buffers.FirstOrDefault(x => string.Equals(x.BufferId, bufferId, StringComparison.OrdinalIgnoreCase));
+            if (buffer == null)
+            {
+                return NotFound(new { status = "error", message = $"Buffer {bufferId} no encontrado." });
+            }
+
+            buffer.ItemsInQueue = 0;
+            buffer.CapacityPercentage = 0;
             _store.EventsProcessed += 1;
+            _store.QueueOccupancyPercentage = _store.Buffers.Any() ? _store.Buffers.Average(x => x.CapacityPercentage) : 0.0;
 
             return Ok(new
             {
@@ -120,38 +149,42 @@ public class RelayDashboardController : Controller
         }
     }
 
+    [HttpGet("exportbuffercsv")]
+    public IActionResult ExportBuffersCsv([FromQuery] string? bufferId)
+    {
+        EnsureStoreInitialized();
+
+        var buffers = string.IsNullOrWhiteSpace(bufferId)
+            ? _store.Buffers
+            : _store.Buffers.Where(x => x.BufferId.Equals(bufferId, StringComparison.OrdinalIgnoreCase)).ToList();
+
+        var csvLines = new List<string>
+        {
+            "BufferId,Type,ItemsInQueue,CapacityPercentage"
+        };
+
+        csvLines.AddRange(buffers.Select(buffer =>
+            $"{buffer.BufferId},{buffer.Type},{buffer.ItemsInQueue},{buffer.CapacityPercentage}"));
+
+        var csvBytes = System.Text.Encoding.UTF8.GetBytes(string.Join("\n", csvLines));
+        var fileName = string.IsNullOrWhiteSpace(bufferId)
+            ? "relay-buffers.csv"
+            : $"relay-buffer-{bufferId}.csv";
+
+        return File(csvBytes, "text/csv", fileName);
+    }
+
     private RelayDashboardViewModel BuildDashboardModel()
     {
-        var routesData = MockDataService.GetRoutesData();
-        var buffersData = MockDataService.GetBuffersData();
+        EnsureStoreInitialized();
 
-        return new RelayDashboardViewModel
+        var model = new RelayDashboardViewModel
         {
             Hemisphere = _settings.Hemisphere,
             LastUpdated = DateTime.Now,
-            Status = new RelayStatusDto
-            {
-                ActiveRelays = routesData.ActiveRoutes,
-                InactiveRelays = Math.Max(0, routesData.TotalRoutes - routesData.ActiveRoutes),
-                TotalPacketsProcessed = routesData.Routes.Sum(r => r.Packets),
-                AvgQueueOccupancy = buffersData.AverageOccupancy
-            },
-            Routes = routesData.Routes.Select(route => new RouteDto
-            {
-                FromSatellite = route.Source,
-                ToAntenna = route.Destination,
-                Status = route.Status,
-                QueueOccupancyPercentage = route.Packets > 0 ? route.Packets * 1.8 : 0,
-                LastSeen = DateTime.Now.AddMinutes(-route.Hops),
-                PacketData = $"{route.Id}:{route.Packets} paquetes"
-            }).ToList(),
-            Buffers = buffersData.Buffers.Select(buffer => new BufferDto
-            {
-                BufferId = buffer.Id,
-                Type = buffer.Status,
-                ItemsInQueue = buffer.Occupied,
-                CapacityPercentage = buffer.OccupancyPercent
-            }).ToList(),
+            Status = BuildStatusFromStore(),
+            Routes = _store.Routes,
+            Buffers = _store.Buffers,
             RecentEvents = new List<EventDto>
             {
                 new() { Timestamp = DateTime.Now.AddMinutes(-2), Level = "Info", Message = "Paquete relay procesado correctamente." },
@@ -160,6 +193,60 @@ public class RelayDashboardController : Controller
             },
             ActionMessage = "Snapshot cargado correctamente."
         };
+
+        return model;
+    }
+
+    private RelayStatusDto BuildStatusFromStore()
+    {
+        var activeRelays = _store.Routes.Count(r =>
+            r.Status.Contains("active", StringComparison.OrdinalIgnoreCase) ||
+            r.Status.Contains("activa", StringComparison.OrdinalIgnoreCase) ||
+            r.Status.Contains("resent", StringComparison.OrdinalIgnoreCase));
+        var inactiveRelays = _store.Routes.Count(r =>
+            r.Status.Contains("inactive", StringComparison.OrdinalIgnoreCase) ||
+            r.Status.Contains("inactiva", StringComparison.OrdinalIgnoreCase));
+        var inferredInactive = inactiveRelays > 0 ? inactiveRelays : Math.Max(0, _store.Routes.Count - activeRelays);
+
+        return new RelayStatusDto
+        {
+            ActiveRelays = activeRelays,
+            InactiveRelays = inferredInactive,
+            TotalPacketsProcessed = _store.Routes.Sum(r => r.PacketCount),
+            AvgQueueOccupancy = _store.QueueOccupancyPercentage
+        };
+    }
+
+    private void EnsureStoreInitialized()
+    {
+        if (_store.Routes.Any() && _store.Buffers.Any())
+        {
+            return;
+        }
+
+        var routesData = MockDataService.GetRoutesData();
+        var buffersData = MockDataService.GetBuffersData();
+
+        _store.Routes = routesData.Routes.Select(route => new RouteDto
+        {
+            FromSatellite = route.Source,
+            ToAntenna = route.Destination,
+            Status = route.Status,
+            QueueOccupancyPercentage = route.Packets > 0 ? route.Packets * 1.8 : 0,
+            LastSeen = DateTime.Now.AddMinutes(-route.Hops),
+            PacketData = $"{route.Id}:{route.Packets} paquetes",
+            PacketCount = route.Packets
+        }).ToList();
+
+        _store.Buffers = buffersData.Buffers.Select(buffer => new BufferDto
+        {
+            BufferId = buffer.Id,
+            Type = buffer.Status,
+            ItemsInQueue = buffer.Occupied,
+            CapacityPercentage = buffer.OccupancyPercent
+        }).ToList();
+
+        _store.QueueOccupancyPercentage = _store.Buffers.Any() ? _store.Buffers.Average(x => x.CapacityPercentage) : 0.0;
     }
 }
 

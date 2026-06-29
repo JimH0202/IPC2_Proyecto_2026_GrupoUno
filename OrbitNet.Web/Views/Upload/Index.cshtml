@@ -5,30 +5,32 @@
     <p>@Localizer["UploadPageDescription"]</p>
 </div>
 
-<h3>@Localizer["UploadSectionTitle"]</h3>
-<form asp-action="Result" asp-controller="Upload" method="post" enctype="multipart/form-data">
-    <div class="upload-box" id="uploadBox">
-        <div class="upload-icon">☁️</div>
-        <p><strong>@Localizer["UploadDragDropPrompt"]</strong></p>
-        <p>@Localizer["UploadOrClickPrompt"]</p>
-        <input type="file" id="xmlFile" name="xmlFile" accept=".xml" required style="display:none;" />
-        <button type="button" class="btn btn-primary" style="margin-top:8px"
-                onclick="document.getElementById('xmlFile').click();">
-            @Localizer["UploadSelectFileButton"]
-        </button>
-        <p style="margin-top:8px;font-size:10.5px;color:#94a3b8">@Localizer["UploadAllowedFilesNote"]</p>
-    </div>
-    <div style="display:none;" id="filePreview">
-        <p style="margin-top:10px"><strong>@Localizer["UploadSelectedFileLabel"]</strong> <span id="fileName"></span></p>
-        <div class="page-actions" style="margin-top:8px">
-            <button type="submit" class="btn btn-primary">@Localizer["UploadConfirmButton"]</button>
-            <button type="button" class="btn btn-secondary"
-                    onclick="document.getElementById('xmlFile').value='';document.getElementById('filePreview').style.display='none';document.getElementById('uploadBox').style.display='block';">
-                @Localizer["UploadChangeFileButton"]
+<div class="sec">
+    <h3>@Localizer["UploadSectionTitle"]</h3>
+    <form asp-action="Result" asp-controller="Upload" method="post" enctype="multipart/form-data">
+        <div class="upload-box" id="uploadBox">
+            <div class="upload-icon">☁️</div>
+            <p><strong>@Localizer["UploadDragDropPrompt"]</strong></p>
+            <p>@Localizer["UploadOrClickPrompt"]</p>
+            <input type="file" id="xmlFile" name="xmlFile" accept=".xml" required style="display:none;" />
+            <button type="button" class="btn btn-primary" style="margin-top:8px"
+                    onclick="document.getElementById('xmlFile').click();">
+                @Localizer["UploadSelectFileButton"]
             </button>
+            <p style="margin-top:8px;font-size:10.5px;color:#94a3b8">@Localizer["UploadAllowedFilesNote"]</p>
         </div>
-    </div>
-</form>
+        <div style="display:none;" id="filePreview">
+            <p style="margin-top:10px"><strong>@Localizer["UploadSelectedFileLabel"]</strong> <span id="fileName"></span></p>
+            <div class="actions" style="margin-top:8px">
+                <button type="submit" class="btn btn-primary">@Localizer["UploadConfirmButton"]</button>
+                <button type="button" class="btn btn-secondary"
+                        onclick="document.getElementById('xmlFile').value='';document.getElementById('filePreview').style.display='none';document.getElementById('uploadBox').style.display='block';">
+                    @Localizer["UploadChangeFileButton"]
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 
 <div class="info-box">
     <h3>@Localizer["UploadInstructionsTitle"]</h3>

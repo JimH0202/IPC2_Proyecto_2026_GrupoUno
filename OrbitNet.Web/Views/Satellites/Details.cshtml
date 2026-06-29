@@ -1,6 +1,6 @@
 @model OrbitNet.Web.Models.ViewModels.SatelliteViewModel
 
-<div class="page-header" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap">
+<div class="page-header-row">
     <div>
         <h1>@Localizer["SatelliteDetail"]: @Model.Id</h1>
         <p>@Localizer["SatelliteDetailDescription"]</p>
@@ -8,64 +8,64 @@
     <a asp-controller="Satellites" asp-action="Index" class="btn btn-secondary btn-sm">← @Localizer["BackToList"]</a>
 </div>
 
-<div class="reports-grid">
-    <div class="stat-card">
-        <strong>@Localizer["Name"]</strong>
-        <div class="stat-value">@Model.Name</div>
+<div class="detail-grid">
+    <div class="dcard">
+        <div class="dcard-label">@Localizer["Name"]</div>
+        <div class="dcard-val">@Model.Name</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["Orbit"]</strong>
-        <div class="stat-value">@Model.OrbitId</div>
+    <div class="dcard">
+        <div class="dcard-label">@Localizer["Orbit"]</div>
+        <div class="dcard-val">@Model.OrbitId</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["Type"]</strong>
-        <div class="stat-value">@Model.Type</div>
+    <div class="dcard">
+        <div class="dcard-label">@Localizer["Type"]</div>
+        <div class="dcard-val">@Model.Type</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["Status"]</strong>
-        <div style="margin-top:8px">
-            <span class="@(Model.IsActive ? "badge-active" : "badge-inactive")">
+    <div class="dcard">
+        <div class="dcard-label">@Localizer["Status"]</div>
+        <div style="margin-top:6px">
+            <span class="badge @(Model.IsActive ? "badge-active" : "badge-inactive")">
                 @(Model.IsActive ? Localizer["ActiveStatus"] : Localizer["InactiveStatus"])
             </span>
         </div>
     </div>
 </div>
 
-<div class="table-card" style="margin-top:24px;padding:20px">
-    <h3 style="margin-top:0">@Localizer["Statistics"]</h3>
-    <div class="reports-grid" style="margin-top:16px">
-        <div class="stat-card" style="padding:16px">
-            <strong>@Localizer["MessagesSent"]</strong>
-            <div class="stat-value">@Model.MessagesSent</div>
+<div class="sec">
+    <h3>@Localizer["Statistics"]</h3>
+    <div class="detail-grid">
+        <div class="dcard">
+            <div class="dcard-label">@Localizer["MessagesSent"]</div>
+            <div class="dcard-val">@Model.MessagesSent</div>
         </div>
-        <div class="stat-card" style="padding:16px">
-            <strong>@Localizer["MessagesReceived"]</strong>
-            <div class="stat-value">@Model.MessagesReceived</div>
+        <div class="dcard">
+            <div class="dcard-label">@Localizer["MessagesReceived"]</div>
+            <div class="dcard-val">@Model.MessagesReceived</div>
         </div>
-        <div class="stat-card" style="padding:16px">
-            <strong>@Localizer["Resends"]</strong>
-            <div class="stat-value">@Model.Resends</div>
+        <div class="dcard">
+            <div class="dcard-label">@Localizer["Resends"]</div>
+            <div class="dcard-val">@Model.Resends</div>
         </div>
-        <div class="stat-card" style="padding:16px">
-            <strong>@Localizer["DiscardedMessages"]</strong>
-            <div class="stat-value">@Model.DiscardedMessages</div>
+        <div class="dcard">
+            <div class="dcard-label">@Localizer["DiscardedMessages"]</div>
+            <div class="dcard-val">@Model.DiscardedMessages</div>
         </div>
-        <div class="stat-card" style="padding:16px">
-            <strong>@Localizer["Position"]</strong>
-            <div class="stat-value">(@Model.X, @Model.Y)</div>
+        <div class="dcard">
+            <div class="dcard-label">@Localizer["Position"]</div>
+            <div class="dcard-val">(@Model.X, @Model.Y)</div>
         </div>
-        <div class="stat-card" style="padding:16px">
-            <strong>@Localizer["LastUpdate"]</strong>
-            <div class="stat-value">@Model.LastUpdate.ToString("dd/MM/yyyy HH:mm:ss")</div>
+        <div class="dcard">
+            <div class="dcard-label">@Localizer["LastUpdate"]</div>
+            <div class="dcard-val">@Model.LastUpdate.ToString("dd/MM/yyyy HH:mm:ss")</div>
         </div>
     </div>
 </div>
 
-<div class="table-card" style="margin-top:24px;padding:20px">
-    <h3 style="margin-top:0">@Localizer["RecentHistory"]</h3>
+<div class="sec">
+    <h3>@Localizer["RecentHistory"]</h3>
     @if (Model.RecentHistory != null && Model.RecentHistory.Any())
     {
-        <table class="table">
+        <table class="tbl">
             <thead>
                 <tr>
                     <th>@Localizer["Timestamp"]</th>
@@ -87,6 +87,6 @@
     }
     else
     {
-        <div style="color:var(--muted)">@Localizer["NoRecentHistory"]</div>
+        <div class="muted">@Localizer["NoRecentHistory"]</div>
     }
 </div>

@@ -5,61 +5,64 @@
     <p>@Localizer["HomeDescription"]</p>
 </div>
 
-<div class="reports-grid">
-    <div class="stat-card">
-        <strong>@Localizer["CurrentTick"]</strong>
-        <div class="stat-value" style="color:var(--primary)">@Model.CurrentTick</div>
-        <small style="color:var(--muted)">@Localizer["HomeLastUpdated"] @DateTime.Now.ToString("dd/MM/yyyy")</small>
+<div class="metrics">
+    <div class="mcard">
+        <div class="mtitle">@Localizer["CurrentTick"]</div>
+        <div class="mval blue">@Model.CurrentTick</div>
+        <div class="msub">@Localizer["HomeLastUpdated"] @DateTime.Now.ToString("dd/MM/yyyy")</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["ActiveSatellites"]</strong>
-        <div class="stat-value" style="color:var(--success)">@Model.ActiveSatellites</div>
-        <small style="color:var(--muted)">@string.Format(Localizer["HomeTotalSatellites"], Model.Satellites.Count)</small>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["ActiveSatellites"]</div>
+        <div class="mval green">@Model.ActiveSatellites</div>
+        <div class="msub">@string.Format(Localizer["HomeTotalSatellites"], Model.Satellites.Count)</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["PendingMessages"]</strong>
-        <div class="stat-value" style="color:var(--warning)">@Model.PendingMessages</div>
-        <small style="color:var(--muted)">@Localizer["HomeQueueStatus"]</small>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["PendingMessages"]</div>
+        <div class="mval orange">@Model.PendingMessages</div>
+        <div class="msub">@Localizer["HomeQueueStatus"]</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["ProcessedMessages"]</strong>
-        <div class="stat-value" style="color:var(--danger)">@Model.ProcessedMessages</div>
-        <small style="color:var(--muted)">@Localizer["HomeTotalProcessed"]</small>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["ProcessedMessages"]</div>
+        <div class="mval red">@Model.ProcessedMessages</div>
+        <div class="msub">@Localizer["HomeTotalProcessed"]</div>
     </div>
 </div>
 
-<div class="reports-grid" style="margin-top:24px">
-    <div class="stat-card">
-        <strong>@Localizer["Antennas"]</strong>
-        <div class="stat-value">@Model.TotalAntennas</div>
+<div class="stats2">
+    <div class="scard">
+        <div class="slabel">@Localizer["Antennas"]</div>
+        <div class="sval primary">@Model.TotalAntennas</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["HomeCurrentHemisphere"]</strong>
-        <div class="stat-value">@(Model.Hemisphere == "North" ? Localizer["HemisphereNorth"] : Localizer["HemisphereSouth"])</div>
+    <div class="scard">
+        <div class="slabel">@Localizer["HomeCurrentHemisphere"]</div>
+        <div class="sval primary">@(Model.Hemisphere == "North" ? Localizer["HemisphereNorth"] : Localizer["HemisphereSouth"])</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["HomeSimulationStatus"]</strong>
-        <div style="margin-top:8px">
-            <span class="@(Model.IsSimulationRunning ? "badge-active" : "badge-inactive")">
+    <div class="scard">
+        <div class="slabel">@Localizer["HomeSimulationStatus"]</div>
+        <div style="margin-top:4px">
+            <span class="badge badge-sim @(Model.IsSimulationRunning ? "" : "badge-inactive")">
                 @(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])
             </span>
         </div>
     </div>
 </div>
 
-<div class="page-actions">
-    <form asp-controller="Simulation" asp-action="TickResult" method="post" style="display:inline">
-        <button type="submit" class="btn btn-secondary">@Localizer["ExecuteTick"]</button>
-    </form>
-    <form asp-controller="Simulation" asp-action="ExecuteTicks" method="post" style="display:inline">
-        <input type="hidden" name="count" value="10" />
-        <button type="submit" class="btn btn-secondary">@Localizer["Execute10Ticks"]</button>
-    </form>
-    <form asp-controller="Simulation" asp-action="ExecuteTicks" method="post" style="display:inline">
-        <input type="hidden" name="count" value="100" />
-        <button type="submit" class="btn btn-secondary">@Localizer["Execute100Ticks"]</button>
-    </form>
-    <form asp-controller="Simulation" asp-action="StopSimulation" method="post" style="display:inline">
-        <button type="submit" class="btn btn-primary-custom" style="background:var(--danger)">@Localizer["StopSimulation"]</button>
-    </form>
+<div class="sec">
+    <h3>@Localizer["HomeQuickActions"]</h3>
+    <div class="actions">
+        <form asp-controller="Simulation" asp-action="TickResult" method="post" style="display:inline">
+            <button type="submit" class="btn btn-secondary">@Localizer["ExecuteTick"]</button>
+        </form>
+        <form asp-controller="Simulation" asp-action="ExecuteTicks" method="post" style="display:inline">
+            <input type="hidden" name="count" value="10" />
+            <button type="submit" class="btn btn-secondary">@Localizer["Execute10Ticks"]</button>
+        </form>
+        <form asp-controller="Simulation" asp-action="ExecuteTicks" method="post" style="display:inline">
+            <input type="hidden" name="count" value="100" />
+            <button type="submit" class="btn btn-secondary">@Localizer["Execute100Ticks"]</button>
+        </form>
+        <form asp-controller="Simulation" asp-action="StopSimulation" method="post" style="display:inline">
+            <button type="submit" class="btn btn-danger">@Localizer["StopSimulation"]</button>
+        </form>
+    </div>
 </div>

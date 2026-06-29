@@ -3,49 +3,52 @@
     <p>@Localizer["SimulationDescription"]</p>
 </div>
 
-<div class="reports-grid">
-    <div class="stat-card">
-        <strong>@Localizer["CurrentTick"]</strong>
-        <div class="stat-value" style="color:var(--primary)">@Model.CurrentTick</div>
+<div class="metrics">
+    <div class="mcard">
+        <div class="mtitle">@Localizer["CurrentTick"]</div>
+        <div class="mval blue">@Model.CurrentTick</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["ActiveSatellites"]</strong>
-        <div class="stat-value" style="color:var(--success)">@Model.ActiveSatellites</div>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["ActiveSatellites"]</div>
+        <div class="mval green">@Model.ActiveSatellites</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["PendingMessages"]</strong>
-        <div class="stat-value" style="color:var(--warning)">@Model.PendingMessages</div>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["PendingMessages"]</div>
+        <div class="mval orange">@Model.PendingMessages</div>
     </div>
-    <div class="stat-card">
-        <strong>@Localizer["Status"]</strong>
-        <div style="margin-top:8px">
-            <span class="@(Model.IsSimulationRunning ? "badge-active" : "badge-inactive")">
+    <div class="mcard">
+        <div class="mtitle">@Localizer["Status"]</div>
+        <div style="margin-top:6px">
+            <span class="badge badge-sim @(Model.IsSimulationRunning ? "" : "badge-inactive")">
                 @(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])
             </span>
         </div>
     </div>
 </div>
 
-<div class="page-actions" style="margin-top:24px">
-    <form asp-action="TickResult" method="post" style="display:inline">
-        <button type="submit" class="btn btn-secondary">@Localizer["ExecuteTick"]</button>
-    </form>
-    <form asp-action="ExecuteTicks" method="post" style="display:inline">
-        <input type="hidden" name="count" value="10" />
-        <button type="submit" class="btn btn-secondary">@Localizer["Execute10Ticks"]</button>
-    </form>
-    <form asp-action="ExecuteTicks" method="post" style="display:inline">
-        <input type="hidden" name="count" value="100" />
-        <button type="submit" class="btn btn-secondary">@Localizer["Execute100Ticks"]</button>
-    </form>
-    <form asp-action="StopSimulation" method="post" style="display:inline">
-        <button type="submit" class="btn btn-primary-custom" style="background:var(--danger)">@Localizer["StopSimulation"]</button>
-    </form>
+<div class="sec">
+    <h3>@Localizer["SimulationControls"]</h3>
+    <div class="sim-controls">
+        <form asp-action="TickResult" method="post" style="display:inline">
+            <button type="submit" class="btn btn-secondary">@Localizer["ExecuteTick"]</button>
+        </form>
+        <form asp-action="ExecuteTicks" method="post" style="display:inline">
+            <input type="hidden" name="count" value="10" />
+            <button type="submit" class="btn btn-secondary">@Localizer["Execute10Ticks"]</button>
+        </form>
+        <form asp-action="ExecuteTicks" method="post" style="display:inline">
+            <input type="hidden" name="count" value="100" />
+            <button type="submit" class="btn btn-secondary">@Localizer["Execute100Ticks"]</button>
+        </form>
+        <form asp-action="StopSimulation" method="post" style="display:inline">
+            <button type="submit" class="btn btn-danger">@Localizer["StopSimulation"]</button>
+        </form>
+    </div>
 </div>
 
-<div class="table-card" style="margin-top:24px;padding:20px">
-    <h3 style="margin-top:0;margin-bottom:16px">@Localizer["ActiveSatellites"]</h3>
-    <table class="table">
+<div class="sec">
+    <h3>@Localizer["ActiveSatellites"]</h3>
+    <table class="tbl">
         <thead>
             <tr>
                 <th>@Localizer["Id"]</th>
@@ -61,7 +64,7 @@
                     <td>@sat.Id</td>
                     <td>@sat.Name</td>
                     <td>@sat.OrbitId</td>
-                    <td><span class="@(sat.IsActive ? "badge-active" : "badge-inactive")">@(sat.IsActive ? Localizer["Yes"] : Localizer["No"])</span></td>
+                    <td><span class="badge @(sat.IsActive ? "badge-active" : "badge-inactive")">@(sat.IsActive ? Localizer["Yes"] : Localizer["No"])</span></td>
                 </tr>
             }
         </tbody>

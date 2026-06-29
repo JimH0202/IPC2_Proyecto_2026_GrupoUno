@@ -6,27 +6,27 @@
 </div>
 
 <div class="matrix-toolbar-row">
-    <div class="reports-grid" style="flex:1;margin-bottom:0">
-        <div class="stat-card" style="padding:16px">
-            <strong>@Localizer["Rows"]</strong>
-            <div class="stat-value">@Model.Rows</div>
+    <div class="stats2" style="flex:1;margin-bottom:0">
+        <div class="scard">
+            <div class="slabel">@Localizer["Rows"]</div>
+            <div class="sval">@Model.Rows</div>
         </div>
-        <div class="stat-card" style="padding:16px">
-            <strong>@Localizer["Columns"]</strong>
-            <div class="stat-value">@Model.Columns</div>
+        <div class="scard">
+            <div class="slabel">@Localizer["Columns"]</div>
+            <div class="sval">@Model.Columns</div>
         </div>
-        <div class="stat-card" style="padding:16px">
-            <strong>@Localizer["OccupiedNodes"]</strong>
-            <div class="stat-value" style="color:var(--primary)">@Model.OccupiedNodes</div>
+        <div class="scard">
+            <div class="slabel">@Localizer["OccupiedNodes"]</div>
+            <div class="sval primary">@Model.OccupiedNodes</div>
         </div>
     </div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <div>
         <select class="msel">
             <option>@Localizer["NorthernHemisphere"]</option>
             <option>@Localizer["SouthernHemisphere"]</option>
         </select>
         <a asp-controller="Reports" asp-action="ExportSvg" asp-route-report="Matrix"
-           class="btn btn-primary btn-sm">@Localizer["ExportSvg"]</a>
+           class="btn btn-primary btn-sm" style="margin-left:6px">@Localizer["ExportSvg"]</a>
     </div>
 </div>
 

@@ -1,0 +1,54 @@
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<OrbitNet.Web.Controllers.SharedResource> Localizer
+
+@{
+    ViewData["Title"] = Localizer["Configuration"];
+}
+
+<div class="page-header">
+    <h1>@Localizer["Configuration"]</h1>
+    <p>@Localizer["SystemDetailsDescription"]</p>
+</div>
+
+<div class="stats2">
+    <div class="scard">
+        <div class="slabel">@Localizer["CurrentHemisphere"]</div>
+        <div class="sval primary">@ViewBag.Hemisphere</div>
+    </div>
+    <div class="scard">
+        <div class="slabel">@Localizer["Port"]</div>
+        <div class="sval" style="color:var(--success)">@ViewBag.Port</div>
+    </div>
+    <div class="scard">
+        <div class="slabel">@Localizer["RemoteHemisphere"]</div>
+        <div class="sval" style="color:var(--warning);font-size:16px">@ViewBag.RemoteHemisphereUrl</div>
+    </div>
+</div>
+
+<div class="stats2">
+    <div class="scard">
+        <div class="slabel">@Localizer["ActiveSatellites"]</div>
+        <div class="sval" style="color:var(--info)">@ViewBag.ActiveSatellites</div>
+    </div>
+    <div class="scard">
+        <div class="slabel">@Localizer["Antennas"]</div>
+        <div class="sval" style="color:var(--danger)">@ViewBag.TotalAntennas</div>
+    </div>
+    <div class="scard">
+        <div class="slabel">@Localizer["UploadResultStatus"]</div>
+        <div style="margin-top:6px">
+            <span class="badge @(ViewBag.ConfigLoaded ? "badge-active" : "badge-inactive")">
+                @(ViewBag.ConfigLoaded ? Localizer["Active"] : Localizer["InactiveStatus"])
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="info-box" style="margin-top:24px">
+    <h3>@Localizer["SystemDetails"]</h3>
+    <p>@Localizer["SystemDetailsDescription"]</p>
+    <div class="page-actions" style="margin-top:12px">
+        <a asp-controller="Upload" asp-action="Index" class="btn btn-primary">@Localizer["XMLUpload"]</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["Back"]</a>
+    </div>
+</div>

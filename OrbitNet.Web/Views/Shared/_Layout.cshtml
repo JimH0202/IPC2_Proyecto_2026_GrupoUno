@@ -20,8 +20,6 @@
     <link rel="stylesheet" href="~/badges.css" />
     <link rel="stylesheet" href="~/reports.css" />
     <link rel="stylesheet" href="~/upload.css" />
-    <link rel="stylesheet" href="~/matrix.css" />
-    <link rel="stylesheet" href="~/logs.css" />
 </head>
 <body>
     @{
@@ -62,6 +60,11 @@
                 <a asp-controller="Satellites" asp-action="Index"
                    class="sidebar-link @(activeController == "Satellites" ? "active" : "")">
                     @Localizer["Satellites"]
+                </a>
+
+                <a asp-controller="RelayDashboard" asp-action="Index"
+                   class="sidebar-link @(activeController == "RelayDashboard" ? "active" : "")">
+                    @Localizer["Communication"]
                 </a>
 
                 <div class="sidebar-menu-group">

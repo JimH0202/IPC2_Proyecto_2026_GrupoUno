@@ -25,6 +25,7 @@ public class RouteDto
     public string FromSatellite { get; set; } = string.Empty;
     public string ToAntenna { get; set; } = string.Empty;
     public string Status { get; set; } = "Pending";
+    public int PacketCount { get; set; }
     public double QueueOccupancyPercentage { get; set; }
     public DateTime LastSeen { get; set; } = DateTime.Now;
     public string PacketData { get; set; } = string.Empty;

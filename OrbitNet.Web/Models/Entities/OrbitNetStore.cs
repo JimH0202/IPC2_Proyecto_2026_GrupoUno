@@ -3,6 +3,7 @@ using OrbitNet.Web.DataStructures.Listas;
 using OrbitNet.Web.DataStructures.Logs;
 using OrbitNet.Web.DataStructures.Matrix;
 using OrbitNet.Web.Models.Entities;
+using OrbitNet.Web.Models.ViewModels;
 
 public class OrbitNetStore
 {
@@ -18,6 +19,10 @@ public class OrbitNetStore
     public bool IsSimulationRunning { get; set; }
     public ListaEnlazada<MessagePacket> PaquetesEnCola { get; } = new();
 
+    // Relay / Communication
+    public List<RouteDto> Routes { get; set; } = new();
+    public List<BufferDto> Buffers { get; set; } = new();
+
     public List<Satellite> Satellites { get; } = new();
     public List<PolarOrbit> PolarOrbits { get; } = new();
     public ListaAntenas Antennas { get; } = new();
@@ -26,6 +31,7 @@ public class OrbitNetStore
 
     public OrbitNetStore()
     {
+        QueueOccupancyPercentage = 40.0;
         ReceptorSatelliteId = "SAT-POL-1001";
     }
 
@@ -48,6 +54,8 @@ public class OrbitNetStore
         Antennas.Clear();
         Matrix.Clear();
         LogAuditoria.Clear();
+        Routes.Clear();
+        Buffers.Clear();
         NodosProcesados = 0;
         CurrentTick = 0;
         EventsProcessed = 0;
