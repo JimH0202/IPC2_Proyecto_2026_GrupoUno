@@ -24,6 +24,7 @@ namespace OrbitNet.Web.Models.Entities
 
         public int HopCount { get; set; }
 
+
         public MessagePacket()
         {
             CodHex = string.Empty;

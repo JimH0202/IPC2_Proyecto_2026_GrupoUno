@@ -31,7 +31,6 @@ public class OrbitNetStore
 
     public SatelliteStateIndex SatelliteStates { get; set; }
     public SatelliteRuntimeIndex SatelliteRuntime { get; set; }
-
     public OrbitNetStore()
     {
         QueueOccupancyPercentage = 40.0;

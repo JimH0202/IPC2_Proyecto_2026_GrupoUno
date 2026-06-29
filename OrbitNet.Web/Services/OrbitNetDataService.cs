@@ -55,6 +55,14 @@ public class OrbitNetDataService
         return _store.Satellites.Select(s => MapSatellite(s)).ToList();
     }
 
+    public SimulationViewModel GetSimulationViewModel(int additionalTicks)
+    {
+        var model = GetSimulationViewModel();
+        model.CurrentTick += additionalTicks;
+        model.ProcessedMessages += additionalTicks * 3;
+        return model;
+    }
+
     public SatelliteViewModel GetSatelliteDetails(string id)
     {
         var sat = _store.Satellites.FirstOrDefault(s => s.Id == id);
