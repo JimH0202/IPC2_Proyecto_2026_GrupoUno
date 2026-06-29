@@ -18,6 +18,8 @@ public class RelayStatusDto
     public int InactiveRelays { get; set; }
     public int TotalPacketsProcessed { get; set; }
     public double AvgQueueOccupancy { get; set; }
+    public double NorthQueueOccupancy { get; set; }
+    public double SouthQueueOccupancy { get; set; }
 }
 
 public class RouteDto

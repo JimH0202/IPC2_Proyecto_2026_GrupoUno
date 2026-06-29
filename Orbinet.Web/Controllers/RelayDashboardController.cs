@@ -200,13 +200,17 @@ public class RelayDashboardController : Controller
         var activeRelays = _store.Routes.Count(r => r.Status.Contains("active", StringComparison.OrdinalIgnoreCase) || r.Status.Contains("activa", StringComparison.OrdinalIgnoreCase));
         var inactiveRelays = _store.Routes.Count(r => r.Status.Contains("inactive", StringComparison.OrdinalIgnoreCase) || r.Status.Contains("inactiva", StringComparison.OrdinalIgnoreCase));
         var inferredInactive = inactiveRelays > 0 ? inactiveRelays : Math.Max(0, _store.Routes.Count - activeRelays);
+        var northOccupancy = _store.Routes.Where(r => r.FromSatellite.StartsWith("SAT-") || r.ToAntenna.Contains("N", StringComparison.OrdinalIgnoreCase)).Select(r => r.QueueOccupancyPercentage).DefaultIfEmpty(_store.QueueOccupancyPercentage).Average();
+        var southOccupancy = _store.Routes.Where(r => r.FromSatellite.StartsWith("ANT-S") || r.ToAntenna.Contains("S", StringComparison.OrdinalIgnoreCase)).Select(r => r.QueueOccupancyPercentage).DefaultIfEmpty(_store.QueueOccupancyPercentage - 10).Average();
 
         return new RelayStatusDto
         {
             ActiveRelays = activeRelays,
             InactiveRelays = inferredInactive,
             TotalPacketsProcessed = _store.Routes.Sum(r => r.PacketCount),
-            AvgQueueOccupancy = _store.QueueOccupancyPercentage
+            AvgQueueOccupancy = _store.QueueOccupancyPercentage,
+            NorthQueueOccupancy = northOccupancy,
+            SouthQueueOccupancy = southOccupancy
         };
     }
 

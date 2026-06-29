@@ -27,8 +27,8 @@
                         <td>@buffer.ItemsInQueue</td>
                         <td>
                             <div class="progress-cell">
-                                <div class="progress-track">
-                                    <div class="progress-fill @((buffer.CapacityPercentage >= 80) ? "hi" : (buffer.CapacityPercentage >= 60) ? "mid" : "low")" style="width:@buffer.CapacityPercentage%"></div>
+                                <div class="progress-track progress-track--large">
+                                    <div class="progress-bar" style="width:@(Math.Round(buffer.CapacityPercentage).ToString(System.Globalization.CultureInfo.InvariantCulture))%; background: @(buffer.CapacityPercentage >= 80 ? "linear-gradient(90deg, var(--danger), #fca5a5)" : buffer.CapacityPercentage >= 60 ? "linear-gradient(90deg, var(--warning), #fef08a)" : buffer.CapacityPercentage >= 40 ? "linear-gradient(90deg, var(--primary), var(--primary-dark))" : "linear-gradient(90deg, var(--success), #86efac)")"></div>
                                 </div>
                                 <span>@buffer.CapacityPercentage.ToString("0")%</span>
                             </div>

@@ -92,11 +92,17 @@ body {
 
 .header-meta-group span,
 .header-controls .refresh-toggle,
-.header-controls .select-small,
-.header-controls .btn {
+.header-controls .select-small {
     background: #fff;
     border: 1px solid rgba(15, 23, 42, .08);
     box-shadow: var(--shadow);
+}
+
+.header-controls button.btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    box-shadow: none;
 }
 
 .header-meta-group span {
@@ -127,6 +133,63 @@ body {
     padding: 10px 14px;
     border-radius: 999px;
     gap: 8px;
+    background: #fff;
+    border: 1px solid rgba(15, 23, 42, .08);
+    box-shadow: var(--shadow);
+}
+
+.progress-track {
+    display: block;
+    background: #e5e7eb;
+    height: 14px;
+    width: 100%;
+    max-width: 160px;
+    min-width: 120px;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-track--large {
+    max-width: 220px;
+    min-width: 160px;
+}
+
+/* Forzar estilo de las barras dentro de tablas para evitar reglas que las sobreescriban */
+.tbl .progress-track {
+    display: block !important;
+    background: #e5e7eb !important;
+    height: 14px !important;
+    width: 100% !important;
+    max-width: 160px !important;
+    min-width: 120px !important;
+    border-radius: 999px !important;
+    overflow: hidden !important;
+}
+.tbl .progress-track--large {
+    max-width: 220px !important;
+    min-width: 160px !important;
+}
+.tbl .progress-track .progress-bar,
+.tbl .progress-bar {
+    display: block !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    border-radius: 999px !important;
+    transition: width .25s ease !important;
+    box-shadow: inset 0 1px 2px rgba(15,23,42,0.04) !important;
+}
+
+.progress-bar {
+    display: block;
+    height: 100%;
+    min-width: 0;
+    max-width: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+    transition: width .25s ease;
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, .04);
 }
 
 .header-controls input[type="checkbox"] {
@@ -339,8 +402,22 @@ body {
 }
 
 .card-metric .card-title {
-    font-size: 11px;
-    letter-spacing: .7px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 4px;
+}
+
+/* Aplicar mismo estilo de títulos compactos a card-title genérico */
+.card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 4px;
 }
 
 .card-metric .card-value {
@@ -654,6 +731,7 @@ body {
 }
 
 .status-tag.status-info { background: var(--primary); }
+.status-tag.status-warning,
 .status-tag.status-warn { background: var(--warning); color: #92400e; }
 .status-tag.status-error { background: var(--danger); }
 
@@ -727,9 +805,15 @@ body {
 }
 
 .action-buttons {
+    /* keep td as table-cell so vertical alignment works */
+    vertical-align: middle;
+    padding: 0; /* remove extra padding so inner container aligns cleanly */
+}
+
+.action-buttons-inner {
     display: flex;
     gap: 8px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
 }
 
@@ -924,34 +1008,23 @@ body {
     font-size: 13px;
     font-weight: 700;
     cursor: pointer;
-    transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
-    text-decoration: none;
-}
+        transition: box-shadow .15s ease, opacity .15s ease;
+        text-decoration: none;
+    }
 
-.btn:hover {
-    transform: translateY(-1px);
-}
+    .btn:hover {
+        opacity: 0.95;
+    }
 
-.btn-primary {
-    background: var(--primary);
-    color: #fff;
-}
-
-.btn-secondary {
-    background: rgba(15, 23, 42, .08);
-    color: var(--text);
-}
-
-.btn-danger {
-    background: var(--danger);
-    color: #fff;
-}
-
-.btn-outline {
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
-}
+    .btn-primary:hover,
+    button#refreshDashboardBtn:hover,
+    .header-controls button.btn-primary:hover {
+        opacity: 1 !important;
+        transform: none !important;
+        background: var(--primary) !important;
+        border-color: var(--primary) !important;
+        color: #fff !important;
+    }
 
 .btn-sm {
     padding: 8px 12px;
@@ -994,19 +1067,17 @@ body {
 }
 
 .progress-cell {
+    /* definida arriba: usar la versión centralizada para progress-track/progress-bar */
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: auto auto;
     align-items: center;
     gap: 10px;
     width: 100%;
 }
 
-.progress-bar {
-    height: 12px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--primary), var(--primary-dark));
-    min-width: 60px;
-    box-shadow: inset 0 1px 2px rgba(15, 23, 42, .08);
+/* Alinea verticalmente la columna de acciones para que coincida con otras celdas */
+.tbl td.action-buttons {
+    vertical-align: middle;
 }
 
 .badge {

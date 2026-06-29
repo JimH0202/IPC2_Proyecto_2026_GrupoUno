@@ -26,21 +26,27 @@
                     <tr>
                         <td>@route.FromSatellite</td>
                         <td>@route.ToAntenna</td>
-                        <td><span class="status-badge status-@(route.Status.ToLower())">@((route.Status.Contains("active", StringComparison.OrdinalIgnoreCase) || route.Status.Contains("activa", StringComparison.OrdinalIgnoreCase)) ? "🟢 Activa" : (route.Status.Contains("warn", StringComparison.OrdinalIgnoreCase) || route.Status.Contains("intermit", StringComparison.OrdinalIgnoreCase)) ? "🟡 Intermitente" : "🔴 Inactiva")</span></td>
+                        @{
+                            var isInactive = route.Status.Contains("inactive", StringComparison.OrdinalIgnoreCase) || route.Status.Contains("inactiva", StringComparison.OrdinalIgnoreCase);
+                            var statusText = isInactive ? "Inactiva" : "Activa";
+                            var statusClass = isInactive ? "status-inactive" : "status-active";
+                        }
+                        <td><span class="status-badge @statusClass">@statusText</span></td>
                         <td>@route.PacketCount</td>
                         <td>
                             <div class="progress-cell">
                                 <div class="progress-track">
-                                    <div class="progress-fill @((route.QueueOccupancyPercentage >= 80) ? "hi" : (route.QueueOccupancyPercentage >= 60) ? "mid" : "low")" style="width:@route.QueueOccupancyPercentage%"></div>
+                                    <div class="progress-bar" style="width:@(Math.Round(route.QueueOccupancyPercentage).ToString(System.Globalization.CultureInfo.InvariantCulture))%; background: @(route.QueueOccupancyPercentage >= 80 ? "linear-gradient(90deg, var(--danger), #fca5a5)" : route.QueueOccupancyPercentage >= 60 ? "linear-gradient(90deg, var(--warning), #fef08a)" : route.QueueOccupancyPercentage >= 40 ? "linear-gradient(90deg, var(--primary), var(--primary-dark))" : "linear-gradient(90deg, var(--success), #86efac)")"></div>
                                 </div>
                                 <span>@route.QueueOccupancyPercentage.ToString("0")%</span>
                             </div>
                         </td>
                         <td>@route.LastSeen.ToString("dd/MM/yyyy HH:mm")</td>
                         <td class="action-buttons">
-                            <button class="btn btn-table btn-sm" type="button" data-action="view-details" data-route-id="@route.FromSatellite">👁 Ver detalle</button>
-                            <button class="btn btn-table btn-sm btn-primary" type="button" data-action="resend-route" data-from="@route.FromSatellite" data-to="@route.ToAntenna">✈ Reenviar</button>
-                            <button class="btn btn-table btn-sm btn-outline" type="button" data-action="copy-route" data-route-id="@route.FromSatellite">📄 Copiar</button>
+                            <div class="action-buttons-inner">
+                                <button class="btn btn-table btn-sm" type="button" data-action="view-details" data-route-id="@route.FromSatellite">Ver detalle</button>
+                                <button class="btn btn-table btn-sm btn-primary" type="button" data-action="resend-route" data-from="@route.FromSatellite" data-to="@route.ToAntenna">Reenviar</button>
+                            </div>
                         </td>
                     </tr>
                 }

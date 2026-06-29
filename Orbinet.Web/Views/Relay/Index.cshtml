@@ -1,4 +1,4 @@
-@model OrbitNet.Web.Models.ViewModels.RelayDashboardViewModel
+﻿@model OrbitNet.Web.Models.ViewModels.RelayDashboardViewModel
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<OrbitNet.Web.Controllers.SharedResource> Localizer
 
@@ -33,7 +33,7 @@
     <main class="relay-main">
         <section class="summary-cards">
             <div class="card card-metric">
-                <span class="metric-icon metric-icon-active">📶</span>
+                <span class="metric-icon metric-icon-active">🛰️</span>
                 <div>
                     <div class="card-title">Relays activos</div>
                     <div class="card-value" id="activeRelaysCount">@Model.Status.ActiveRelays</div>
@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="card card-metric">
-                <span class="metric-icon metric-icon-inactive">🚫</span>
+                <span class="metric-icon metric-icon-inactive">⛔</span>
                 <div>
                     <div class="card-title">Relays inactivos</div>
                     <div class="card-value" id="inactiveRelaysCount">@Model.Status.InactiveRelays</div>
@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="card card-metric">
-                <span class="metric-icon metric-icon-queue">⏱️</span>
+                <span class="metric-icon metric-icon-queue">📊</span>
                 <div>
                     <div class="card-title">Ocupación promedio</div>
                     <div class="card-value" id="avgQueueCount">@Model.Status.AvgQueueOccupancy.ToString("0.0")% </div>
@@ -132,13 +132,13 @@
                         <dt>Última actualización</dt>
                         <dd>@Model.LastUpdated.ToString("dd/MM/yyyy HH:mm:ss")</dd>
                         <dt>Ruta origen</dt>
-                        <dd>@route?.FromSatellite ?? "-"</dd>
+                        <dd id="detailRouteOrigin">@route?.FromSatellite ?? "-"</dd>
                         <dt>Ruta destino</dt>
-                        <dd>@route?.ToAntenna ?? "-"</dd>
+                        <dd id="detailRouteDestination">@route?.ToAntenna ?? "-"</dd>
                         <dt>Estado</dt>
-                        <dd>@route?.Status ?? "-"</dd>
+                        <dd id="detailRouteStatus">@route?.Status ?? "-"</dd>
                         <dt>Ocupación cola</dt>
-                        <dd>@(route != null ? route.QueueOccupancyPercentage.ToString("0") + "%" : "-")</dd>
+                        <dd id="detailRouteOccupancy">@(route != null ? route.QueueOccupancyPercentage.ToString("0") + "%" : "-")</dd>
                     </div>
                 </div>
             </div>
@@ -209,7 +209,12 @@
         const detailTabs = document.querySelectorAll('.detail-tabs .tab');
         const detailTabInfo = document.querySelector('.tab-info');
         const detailTabMetadata = document.querySelector('.tab-metadata');
+        const detailRouteOrigin = document.getElementById('detailRouteOrigin');
+        const detailRouteDestination = document.getElementById('detailRouteDestination');
+        const detailRouteStatus = document.getElementById('detailRouteStatus');
+        const detailRouteOccupancy = document.getElementById('detailRouteOccupancy');
 
+        const logsIndexUrl = '@Url.Action("Index", "Logs")';
         const locale = {
             clearBuffer: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["ClearBuffer"].Value)),
             exportCsv: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["ExportCsv"].Value)),
@@ -328,8 +333,9 @@
 
         function getProgressColor(percent) {
             if (percent >= 80) return 'linear-gradient(90deg, var(--danger), #fca5a5)';
-            if (percent >= 60) return 'linear-gradient(90deg, var(--warning), #fbbf24)';
-            return 'linear-gradient(90deg, var(--primary), var(--primary-dark))';
+            if (percent >= 60) return 'linear-gradient(90deg, var(--warning), #fef08a)';
+            if (percent >= 40) return 'linear-gradient(90deg, var(--primary), var(--primary-dark))';
+            return 'linear-gradient(90deg, var(--success), #86efac)';
         }
 
         function setModalTab(tabName) {
@@ -356,6 +362,7 @@
             const route = currentRoutes.find(item => item.fromSatellite === routeId || item.toAntenna === routeId);
             if (!route) {
                 showToast(locale.routeNotFound, 'danger');
+                return;
             }
 
             const detailJson = {
@@ -372,42 +379,13 @@
                 detailPre.textContent = JSON.stringify(detailJson, null, 2);
             }
 
+            if (detailRouteOrigin) detailRouteOrigin.textContent = route.fromSatellite;
+            if (detailRouteDestination) detailRouteDestination.textContent = route.toAntenna;
+            if (detailRouteStatus) detailRouteStatus.textContent = route.status;
+            if (detailRouteOccupancy) detailRouteOccupancy.textContent = `${Math.round(route.queueOccupancyPercentage)}%`;
+
             setModalTab('info');
             openModal(relayDetailModal);
-        }
-
-        function updateSummaryCards(data) {
-            activeRelaysCount.textContent = data.status.activeRelays;
-            inactiveRelaysCount.textContent = data.status.inactiveRelays;
-            totalPacketsCount.textContent = data.status.totalPacketsProcessed;
-            avgQueueCount.textContent = `${data.status.avgQueueOccupancy.toFixed(1)}%`;
-        }
-
-        function renderRoutes(routes) {
-            currentRoutes = routes;
-            routesTableBody.innerHTML = '';
-            routes.forEach(route => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${route.fromSatellite}</td>
-                    <td>${route.toAntenna}</td>
-                    <td><span class="badge badge-${route.status.toLowerCase() === 'resent' ? 'resent' : route.status.toLowerCase()}">${route.status}</span></td>
-                    <td>${route.packetCount}</td>
-                    <td>
-                        <div class="progress-cell">
-                            <div class="progress-bar" style="width:${route.queueOccupancyPercentage}%; background: ${getProgressColor(route.queueOccupancyPercentage)}"></div>
-                            <span>${Math.round(route.queueOccupancyPercentage)}%</span>
-                        </div>
-                    </td>
-                    <td>${new Date(route.lastSeen).toLocaleString()}</td>
-                    <td>
-                        <button class="btn btn-secondary btn-sm" type="button" data-action="view-details" data-route-id="${route.fromSatellite}">${locale.viewDetail || 'Ver detalle'}</button>
-                        <button class="btn btn-primary btn-sm" type="button" data-action="resend-route" data-from="${route.fromSatellite}" data-to="${route.toAntenna}">${locale.resend || 'Reenviar'}</button>
-                        <button class="btn btn-outline btn-sm" type="button" data-action="copy-route" data-route-id="${route.fromSatellite}">${locale.copy || 'Copiar'}</button>
-                    </td>
-                `;
-                routesTableBody.appendChild(row);
-            });
         }
 
         function renderBuffers(buffers) {
@@ -421,7 +399,9 @@
                     <td>${buffer.itemsInQueue}</td>
                     <td>
                         <div class="progress-cell">
-                            <div class="progress-bar" style="width:${buffer.capacityPercentage}%; background: ${getProgressColor(buffer.capacityPercentage)}"></div>
+                            <div class="progress-track progress-track--large">
+                                <div class="progress-bar" style="width:${Math.round(buffer.capacityPercentage)}%; background: ${getProgressColor(buffer.capacityPercentage)}"></div>
+                            </div>
                             <span>${Math.round(buffer.capacityPercentage)}%</span>
                         </div>
                     </td>
@@ -445,9 +425,15 @@
         }
 
         function updateCharts(data) {
+            const timestamp = new Date(data.lastUpdated).toLocaleTimeString();
+            const avgQueue = Number(data.status.avgQueueOccupancy ?? 0);
+            const northValue = Number(data.status.northQueueOccupancy ?? avgQueue);
+            const southValue = Number(data.status.southQueueOccupancy ?? Math.max(0, avgQueue - 10));
+
             historyBuffer.push({
-                time: new Date(data.lastUpdated).toLocaleTimeString(),
-                occupancy: data.status.avgQueueOccupancy
+                time: timestamp,
+                north: northValue,
+                south: southValue
             });
 
             if (historyBuffer.length > 20) {
@@ -455,10 +441,11 @@
             }
 
             queueHistoryChart.data.labels = historyBuffer.map(point => point.time);
-            queueHistoryChart.data.datasets[0].data = historyBuffer.map(point => point.occupancy);
+            queueHistoryChart.data.datasets[0].data = historyBuffer.map(point => point.north);
+            queueHistoryChart.data.datasets[1].data = historyBuffer.map(point => point.south);
             queueHistoryChart.update();
 
-            occupancyGaugeChart.data.datasets[0].data = [data.status.avgQueueOccupancy, 100 - data.status.avgQueueOccupancy];
+            occupancyGaugeChart.data.datasets[0].data = [avgQueue, Math.max(0, 100 - avgQueue)];
             occupancyGaugeChart.update();
         }
 
@@ -584,6 +571,17 @@
                     fetchRefresh();
                 }
 
+                if (action === 'clear-events') {
+                    if (recentEventsList) {
+                        recentEventsList.innerHTML = '';
+                        showToast('Vista de eventos limpiada', 'success');
+                    }
+                }
+
+                if (action === 'view-all-events') {
+                    window.location.href = logsIndexUrl;
+                }
+
                 if (action === 'copy-route' && routeId) {
                     if (navigator.clipboard) {
                         navigator.clipboard.writeText(routeId);
@@ -613,17 +611,35 @@
         }
 
         function createCharts() {
+            const initialGaugeValue = Number(@Model.Status.AvgQueueOccupancy.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            const initialHistoryTime = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(DateTime.Now.ToString("HH:mm:ss")));
+
+            historyBuffer = [{
+                time: initialHistoryTime,
+                north: Number(@Model.Status.NorthQueueOccupancy.ToString(System.Globalization.CultureInfo.InvariantCulture)),
+                south: Number(@Model.Status.SouthQueueOccupancy.ToString(System.Globalization.CultureInfo.InvariantCulture))
+            }];
+
             queueHistoryChart = new Chart(queueHistoryChartCtx, {
                 type: 'line',
                 data: {
-                    labels: [],
-                    datasets: [{
-                        label: locale.queueOccupancy,
-                        borderColor: '#2563eb',
-                        backgroundColor: 'rgba(37,99,235,0.15)',
-                        tension: 0.3,
-                        data: []
-                    }]
+                    labels: [initialHistoryTime],
+                    datasets: [
+                        {
+                            label: 'Ocupación cola hemisferio norte',
+                            borderColor: '#2563eb',
+                            backgroundColor: 'rgba(37,99,235,0.15)',
+                            tension: 0.3,
+                            data: [Number(@Model.Status.NorthQueueOccupancy.ToString(System.Globalization.CultureInfo.InvariantCulture))]
+                        },
+                        {
+                            label: 'Ocupación cola hemisferio sur',
+                            borderColor: '#d97706',
+                            backgroundColor: 'rgba(249,115,22,0.15)',
+                            tension: 0.3,
+                            data: [Number(@Model.Status.SouthQueueOccupancy.ToString(System.Globalization.CultureInfo.InvariantCulture))]
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
@@ -638,7 +654,7 @@
                 data: {
                     labels: [locale.used, locale.free],
                     datasets: [{
-                        data: [@Model.Status.AvgQueueOccupancy, @(100 - Model.Status.AvgQueueOccupancy)],
+                        data: [initialGaugeValue, Math.max(0, 100 - initialGaugeValue)],
                         backgroundColor: ['#2563eb', '#e5e7eb'],
                         borderWidth: 0
                     }]
@@ -646,6 +662,7 @@
                 options: {
                     cutout: '70%',
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         legend: { display: false }
                     }
@@ -696,3 +713,4 @@
             }
         });
     </script>
+
