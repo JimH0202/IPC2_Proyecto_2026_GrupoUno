@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data" minOccurs="0" maxOccurs="unbounded">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader" minOccurs="0" maxOccurs="unbounded">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Dashboard">
+    <value>Panel de Control</value>
+  </data>
+  <data name="XMLUpload">
+    <value>Carga XML</value>
+  </data>
+  <data name="Simulation">
+    <value>Simulación</value>
+  </data>
+  <data name="Matrix">
+    <value>Matriz</value>
+  </data>
+  <data name="Satellites">
+    <value>Satélites</value>
+  </data>
+  <data name="Reports">
+    <value>Reportes</value>
+  </data>
+  <data name="Logs">
+    <value>Registros</value>
+  </data>
+  <data name="Configuration">
+    <value>Configuración</value>
+  </data>
+  <data name="CurrentTick">
+    <value>Tick Actual</value>
+  </data>
+  <data name="ActiveSatellites">
+    <value>Satélites Activos</value>
+  </data>
+  <data name="PendingMessages">
+    <value>Mensajes Pendientes</value>
+  </data>
+  <data name="ProcessedMessages">
+    <value>Mensajes Procesados</value>
+  </data>
+  <data name="Active">
+    <value>Activo</value>
+  </data>
+  <data name="Stopped">
+    <value>Detenido</value>
+  </data>
+  <data name="SystemDetails">
+    <value>Detalles del Sistema</value>
+  </data>
+  <data name="Antennas">
+    <value>Antenas</value>
+  </data>
+  <data name="Port">
+    <value>Puerto</value>
+  </data>
+  <data name="RemoteHemisphere">
+    <value>Hemisferio Remoto</value>
+  </data>
+  <data name="Yes">
+    <value>Sí</value>
+  </data>
+  <data name="No">
+    <value>No</value>
+  </data>
+  <data name="ExecuteTick">
+    <value>Ejecutar 1 Tick</value>
+  </data>
+  <data name="Execute10Ticks">
+    <value>Ejecutar 10 Ticks</value>
+  </data>
+  <data name="Execute100Ticks">
+    <value>Ejecutar 100 Ticks</value>
+  </data>
+  <data name="StopSimulation">
+    <value>Detener Simulación</value>
+  </data>
+  <data name="Back">
+    <value>Volver</value>
+  </data>
+  <data name="Home">
+    <value>Inicio</value>
+  </data>
+  <data name="HomeDescription">
+    <value>Controla el estado de la constelación, operaciones y métricas del hemisferio.</value>
+  </data>
+  <data name="ViewSatellites">
+    <value>Ver satélites</value>
+  </data>
+  <data name="GoToSimulation">
+    <value>Ir a simulación</value>
+  </data>
+  <data name="ViewReports">
+    <value>Ver reportes</value>
+  </data>
+  <data name="HemisphereNorth">
+    <value>Norte</value>
+  </data>
+  <data name="HemisphereSouth">
+    <value>Sur</value>
+  </data>
+  <data name="NorthHemisphereDescription">
+    <value>Constelación del Hemisferio Norte • Puerto 5000</value>
+  </data>
+  <data name="SouthHemisphereDescription">
+    <value>Constelación del Hemisferio Sur • Puerto 5001</value>
+  </data>
+  <data name="SystemDetailsDescription">
+    <value>Estado de la simulación, antenas y la conexión con el hemisferio remoto.</value>
+  </data>
+  <data name="SatellitesInConstellation">
+    <value>Satélites en la constelación</value>
+  </data>
+  <data name="Id">
+    <value>ID</value>
+  </data>
+  <data name="Name">
+    <value>Nombre</value>
+  </data>
+  <data name="Orbit">
+    <value>Órbita</value>
+  </data>
+  <data name="SimulationDashboardTitle">
+    <value>Dashboard de Simulación</value>
+  </data>
+  <data name="SimulationDescription">
+    <value>Supervisa ticks, satélites activos y mensajes en cola para la simulación.</value>
+  </data>
+  <data name="SimulationControls">
+    <value>Controles de simulación</value>
+  </data>
+  <data name="BackToDashboard">
+    <value>Volver al dashboard</value>
+  </data>
+  <data name="UploadPageTitle">
+    <value>Cargar archivo XML</value>
+  </data>
+  <data name="UploadPageDescription">
+    <value>Selecciona un archivo de configuración XML para cargar satélites, antenas y órbitas.</value>
+  </data>
+  <data name="UploadSectionTitle">
+    <value>Subir archivo XML</value>
+  </data>
+  <data name="UploadFormLabel">
+    <value>Archivo XML de configuración:</value>
+  </data>
+  <data name="UploadButton">
+    <value>Subir archivo</value>
+  </data>
+  <data name="UploadInstructionsTitle">
+    <value>Instrucciones</value>
+  </data>
+  <data name="UploadInstructions">
+    <value>Selecciona un archivo XML con la configuración de satélites, órbitas y antenas.</value>
+  </data>
+  <data name="UploadDragDropPrompt">
+    <value>Arrastra y suelta el archivo XML aquí</value>
+  </data>
+  <data name="UploadOrClickPrompt">
+    <value>o haz clic para seleccionar</value>
+  </data>
+  <data name="UploadSelectFileButton">
+    <value>Seleccionar archivo</value>
+  </data>
+  <data name="UploadAllowedFilesNote">
+    <value>Solo se permiten archivos .xml</value>
+  </data>
+  <data name="UploadSelectedFileLabel">
+    <value>Archivo seleccionado:</value>
+  </data>
+  <data name="UploadConfirmButton">
+    <value>Confirmar carga</value>
+  </data>
+  <data name="UploadChangeFileButton">
+    <value>Cambiar archivo</value>
+  </data>
+  <data name="UploadLastSuccessTitle">
+    <value>✅ Última carga</value>
+  </data>
+  <data name="UploadLastSuccessMeta">
+    <value>Satélites: {0} · Antenas: {1} · Órbitas: {2}</value>
+  </data>
+  <data name="UploadViewDetailButton">
+    <value>Ver detalle</value>
+  </data>
+  <data name="DownloadSvg">
+    <value>Descargar SVG</value>
+  </data>
+  <data name="UploadResultTitle">
+    <value>Resultado de la carga</value>
+  </data>
+  <data name="UploadResultFile">
+    <value>Archivo:</value>
+  </data>
+  <data name="UploadResultSatellitesLoaded">
+    <value>Satélites cargados</value>
+  </data>
+  <data name="UploadResultAntennasLoaded">
+    <value>Antenas cargadas</value>
+  </data>
+  <data name="UploadResultPolarOrbitsLoaded">
+    <value>Órbitas polares cargadas</value>
+  </data>
+  <data name="ReportPageTitle">
+    <value>Reportes del sistema</value>
+  </data>
+  <data name="ReportsPageDescription">
+    <value>Accede a los análisis visuales de memoria, buffers y enrutamiento de la constelación.</value>
+  </data>
+  <data name="ReportCardMemory">
+    <value>Diseño de Memoria</value>
+  </data>
+  <data name="ReportCardMemoryDescription">
+    <value>Visualiza el diseño de la memoria y la distribución de estructuras de datos en el sistema.</value>
+  </data>
+  <data name="ReportCardBuffers">
+    <value>Buffers</value>
+  </data>
+  <data name="ReportCardBuffersDescription">
+    <value>Análisis visual de los buffers de comunicación y colas de mensajes del sistema.</value>
+  </data>
+  <data name="ReportCardRouting">
+    <value>Enrutamiento</value>
+  </data>
+  <data name="ReportCardRoutingDescription">
+    <value>Diagrama de rutas de comunicación entre satélites y antenas en la constelación.</value>
+  </data>
+  <data name="ReportCardMatrix">
+    <value>Matriz dispersa</value>
+  </data>
+  <data name="ReportCardMatrixDescription">
+    <value>Visualiza la ocupación de la matriz dispersa y la distribución espacial de los elementos almacenados.</value>
+  </data>
+  <data name="ViewReport">
+    <value>Ver reporte</value>
+  </data>
+  <data name="ExportSvg">
+    <value>Exportar SVG</value>
+  </data>
+  <data name="NoSvgContent">
+    <value>No hay contenido SVG disponible.</value>
+  </data>
+  <data name="HemisphereSelector">
+    <value>Hemisferio</value>
+  </data>
+  <data name="NorthernHemisphere">
+    <value>Hemisferio Norte</value>
+  </data>
+  <data name="SouthernHemisphere">
+    <value>Hemisferio Sur</value>
+  </data>
+  <data name="Legend">
+    <value>Leyenda</value>
+  </data>
+  <data name="ActiveSatellite">
+    <value>Satélite activo</value>
+  </data>
+  <data name="InactiveSatellite">
+    <value>Satélite Inactivo</value>
+  </data>
+  <data name="EmptySpace">
+    <value>Espacio vacío</value>
+  </data>
+  <data name="SystemLogs">
+    <value>Registros del sistema</value>
+  </data>
+  <data name="SystemLogsDescription">
+    <value>Consulta los eventos recientes y revisa el historial de operaciones en OrbitNet.</value>
+  </data>
+  <data name="TotalLogs">
+    <value>Total de registros:</value>
+  </data>
+  <data name="LatestLogs">
+    <value>Últimos registros</value>
+  </data>
+  <data name="Date">
+    <value>Fecha</value>
+  </data>
+  <data name="Level">
+    <value>Nivel</value>
+  </data>
+  <data name="Event">
+    <value>Evento</value>
+  </data>
+  <data name="DetailsLabel">
+    <value>Detalles</value>
+  </data>
+  <data name="SparseMatrix">
+    <value>Matriz Dispersa</value>
+  </data>
+  <data name="SparseMatrixDescription">
+    <value>Visualiza la estructura y ocupación de la matriz dispersa del sistema.</value>
+  </data>
+  <data name="MatrixVisualization">
+    <value>Visualización de la Matriz</value>
+  </data>
+  <data name="SatelliteList">
+    <value>Lista de Satélites</value>
+  </data>
+  <data name="SatelliteListDescription">
+    <value>Revisa el inventario de satélites, su estado y el tráfico de mensajes.</value>
+  </data>
+  <data name="InventoryOfSatellites">
+    <value>Inventario de Satélites</value>
+  </data>
+  <data name="Type">
+    <value>Tipo</value>
+  </data>
+  <data name="MessagesSent">
+    <value>Mensajes enviados</value>
+  </data>
+  <data name="MessagesReceived">
+    <value>Mensajes recibidos</value>
+  </data>
+  <data name="ViewDetails">
+    <value>Ver detalles</value>
+  </data>
+  <data name="SatelliteDetail">
+    <value>Detalle de Satélite</value>
+  </data>
+  <data name="SatelliteDetailDescription">
+    <value>Información completa del satélite seleccionado y su actividad reciente.</value>
+  </data>
+  <data name="RecentHistory">
+    <value>Historial reciente</value>
+  </data>
+  <data name="SatelliteSummary">
+    <value>Resumen del satélite</value>
+  </data>
+  <data name="SatelliteActivity">
+    <value>Actividad</value>
+  </data>
+  <data name="Position">
+    <value>Posición</value>
+  </data>
+  <data name="ActiveStatus">
+    <value>Activo</value>
+  </data>
+  <data name="InactiveStatus">
+    <value>Inactivo</value>
+  </data>
+  <data name="ErrorTitle">
+    <value>Error</value>
+  </data>
+  <data name="ErrorDescription">
+    <value>Ocurrió un error al procesar su solicitud. Revisa la información del pedido y vuelve a intentarlo.</value>
+  </data>
+  <data name="ErrorDetailsTitle">
+    <value>Detalles del error</value>
+  </data>
+  <data name="ErrorContactAdmin">
+    <value>Si el problema persiste, revisa la traza del servidor o contacta al administrador.</value>
+  </data>
+  <data name="RequestId">
+    <value>Request ID</value>
+  </data>
+  <data name="AppTitle">
+    <value>OrbitNet</value>
+  </data>
+  <data name="UploadSuccessMessage">
+    <value>Archivo recibido y simulado correctamente.</value>
+  </data>
+  <data name="UploadNoFileSelectedMessage">
+    <value>No se seleccionó ningún archivo.</value>
+  </data>
+  <data name="UploadInstructionsDetail">
+    <value>El archivo debe contener una configuración XML válida para la red orbital.</value>
+  </data>
+  <data name="UploadResultStats">
+    <value>Estadísticas de Carga</value>
+  </data>
+  <data name="UploadAnotherFile">
+    <value>Cargar Otro Archivo</value>
+  </data>
+  <data name="UploadErrorsFound">
+    <value>Errores Encontrados</value>
+  </data>
+  <data name="BackToReports">
+    <value>Volver a Reportes</value>
+  </data>
+  <data name="BackToList">
+    <value>Volver a la Lista</value>
+  </data>
+  <data name="Generated">
+    <value>Generado:</value>
+  </data>
+  <data name="Status">
+    <value>Estado</value>
+  </data>
+  <data name="Actions">
+    <value>Acciones</value>
+  </data>
+  <data name="Rows">
+    <value>Filas</value>
+  </data>
+  <data name="Columns">
+    <value>Columnas</value>
+  </data>
+  <data name="OccupiedNodes">
+    <value>Nodos Ocupados</value>
+  </data>
+  <data name="TickResultTitle">
+    <value>Resultado del Tick</value>
+  </data>
+  <data name="TickResultDescription">
+    <value>Estado actual después de procesar un tick de simulación.</value>
+  </data>
+  <data name="TickResultCurrentTick">
+    <value>Tick Actual:</value>
+  </data>
+  <data name="TickResultProcessedMessages">
+    <value>Mensajes Procesados:</value>
+  </data>
+  <data name="TickResultActiveSatellites">
+    <value>Satélites Activos:</value>
+  </data>
+  <data name="TickResultPendingMessages">
+    <value>Mensajes Pendientes:</value>
+  </data>
+  <data name="TickResultSimulation">
+    <value>Simulación:</value>
+  </data>
+  <data name="TickResultSatellitesStatusTitle">
+    <value>Estado de los Satélites</value>
+  </data>
+  <data name="SimulationDashboardHeader">
+    <value>Dashboard de Simulación</value>
+  </data>
+  <data name="HomeLastUpdated">
+    <value>Última actualización:</value>
+  </data>
+  <data name="HomeTotalSatellites">
+    <value>de {0} satélites totales</value>
+  </data>
+  <data name="HomeQueueStatus">
+    <value>en cola</value>
+  </data>
+  <data name="HomeTotalProcessed">
+    <value>total acumulado</value>
+  </data>
+  <data name="HomeCurrentHemisphere">
+    <value>Hemisferio Actual</value>
+  </data>
+  <data name="HomeSimulationStatus">
+    <value>Estado Simulación</value>
+  </data>
+  <data name="HomeQuickActions">
+    <value>Acciones Rápidas</value>
+  </data>
+  <data name="Refresh">
+    <value>Actualizar</value>
+  </data>
+  <data name="SearchLogsPlaceholder">
+    <value>🔍 Buscar en registros...</value>
+  </data>
+  <data name="SearchSatellitePlaceholder">
+    <value>🔍 Buscar satélite...</value>
+  </data>
+  <data name="ShowingRecords">
+    <value>Mostrando 1 a {0} de {0} registros</value>
+  </data>
+  <data name="ShowingSatellites">
+    <value>Mostrando 1 a {0} de {0} satélites</value>
+  </data>
+  <data name="Statistics">
+    <value>Estadísticas</value>
+  </data>
+  <data name="UploadResultStatus">
+    <value>Estado de carga</value>
+  </data>
+  <data name="UploadResultStatusSubtext">
+    <value>Resumen del resultado de la carga.</value>
+  </data>
+  <data name="UploadResultFileName">
+    <value>Nombre del archivo</value>
+  </data>
+  <data name="UploadResultFileSummary">
+    <value>Nombre y metadatos del archivo cargado</value>
+  </data>
+  <data name="UploadResultMessage">
+    <value>Mensaje</value>
+  </data>
+  <data name="UploadResultSatellitesLoadedDesc">
+    <value>Número de satélites importados desde el XML cargado.</value>
+  </data>
+  <data name="UploadResultAntennasLoadedDesc">
+    <value>Número de antenas importadas desde el XML cargado.</value>
+  </data>
+  <data name="UploadResultDescription">
+    <value>La carga fue procesada. Revisa el archivo y el estado de carga abajo.</value>
+  </data>
+  <data name="Success">
+    <value>Éxito</value>
+  </data>
+  <data name="Error">
+    <value>Error</value>
+  </data>
+  <data name="Details">
+    <value>Detalles</value>
+  </data>
+  <data name="Controls">
+    <value>Controles</value>
+  </data>
+  <data name="SimulationStatus">
+    <value>Estado de la simulación</value>
+  </data>
+  <data name="Processed">
+    <value>Procesado</value>
+  </data>
+  <data name="TotalMessagesProcessed">
+    <value>Mensajes procesados en total</value>
+  </data>
+  <data name="MessagesProcessedRecentTicks">
+    <value>Mensajes procesados en ticks recientes</value>
+  </data>
+  <data name="MessagesWaitingQueue">
+    <value>Mensajes esperando en cola</value>
+  </data>
+  <data name="SatellitesCurrentlyActive">
+    <value>Satélites actualmente activos</value>
+  </data>
+  <data name="Resends">
+    <value>Reenvíos</value>
+  </data>
+  <data name="DiscardedMessages">
+    <value>Mensajes descartados</value>
+  </data>
+  <data name="LastUpdate">
+    <value>Última actualización</value>
+  </data>
+  <data name="NoRecentHistory">
+    <value>No hay historial reciente disponible.</value>
+  </data>
+  <data name="Timestamp">
+    <value>Marca de tiempo</value>
+  </data>
+  <data name="RelayTitle">
+    <value>Comunicación Relay</value>
+  </data>
+  <data name="RelayDescription">
+    <value>Supervisa rutas relay, buffers y el reenvío de paquetes entre hemisferios.</value>
+  </data>
+  <data name="ActiveRelaysNote">
+    <value>Relays actualmente activos.</value>
+  </data>
+  <data name="InactiveRelaysNote">
+    <value>Relays actualmente inactivos.</value>
+  </data>
+  <data name="TotalPacketsNote">
+    <value>Total de paquetes que atraviesan la red relay.</value>
+  </data>
+  <data name="QueueOccupancyNote">
+    <value>Ocupación actual de cola para las rutas relay.</value>
+  </data>
+  <data name="AvgQueue">
+    <value>Cola media</value>
+  </data>
+  <data name="QueueHistory">
+    <value>Historial de cola</value>
+  </data>
+  <data name="QueueHistoryDescription">
+    <value>Vista histórica de la ocupación de colas relay.</value>
+  </data>
+  <data name="CurrentAverageOccupancy">
+    <value>Ocupación media actual</value>
+  </data>
+  <data name="AverageOccupancyDescription">
+    <value>Ocupación media actual de cola en todos los buffers relay.</value>
+  </data>
+  <data name="PacketDetail">
+    <value>Detalle del paquete</value>
+  </data>
+  <data name="PacketDetails">
+    <value>Detalles del paquete</value>
+  </data>
+  <data name="DetailPanelSubtitle">
+    <value>Inspecciona rutas de paquetes y toma acciones de control.</value>
+  </data>
+  <data name="QuickActions">
+    <value>Acciones rápidas</value>
+  </data>
+  <data name="ResendPendingPackets">
+    <value>Reenviar paquetes pendientes</value>
+  </data>
+  <data name="AutoRefresh">
+    <value>Actualización automática</value>
+  </data>
+  <data name="Interval">
+    <value>Intervalo</value>
+  </data>
+  <data name="RecentEvents">
+    <value>Eventos recientes</value>
+  </data>
+  <data name="DashboardUpdated">
+    <value>Panel actualizado</value>
+  </data>
+  <data name="AutoRefreshEnabled">
+    <value>Actualización automática activada</value>
+  </data>
+  <data name="AutoRefreshDisabled">
+    <value>Actualización automática desactivada</value>
+  </data>
+  <data name="CommunicationRoutesDescription">
+    <value>Visión general de rutas relay activas y flujo de paquetes.</value>
+  </data>
+  <data name="BuffersDescription">
+    <value>Vista detallada de la utilización y controles de buffers relay.</value>
+  </data>
+  <data name="BufferId">
+    <value>ID de buffer</value>
+  </data>
+  <data name="CapacityPercentage">
+    <value>Capacidad %</value>
+  </data>
+  <data name="ItemsInQueue">
+    <value>Elementos en cola</value>
+  </data>
+  <data name="FromSatellite">
+    <value>Desde satélite</value>
+  </data>
+  <data name="ToAntenna">
+    <value>Hacia antena</value>
+  </data>
+  <data name="QueueOccupancy">
+    <value>Ocupación de cola</value>
+  </data>
+  <data name="LastSeen">
+    <value>Última vez visto</value>
+  </data>
+  <data name="RouteId">
+    <value>ID de ruta</value>
+  </data>
+  <data name="Origin">
+    <value>Origen</value>
+  </data>
+  <data name="Destination">
+    <value>Destino</value>
+  </data>
+  <data name="ConfirmAction">
+    <value>Confirmar acción</value>
+  </data>
+  <data name="ConfirmActionMessage">
+    <value>¿Seguro que desea realizar esta acción?</value>
+  </data>
+  <data name="Confirm">
+    <value>Confirmar</value>
+  </data>
+  <data name="Cancel">
+    <value>Cancelar</value>
+  </data>
+  <data name="Close">
+    <value>Cerrar</value>
+  </data>
+  <data name="Copy">
+    <value>Copiar</value>
+  </data>
+  <data name="Information">
+    <value>Información</value>
+  </data>
+  <data name="Metadata">
+    <value>Metadatos</value>
+  </data>
+  <data name="Priority">
+    <value>Prioridad</value>
+  </data>
+  <data name="Free">
+    <value>Libre</value>
+  </data>
+  <data name="Used">
+    <value>Usado</value>
+  </data>
+  <data name="CurrentHemisphere">
+    <value>Hemisferio actual</value>
+  </data>
+  <data name="LastUpdated">
+    <value>Última actualización</value>
+  </data>
+  <data name="ActiveRelays">
+    <value>Relays activos</value>
+  </data>
+  <data name="InactiveRelays">
+    <value>Relays inactivos</value>
+  </data>
+  <data name="TotalPackets">
+    <value>Total de paquetes procesados</value>
+  </data>
+  <data name="AvgQueueOccupancy">
+    <value>Ocupación media de cola</value>
+  </data>
+  <data name="RoutesHeader">
+    <value>Rutas Relay</value>
+  </data>
+  <data name="BuffersHeader">
+    <value>Buffers Relay</value>
+  </data>
+  <data name="Resend">
+    <value>Reenviar</value>
+  </data>
+  <data name="ClearBuffer">
+    <value>Limpiar buffer</value>
+  </data>
+  <data name="ExportCsv">
+    <value>Exportar CSV</value>
+  </data>
+  <data name="ViewDetail">
+    <value>Ver detalle</value>
+  </data>
+  <data name="Communication">
+    <value>Comunicación</value>
+  </data>
+</root>

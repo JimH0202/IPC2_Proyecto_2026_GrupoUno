@@ -1,0 +1,44 @@
+@model List<OrbitNet.Web.Models.ViewModels.BufferDto>
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<OrbitNet.Web.Controllers.SharedResource> Localizer
+
+<div class="table-card">
+    <div class="card-header">
+        <h2 style="margin:0;font-size:16px">@Localizer["BuffersHeader"]</h2>
+        <small style="color:var(--muted)">@Localizer["BuffersDescription"]</small>
+    </div>
+
+    <div style="overflow-x:auto">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Localizer["BufferId"]</th>
+                    <th>@Localizer["Type"]</th>
+                    <th>@Localizer["ItemsInQueue"]</th>
+                    <th>@Localizer["CapacityPercentage"]</th>
+                    <th>@Localizer["Actions"]</th>
+                </tr>
+            </thead>
+            <tbody id="buffersTableBody">
+                @foreach (var buffer in Model)
+                {
+                    <tr>
+                        <td>@buffer.BufferId</td>
+                        <td>@buffer.Type</td>
+                        <td>@buffer.ItemsInQueue</td>
+                        <td>
+                            <div class="progress-cell">
+                                <div class="progress-bar" style="width:@buffer.CapacityPercentage%"></div>
+                                <span>@buffer.CapacityPercentage.ToString("0")%</span>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger-custom btn-sm" type="button" data-action="clear-buffer" data-buffer-id="@buffer.BufferId">@Localizer["ClearBuffer"]</button>
+                            <button class="btn btn-outline-custom btn-sm" type="button" data-action="export-buffer" data-buffer-id="@buffer.BufferId">@Localizer["ExportCsv"]</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

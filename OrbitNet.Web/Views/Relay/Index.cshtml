@@ -1,0 +1,503 @@
+@model OrbitNet.Web.Models.ViewModels.RelayDashboardViewModel
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<OrbitNet.Web.Controllers.SharedResource> Localizer
+
+@{
+    ViewData["Title"] = Localizer["RelayTitle"];
+}
+
+<div class="page-header-row">
+    <div>
+        <h1>@Localizer["RelayTitle"]</h1>
+        <p>@Localizer["RelayDescription"]</p>
+    </div>
+    <div class="header-actions">
+        <span class="badge badge-info">@Localizer["CurrentHemisphere"]: @Model.Hemisphere</span>
+        <span class="header-meta">@Localizer["LastUpdated"]: @Model.LastUpdated.ToString("dd/MM/yyyy HH:mm:ss")</span>
+    </div>
+</div>
+
+<div class="relay-dashboard-grid">
+    <section class="summary-cards">
+        <div class="card card-metric">
+            <div class="card-title">@Localizer["ActiveRelays"]</div>
+            <div class="card-value" id="activeRelaysCount">@Model.Status.ActiveRelays</div>
+            <div class="card-note">@Localizer["ActiveRelaysNote"]</div>
+        </div>
+        <div class="card card-metric">
+            <div class="card-title">@Localizer["InactiveRelays"]</div>
+            <div class="card-value" id="inactiveRelaysCount">@Model.Status.InactiveRelays</div>
+            <div class="card-note">@Localizer["InactiveRelaysNote"]</div>
+        </div>
+        <div class="card card-metric">
+            <div class="card-title">@Localizer["TotalPackets"]</div>
+            <div class="card-value" id="totalPacketsCount">@Model.Status.TotalPacketsProcessed</div>
+            <div class="card-note">@Localizer["TotalPacketsNote"]</div>
+        </div>
+        <div class="card card-metric">
+            <div class="card-title">@Localizer["AvgQueue"]</div>
+            <div class="card-value" id="avgQueueCount">@Model.Status.AvgQueueOccupancy.ToString("0.0")% </div>
+            <div class="card-note">@Localizer["QueueOccupancyNote"]</div>
+        </div>
+    </section>
+
+    <section class="relay-charts">
+        <div class="card chart-card">
+            <div class="card-header">
+                <h2>@Localizer["QueueHistory"]</h2>
+                <span class="card-subtitle">@Localizer["QueueHistoryDescription"]</span>
+            </div>
+            <div class="chart-container">
+                <canvas id="queueHistoryChart" height="220"></canvas>
+            </div>
+        </div>
+
+        <div class="card status-card">
+            <div class="card-header">
+                <h2>@Localizer["CurrentAverageOccupancy"]</h2>
+                <span class="card-subtitle">@Localizer["AverageOccupancyDescription"]</span>
+            </div>
+            <div class="chart-container gauge-container">
+                <canvas id="occupancyGaugeChart" height="220"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section class="tables-section">
+        <div class="tables-main">
+            @await Html.PartialAsync("~/Views/Relay/_RelayRoutesTable.cshtml", Model.Routes)
+            @await Html.PartialAsync("~/Views/Relay/_RelayBuffersTable.cshtml", Model.Buffers)
+        </div>
+
+        <aside class="detail-panel">
+            <div class="panel-header">
+                <h2>@Localizer["PacketDetail"]</h2>
+                <span class="panel-subtitle">@Localizer["DetailPanelSubtitle"]</span>
+            </div>
+
+            <div class="panel-card">
+                <div class="panel-section">
+                    <h3>@Localizer["QuickActions"]</h3>
+                    <button class="btn btn-secondary btn-block" type="button" data-action="refresh-dashboard">@Localizer["Refresh"]</button>
+                    <button class="btn btn-primary btn-block" type="button" data-action="resend-all">@Localizer["ResendPendingPackets"]</button>
+                </div>
+                <div class="panel-section">
+                    <h3>@Localizer["AutoRefresh"]</h3>
+                    <div class="refresh-controls">
+                        <label>
+                            <input type="checkbox" id="autoRefreshToggle" data-action="toggle-auto-refresh" checked /> @Localizer["AutoRefresh"]
+                        </label>
+                        <label>
+                            @Localizer["Interval"]
+                            <select id="refreshInterval" class="select-small">
+                                <option value="5000">5s</option>
+                                <option value="10000">10s</option>
+                                <option value="15000">15s</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>@Localizer["RecentEvents"]</h3>
+                    <ul class="event-list">
+                        @foreach (var evt in Model.RecentEvents)
+                        {
+                            <li class="event-item event-@evt.Level.ToLower()">
+                                <span class="event-time">@evt.Timestamp.ToString("HH:mm")</span>
+                                <strong>@evt.Level</strong> - @evt.Message
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </aside>
+    </section>
+</div>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    @await Html.PartialAsync("~/Views/Relay/_RelayModals.cshtml")
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const refreshIntervalInput = document.getElementById('refreshInterval');
+        const autoRefreshToggle = document.getElementById('autoRefreshToggle');
+        const refreshButton = document.querySelector('[data-action="refresh-dashboard"]');
+        const toastContainer = document.getElementById('toastContainer');
+        const activeRelaysCount = document.getElementById('activeRelaysCount');
+        const inactiveRelaysCount = document.getElementById('inactiveRelaysCount');
+        const totalPacketsCount = document.getElementById('totalPacketsCount');
+        const avgQueueCount = document.getElementById('avgQueueCount');
+        const routesTableBody = document.getElementById('routesTableBody');
+        const buffersTableBody = document.getElementById('buffersTableBody');
+        const recentEventsList = document.querySelector('.event-list');
+        const queueHistoryChartCtx = document.getElementById('queueHistoryChart').getContext('2d');
+        const occupancyGaugeCtx = document.getElementById('occupancyGaugeChart').getContext('2d');
+        const relayDetailModal = document.getElementById('relayDetailModal');
+        const confirmModal = document.getElementById('confirmModal');
+        const modalTabs = document.querySelectorAll('.modal-tabs .tab');
+        const modalTabInfo = document.getElementById('modalTabInfo');
+        const modalTabMetadata = document.getElementById('modalTabMetadata');
+
+        let pollingTimer = null;
+        let historyBuffer = [];
+        let queueHistoryChart;
+        let occupancyGaugeChart;
+        let currentRoutes = [];
+        let currentBuffers = [];
+        let pendingBufferClearId = null;
+
+        function showToast(message, type = 'success') {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.setAttribute('role', 'status');
+            alert.setAttribute('aria-live', 'polite');
+            alert.textContent = message;
+            toastContainer.appendChild(alert);
+            setTimeout(() => alert.remove(), 5000);
+        }
+
+        function openModal(modal) {
+            if (!modal) return;
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeModal(modal) {
+            if (!modal) return;
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+
+        function setModalTab(tabName) {
+            modalTabs.forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.tab === tabName);
+            });
+            modalTabInfo.style.display = tabName === 'info' ? 'block' : 'none';
+            modalTabMetadata.style.display = tabName === 'metadata' ? 'block' : 'none';
+        }
+
+        function populateRouteDetail(routeId) {
+            const route = currentRoutes.find(item => item.fromSatellite === routeId || item.toAntenna === routeId);
+            if (!route) {
+                showToast('Ruta no encontrada.', 'danger');
+                return;
+            }
+
+            const detailJson = {
+                fromSatellite: route.fromSatellite,
+                toAntenna: route.toAntenna,
+                status: route.status,
+                queueOccupancyPercentage: route.queueOccupancyPercentage,
+                lastSeen: route.lastSeen,
+                packetData: route.packetData
+            };
+
+            const detailPre = relayDetailModal.querySelector('.code-block');
+            if (detailPre) {
+                detailPre.textContent = JSON.stringify(detailJson, null, 2);
+            }
+
+            setModalTab('info');
+            openModal(relayDetailModal);
+        }
+
+        function updateSummaryCards(data) {
+            activeRelaysCount.textContent = data.status.activeRelays;
+            inactiveRelaysCount.textContent = data.status.inactiveRelays;
+            totalPacketsCount.textContent = data.status.totalPacketsProcessed;
+            avgQueueCount.textContent = `${data.status.avgQueueOccupancy.toFixed(1)}%`;
+        }
+
+        function renderRoutes(routes) {
+            currentRoutes = routes;
+            routesTableBody.innerHTML = '';
+            routes.forEach(route => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${route.fromSatellite}</td>
+                    <td>${route.toAntenna}</td>
+                    <td><span class="badge badge-${route.status.toLowerCase() === 'resent' ? 'resent' : route.status.toLowerCase()}">${route.status}</span></td>
+                    <td>${route.packetCount}</td>
+                    <td>
+                        <div class="progress-cell">
+                            <div class="progress-bar" style="width:${route.queueOccupancyPercentage}%"></div>
+                            <span>${Math.round(route.queueOccupancyPercentage)}%</span>
+                        </div>
+                    </td>
+                    <td>${new Date(route.lastSeen).toLocaleString()}</td>
+                    <td>
+                        <button class="btn btn-secondary btn-sm" type="button" data-action="view-details" data-route-id="${route.fromSatellite}">Ver detalle</button>
+                        <button class="btn btn-primary btn-sm" type="button" data-action="resend-route" data-from="${route.fromSatellite}" data-to="${route.toAntenna}">Reenviar</button>
+                        <button class="btn btn-outline btn-sm" type="button" data-action="copy-route" data-route-id="${route.fromSatellite}">Copiar</button>
+                    </td>
+                `;
+                routesTableBody.appendChild(row);
+            });
+        }
+
+        function renderBuffers(buffers) {
+            currentBuffers = buffers;
+            buffersTableBody.innerHTML = '';
+            buffers.forEach(buffer => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${buffer.bufferId}</td>
+                    <td>${buffer.type}</td>
+                    <td>${buffer.itemsInQueue}</td>
+                    <td>
+                        <div class="progress-cell">
+                            <div class="progress-bar" style="width:${buffer.capacityPercentage}%"></div>
+                            <span>${Math.round(buffer.capacityPercentage)}%</span>
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" type="button" data-action="clear-buffer" data-buffer-id="${buffer.bufferId}">${Localizer["ClearBuffer"] ?? "Vaciar buffer"}</button>
+                        <button class="btn btn-outline btn-sm" type="button" data-action="export-buffer" data-buffer-id="${buffer.bufferId}">${Localizer["ExportCsv"] ?? "Exportar CSV"}</button>
+                    </td>
+                `;
+                buffersTableBody.appendChild(row);
+            });
+        }
+
+        function renderEvents(events) {
+            recentEventsList.innerHTML = '';
+            events.forEach(evt => {
+                const item = document.createElement('li');
+                item.className = `event-item event-${evt.level.toLowerCase()}`;
+                item.innerHTML = `<span class="event-time">${new Date(evt.timestamp).toLocaleTimeString()}</span> <strong>${evt.level}</strong> - ${evt.message}`;
+                recentEventsList.appendChild(item);
+            });
+        }
+
+        function updateCharts(data) {
+            historyBuffer.push({
+                time: new Date(data.lastUpdated).toLocaleTimeString(),
+                occupancy: data.status.avgQueueOccupancy
+            });
+
+            if (historyBuffer.length > 20) {
+                historyBuffer.shift();
+            }
+
+            queueHistoryChart.data.labels = historyBuffer.map(point => point.time);
+            queueHistoryChart.data.datasets[0].data = historyBuffer.map(point => point.occupancy);
+            queueHistoryChart.update();
+
+            occupancyGaugeChart.data.datasets[0].data = [data.status.avgQueueOccupancy, 100 - data.status.avgQueueOccupancy];
+            occupancyGaugeChart.update();
+        }
+
+        async function fetchRefresh() {
+            try {
+                const response = await fetch('/Relay/Refresh');
+                const payload = await response.json();
+
+                if (payload.status !== 'success') {
+                    throw new Error(payload.message || 'Refresh failed');
+                }
+
+                updateSummaryCards(payload.data);
+                renderRoutes(payload.data.routes);
+                renderBuffers(payload.data.buffers);
+                renderEvents(payload.data.recentEvents);
+                updateCharts(payload.data);
+                showToast('${Localizer["DashboardUpdated"] ?? "Dashboard actualizado"}', 'success');
+            } catch (error) {
+                showToast(error.message || 'Error al refrescar', 'danger');
+            }
+        }
+
+        async function sendForce(requestBody) {
+            try {
+                const response = await fetch('/Relay/ForceSend', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody)
+                });
+                const payload = await response.json();
+
+                if (!response.ok || payload.status !== 'success') {
+                    throw new Error(payload.message || 'Error al reenviar paquete');
+                }
+
+                showToast(payload.message, 'success');
+                fetchRefresh();
+            } catch (error) {
+                showToast(error.message || 'Error al reenviar paquete', 'danger');
+            }
+        }
+
+        async function clearBuffer(bufferId) {
+            try {
+                const response = await fetch(`/Relay/ClearBuffer?bufferId=${encodeURIComponent(bufferId)}`, {
+                    method: 'POST'
+                });
+                const payload = await response.json();
+
+                if (!response.ok || payload.status !== 'success') {
+                    throw new Error(payload.message || 'Error al limpiar el buffer');
+                }
+
+                showToast(payload.message, 'success');
+                fetchRefresh();
+            } catch (error) {
+                showToast(error.message || 'Error al limpiar el buffer', 'danger');
+            }
+        }
+
+        function exportBuffer(bufferId) {
+            const url = `/Relay/ExportBuffersCsv?bufferId=${encodeURIComponent(bufferId)}`;
+            window.location.href = url;
+        }
+
+        function bindActionButtons() {
+            document.body.addEventListener('click', event => {
+                const button = event.target.closest('button[data-action]');
+                if (!button) return;
+
+                const action = button.getAttribute('data-action');
+                const bufferId = button.getAttribute('data-buffer-id');
+                const fromSatellite = button.getAttribute('data-from');
+                const toAntenna = button.getAttribute('data-to');
+                const routeId = button.getAttribute('data-route-id');
+
+                if (action === 'resend-route') {
+                    sendForce({
+                        fromSatellite: fromSatellite,
+                        toAntenna: toAntenna,
+                        packetData: 'forced relay packet',
+                        priority: 1
+                    });
+                }
+
+                if (action === 'resend-all') {
+                    if (currentRoutes.length > 0) {
+                        const route = currentRoutes[0];
+                        sendForce({
+                            fromSatellite: route.fromSatellite,
+                            toAntenna: route.toAntenna,
+                            packetData: 'forced relay packet',
+                            priority: 1
+                        });
+                        showToast('${Localizer["ResendPendingPackets"] ?? "Solicitud de reenvío enviada"}', 'info');
+                    }
+                }
+
+                if (action === 'clear-buffer' && bufferId) {
+                    pendingBufferClearId = bufferId;
+                    openModal(confirmModal);
+                }
+
+                if (action === 'export-buffer' && bufferId) {
+                    exportBuffer(bufferId);
+                }
+
+                if (action === 'view-details' && routeId) {
+                    populateRouteDetail(routeId);
+                }
+
+                if (action === 'copy-route' && routeId) {
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(routeId);
+                        showToast('${Localizer["CopiedToClipboard"] ?? "Copiado al portapapeles"}', 'success');
+                    } else {
+                        showToast('${Localizer["ClipboardNotSupported"] ?? "Portapapeles no disponible"}', 'danger');
+                    }
+                }
+
+                if (action === 'close-modal') {
+                    closeModal(button.closest('.modal'));
+                }
+
+                if (action === 'cancel-action') {
+                    pendingBufferClearId = null;
+                    closeModal(confirmModal);
+                }
+
+                if (action === 'confirm-action') {
+                    if (pendingBufferClearId) {
+                        clearBuffer(pendingBufferClearId);
+                        pendingBufferClearId = null;
+                    }
+                    closeModal(confirmModal);
+                }
+            });
+        }
+
+        function createCharts() {
+            queueHistoryChart = new Chart(queueHistoryChartCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: '${Localizer["QueueOccupancy"] ?? "Ocupación"}',
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37,99,235,0.15)',
+                        tension: 0.3,
+                        data: []
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, max: 100 }
+                    }
+                }
+            });
+
+            occupancyGaugeChart = new Chart(occupancyGaugeCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['@Localizer["Used"]', '@Localizer["Free"]'],
+                    datasets: [{
+                        data: [@Model.Status.AvgQueueOccupancy, @(100 - Model.Status.AvgQueueOccupancy)],
+                        backgroundColor: ['#2563eb', '#e5e7eb'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    cutout: '70%',
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        function startPolling() {
+            const interval = parseInt(refreshIntervalInput.value, 10) || 5000;
+            if (pollingTimer) {
+                clearInterval(pollingTimer);
+            }
+            pollingTimer = setInterval(fetchRefresh, interval);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            bindActionButtons();
+            createCharts();
+
+            refreshButton.addEventListener('click', fetchRefresh);
+            autoRefreshToggle.addEventListener('change', () => {
+                if (autoRefreshToggle.checked) {
+                    startPolling();
+                    showToast('${Localizer["AutoRefreshEnabled"] ?? "Auto-refresh activado"}', 'success');
+                } else {
+                    clearInterval(pollingTimer);
+                    showToast('${Localizer["AutoRefreshDisabled"] ?? "Auto-refresh desactivado"}', 'info');
+                }
+            });
+
+            refreshIntervalInput.addEventListener('change', () => {
+                if (autoRefreshToggle.checked) {
+                    startPolling();
+                }
+            });
+
+            if (autoRefreshToggle.checked) {
+                startPolling();
+            }
+        });
+    </script>
