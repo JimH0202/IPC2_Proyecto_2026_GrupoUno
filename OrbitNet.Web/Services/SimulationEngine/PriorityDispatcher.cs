@@ -39,7 +39,9 @@ namespace OrbitNet.Web.Services.SimulationEngine
                         continue;
                     }
 
-                    if (satellite.PaquetesABordo.IsEmpty)
+                    var paquetesABordo = satellite.PaquetesABordo;
+
+                    if (paquetesABordo is null || paquetesABordo.IsEmpty)
                     {
                         result.EmptyBuffers++;
                         current = current.Right;
