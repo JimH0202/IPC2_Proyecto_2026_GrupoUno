@@ -165,6 +165,193 @@
     text-decoration: none;
 }
 
+/* ── Configuration page ── */
+.config-page {
+    display: grid;
+    gap: 16px;
+}
+
+.config-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    padding: 24px;
+    background: linear-gradient(135deg, #071426 0%, #163561 52%, #1d4ed8 100%);
+    color: #fff;
+    box-shadow: var(--shadow-lg);
+}
+
+.config-hero::after {
+    content: "";
+    position: absolute;
+    inset: auto -80px -60px auto;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .12);
+    filter: blur(2px);
+}
+
+.config-hero-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .12);
+    border: 1px solid rgba(255, 255, 255, .14);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+}
+
+.config-hero h1 {
+    margin-top: 14px;
+    font-size: 30px;
+    line-height: 1.05;
+    font-weight: 800;
+}
+
+.config-hero p {
+    max-width: 760px;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, .82);
+    font-size: 14px;
+}
+
+.config-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.config-member-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border: 1px solid rgba(37, 99, 235, .10);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 18px;
+    min-height: 320px;
+    display: grid;
+    gap: 12px;
+}
+
+.config-member-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(37, 99, 235, .07), transparent 55%);
+    pointer-events: none;
+}
+
+.config-member-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.config-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: rgba(37, 99, 235, .08);
+    color: var(--primary-dark);
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.config-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    box-shadow: 0 10px 24px rgba(37, 99, 235, .22);
+    flex: none;
+}
+
+.config-member-name {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+    margin-top: 2px;
+}
+
+.config-member-field {
+    display: grid;
+    gap: 4px;
+}
+
+.config-member-label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--muted);
+}
+
+.config-member-value {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.config-member-role {
+    font-size: 12px;
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+.config-member-desc {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.config-cta-panel {
+    display: grid;
+    place-items: center;
+    gap: 14px;
+    text-align: center;
+    padding: 24px 18px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow);
+}
+
+.config-cta-panel p {
+    max-width: 760px;
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.config-cta-button,
+.config-download-button {
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 14px;
+    font-weight: 700;
+}
+
+.config-downloads {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
 /* ── Satellite detail cards ── */
 .detail-grid {
     display: grid;
@@ -264,6 +451,11 @@
     .metrics { grid-template-columns: repeat(2, 1fr); }
     .stats2  { grid-template-columns: 1fr; }
     .reports-grid { grid-template-columns: 1fr; }
+    .config-cards-grid { grid-template-columns: 1fr; }
     .detail-grid { grid-template-columns: 1fr; }
     .buf-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 1200px) and (min-width: 769px) {
+    .config-cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

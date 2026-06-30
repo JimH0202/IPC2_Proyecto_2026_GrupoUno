@@ -1,0 +1,123 @@
+@{
+    ViewData["Title"] = "Configuracion";
+}
+
+<div class="config-page">
+    <section class="config-hero">
+        <span class="config-hero-kicker">Configuracion del equipo</span>
+        <h1>Integrantes del proyecto y acceso rapido a la documentacion</h1>
+        <p>
+            Esta seccion presenta la informacion principal del grupo de trabajo y un acceso directo para abrir un enlace externo del proyecto.
+            Debajo se incluyen los botones para descargar la documentacion disponible desde la aplicacion.
+        </p>
+    </section>
+
+    <section class="config-cards-grid">
+        <article class="config-member-card">
+            <div class="config-member-top">
+                <div>
+                    <span class="config-chip">Integrante 1</span>
+                    <div class="config-member-name">Nombre del integrante 1</div>
+                </div>
+                <div class="config-avatar">1</div>
+            </div>
+            <div class="config-member-field">
+                <span class="config-member-label">Carnet</span>
+                <span class="config-member-value">000000</span>
+            </div>
+            <div class="config-member-field">
+                <span class="config-member-label">Funcion</span>
+                <span class="config-member-role">Rol del integrante 1</span>
+            </div>
+            <p class="config-member-desc">
+                Aqui puedes escribir la descripcion de la funcion que realizo este integrante, por ejemplo analisis, desarrollo del frontend, pruebas o documentacion.
+            </p>
+        </article>
+
+        <article class="config-member-card">
+            <div class="config-member-top">
+                <div>
+                    <span class="config-chip">Integrante 2</span>
+                    <div class="config-member-name">Nombre del integrante 2</div>
+                </div>
+                <div class="config-avatar">2</div>
+            </div>
+            <div class="config-member-field">
+                <span class="config-member-label">Carnet</span>
+                <span class="config-member-value">000000</span>
+            </div>
+            <div class="config-member-field">
+                <span class="config-member-label">Funcion</span>
+                <span class="config-member-role">Rol del integrante 2</span>
+            </div>
+            <p class="config-member-desc">
+                Aqui puedes escribir la descripcion de la funcion que realizo este integrante, por ejemplo modelado de datos, integracion de reportes o soporte tecnico.
+            </p>
+        </article>
+
+        <article class="config-member-card">
+            <div class="config-member-top">
+                <div>
+                    <span class="config-chip">Integrante 3</span>
+                    <div class="config-member-name">Nombre del integrante 3</div>
+                </div>
+                <div class="config-avatar">3</div>
+            </div>
+            <div class="config-member-field">
+                <span class="config-member-label">Carnet</span>
+                <span class="config-member-value">000000</span>
+            </div>
+            <div class="config-member-field">
+                <span class="config-member-label">Funcion</span>
+                <span class="config-member-role">Rol del integrante 3</span>
+            </div>
+            <p class="config-member-desc">
+                Aqui puedes escribir la descripcion de la funcion que realizo este integrante, por ejemplo simulacion, validacion de datos o revision de errores.
+            </p>
+        </article>
+
+        <article class="config-member-card">
+            <div class="config-member-top">
+                <div>
+                    <span class="config-chip">Integrante 4</span>
+                    <div class="config-member-name">Nombre del integrante 4</div>
+                </div>
+                <div class="config-avatar">4</div>
+            </div>
+            <div class="config-member-field">
+                <span class="config-member-label">Carnet</span>
+                <span class="config-member-value">000000</span>
+            </div>
+            <div class="config-member-field">
+                <span class="config-member-label">Funcion</span>
+                <span class="config-member-role">Rol del integrante 4</span>
+            </div>
+            <p class="config-member-desc">
+                Aqui puedes escribir la descripcion de la funcion que realizo este integrante, por ejemplo documentacion final, estilos visuales o pruebas de navegacion.
+            </p>
+        </article>
+    </section>
+
+    <section class="config-cta-panel">
+        <div>
+            <h2>Enlace del proyecto</h2>
+            <p>
+                Usa este boton para redirigir al enlace externo del proyecto, repositorio o documento que desees mostrar desde la configuracion.
+            </p>
+        </div>
+        <a class="btn btn-primary config-cta-button" href="https://github.com/JimH0202/IPC2_Proyecto_2026_GrupoUno" target="_blank" rel="noopener noreferrer">
+            Ir al enlace del proyecto
+        </a>
+    </section>
+
+    <section class="config-cta-panel">
+        <div>
+            <h2>Descarga de documentacion</h2>
+            <p>Descarga la documentacion disponible directamente desde la aplicacion.</p>
+        </div>
+        <div class="config-downloads">
+            <a asp-controller="Configuration" asp-action="DownloadUserManual" class="btn btn-secondary config-download-button">Descargar manual de usuario</a>
+            <a asp-controller="Configuration" asp-action="DownloadTechnicalManual" class="btn btn-secondary config-download-button">Descargar manual tecnico</a>
+        </div>
+    </section>
+</div>
