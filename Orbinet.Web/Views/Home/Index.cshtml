@@ -47,6 +47,11 @@
     </div>
 </div>
 
+<div class="hemisphere-image-card">
+    @{ var hemisphereImageName = Model.Port == 5001 ? "hemisferio sur.png" : "hemisferio norte.png"; }
+    <img src="@Url.Content($"~/imagenes/{hemisphereImageName}")" alt="@(Model.Port == 5001 ? Localizer["HemisphereSouth"] : Localizer["HemisphereNorth"])" />
+</div>
+
 <div class="sec">
     <h3>@Localizer["HomeQuickActions"]</h3>
     <div class="actions">

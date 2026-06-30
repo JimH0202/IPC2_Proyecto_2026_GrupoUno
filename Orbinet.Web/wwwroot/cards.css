@@ -94,6 +94,36 @@
     margin-bottom: 12px;
 }
 
+.hemisphere-image-card {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 16px;
+    margin-top: 10px;
+    display: block;
+    overflow: hidden;
+    text-align: center;
+}
+
+.hemisphere-image-card img {
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    aspect-ratio: 1535 / 510;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+    margin: 0 auto;
+}
+
+@media (max-width: 992px) {
+    .hemisphere-image-card img {
+        aspect-ratio: 1535 / 510;
+    }
+}
+
 /* ── Report cards on index ── */
 .reports-grid {
     display: grid;
