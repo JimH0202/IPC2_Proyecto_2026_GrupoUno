@@ -1,208 +1,391 @@
-# Rama `api-y-comunicacion` — API REST y Comunicación Multi-Puerto
+# OrbitNet 🛰️ — Simulador de Red de Satélites
 
-Documentación de los cambios realizados en esta rama para la **Fase 3** del Proyecto OrbitNet-NetCore.
-
-**Responsable:** API y comunicación  
-**Alcance:** Solo endpoints REST, configuración de puertos 5000/5001, HttpClient y HTTP Basic Authentication.
-
-> No se modificaron TDAs, Graphviz, vistas Razor, pruebas unitarias ni el motor de simulación completo.  
-> El único ajuste fuera del alcance estricto fue reparar `Resources/SharedResource.es.resx` (archivo vacío que impedía compilar el proyecto).
+**OrbitNet** es un simulador de constelaciones de satélites de órbita baja y media (LEO/MEO) que modela la interacción entre satélites y estaciones terrestres. El sistema representa el tránsito de paquetes de datos entre satélites utilizando **estructuras de datos personalizadas** (TDAs) implementadas manualmente con punteros.
 
 ---
 
-## Resumen de la rama
+## 📋 Tabla de Contenido
 
-| Bloque | Estado |
-|--------|--------|
-| Modelos / entidades base | Commits previos en la rama |
-| Configuración puertos 5000 y 5001 | Implementado |
-| `SpaceController` con 3 endpoints | Implementado |
-| `IHttpClientFactory` + Basic Auth | Implementado |
-| Relay cross-port Norte ↔ Sur | Implementado (servicio listo) |
-
----
-
-## Commits ya existentes en la rama (modelos base)
-
-Estos archivos ya estaban en la rama antes de la infraestructura de la API:
-
-| Archivo | Descripción |
-|---------|-------------|
-| `Models/Entities/Satellite.cs` | Entidad satélite (`Id`, `Name`, `Ip`) |
-| `Models/Entities/GroundAntenna.cs` | Entidad antena terrestre |
-| `Models/Entities/MessagePacket` | Paquete JSON de relay (ahora renombrado a `.cs`) |
-| `Models/Entities/PolarOrbit.cs` | Entidad órbita polar |
-| `Models/Entities/SimulationState.cs` | Estado simple de simulación (`TickNow`) |
-| `Models/DTOs/RelayRequestDto.cs` | DTO renombrado desde `UploadConfigurationRequest.cs` |
-
-### Corrección menor en entidades
-
-`PolarOrbit.cs` y `SimulationState.cs` tenían por error el mismo contenido que `Satellite.cs` (copia duplicada). Se corrigió para que cada clase tenga su definición real.
+- [Arquitectura](#-arquitectura)
+- [Estructuras de Datos (TDAs)](#-estructuras-de-datos-tdas)
+- [Tecnologías](#️-tecnologías)
+- [Requisitos](#-requisitos)
+- [Ejecución](#-ejecución)
+- [Endpoints API REST](#-endpoints-api-rest)
+- [Vistas del Frontend](#-vistas-del-frontend)
+- [Motor de Simulación](#-motor-de-simulación)
+- [Internacionalización](#️-internacionalización)
+- [Estructura del Proyecto](#-estructura-del-proyecto)
+- [Pruebas](#-pruebas)
 
 ---
 
-## Cambios nuevos — Infraestructura API y comunicación
+## 🏗️ Arquitectura
 
-### 1. Configuración de puertos concurrentes
+El proyecto utiliza una **arquitectura distribuida con dos instancias simultáneas**:
 
-| Archivo | Qué hace |
-|---------|----------|
-| `Properties/launchSettings.json` | Perfil **OrbitNet-North** → puerto **5000** / Perfil **OrbitNet-South** → puerto **5001** |
-| `appsettings.json` | Configuración base de logging |
-| `appsettings.North.json` | Hemisferio Norte: puerto 5000, hermano 5001 |
-| `appsettings.South.json` | Hemisferio Sur: puerto 5001, hermano 5000 |
-| `Configuration/AppInstanceSettings.cs` | Clase POCO: `Hemisphere`, `Port`, `SiblingPort` |
-| `Utils/Constants.cs` | Usuario, contraseña y puertos fijos del protocolo |
-| `OrbitNet.Web.csproj` | Proyecto ASP.NET Core 8.0 (necesario para compilar y correr la API) |
+| Instancia | Hemisferio | Puerto | Acceso |
+|-----------|-----------|--------|--------|
+| **Norte** | `North` | `5000` | http://localhost:5000 |
+| **Sur** | `South` | `5001` | http://localhost:5001 |
 
-**Cómo levantar las dos instancias:**
+Ambas instancias se comunican entre sí mediante **HTTP Basic Auth** para el reenvío de paquetes entre hemisferios (cross-port relay).
 
-```powershell
-# Terminal 1 — Hemisferio Norte
-dotnet run --launch-profile OrbitNet-North
+### Flujo de comunicación cross-port
 
-# Terminal 2 — Hemisferio Sur
-dotnet run --launch-profile OrbitNet-South
+```
+Instancia Norte (5000)  ──POST /api/v1/space/relay + Auth──►  Instancia Sur (5001)
+Instancia Sur (5001)    ──POST /api/v1/space/relay + Auth──►  Instancia Norte (5000)
 ```
 
 ---
 
-### 2. Controlador de la API
+## 🧱 Estructuras de Datos (TDAs)
 
-| Archivo | Qué hace |
-|---------|----------|
-| `Controllers/SpaceController.cs` | Expone los 3 endpoints REST bajo `/api/v1/space` |
-| `Program.cs` | Registra controladores, servicios e `AddHttpClient()` |
-| `Models/DTOs/ApiDtos.cs` | DTOs de request/response para config, relay y simulation |
+Todas las estructuras están implementadas **manualmente con punteros autorreferenciados** (sin usar `List<T>`, `Dictionary<T>`, etc. de .NET).
 
-#### Endpoints implementados
+| TDA | Ubicación | Descripción |
+|-----|-----------|-------------|
+| **ListaEnlazada<T>** | `DataStructures/Listas/` | Lista doblemente enlazada con cabeza y cola |
+| **NodoLista<T>** | `DataStructures/Listas/` | Nodo genérico con puntero `Siguiente` |
+| **ListaAntenas** | `DataStructures/Antenas/` | Lista enlazada especializada para antenas terrestres |
+| **RegistroSatelites (AVL)** | `DataStructures/AVL/` | Árbol AVL para índice de satélites por ID |
+| **AvlNode** | `DataStructures/AVL/` | Nodo AVL con punteros `Left`, `Right` y altura |
+| **BufferMensajes (ABB)** | `DataStructures/Buffer/` | Árbol Binario de Búsqueda para cola de mensajes por prioridad |
+| **RedSatelitalPlano (Matriz Dispersa)** | `DataStructures/Matrix/` | Matriz dispersa con nodos fila/columna y 4 punteros |
+| **HeaderNode** | `DataStructures/Matrix/` | Nodo cabecera de fila/columna |
+| **MatrixNode** | `DataStructures/Matrix/` | Nodo interno con posición (fila, columna) |
+| **LogAuditoria** | `DataStructures/Logs/` | Bitácora tipo lista para registro de eventos |
+
+### Interfaces
+
+| Interfaz | Propósito |
+|----------|-----------|
+| `IAbstractCollection` | Operaciones básicas: `Add`, `Remove`, `Clear`, `Count` |
+| `IMatrix` | Operaciones de matriz dispersa: `Insert`, `Remove`, `Search`, `GetNeighbors` |
+| `IMessageBuffer` | Operaciones de buffer: `Enqueue`, `Dequeue`, `Peek`, `Clear` |
+
+---
+
+## ☁️ Tecnologías
+
+- **.NET 10.0** (ASP.NET Core MVC + API)
+- **C#** con `Nullable` habilitado e `ImplicitUsings`
+- **Razor** para vistas del frontend
+- **Chart.js** para gráficas en el dashboard Relay
+- **Graphviz (DOT)** para visualización de estructuras de datos
+- **SVG inline** para mapas y reportes visuales
+- **HTTP Basic Auth** para comunicación entre instancias
+
+---
+
+## 📦 Requisitos
+
+- [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+- Dos terminales (PowerShell, Bash, CMD)
+- Navegador web moderno (Chrome, Firefox, Edge)
+
+---
+
+## 🚀 Ejecución
+
+### 1. Compilar el proyecto
+
+```bash
+cd V4.3\IPC2_Proyecto_2026_GrupoUno-develop\OrbitNet.Web
+dotnet build
+```
+
+### 2. Iniciar las dos instancias
+
+**Terminal 1 — Hemisferio Norte (puerto 5000):**
+
+```bash
+set ASPNETCORE_PORT=5000
+set HEMISPHERE=North
+dotnet run
+```
+
+O usando PowerShell:
+
+```powershell
+$env:ASPNETCORE_PORT=5000
+$env:HEMISPHERE="North"
+dotnet run
+```
+
+**Terminal 2 — Hemisferio Sur (puerto 5001):**
+
+```bash
+set ASPNETCORE_PORT=5001
+set HEMISPHERE=South
+dotnet run
+```
+
+### 3. Abrir en el navegador
+
+| Instancia | URL |
+|-----------|-----|
+| Dashboard Norte | http://localhost:5000 |
+| Dashboard Sur | http://localhost:5001 |
+
+### Variables de entorno
+
+| Variable | Valores | Default | Descripción |
+|----------|---------|---------|-------------|
+| `ASPNETCORE_PORT` | `5000`, `5001` | `5000` | Puerto del servidor |
+| `HEMISPHERE` | `North`, `South` | Según puerto | Hemisferio de la instancia |
+
+---
+
+## 🔌 Endpoints API REST
+
+### Configuración
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
-| `POST` | `/api/v1/space/config` | Recibe JSON con `xml_data`, valida con RegEx y carga en RAM |
-| `POST` | `/api/v1/space/relay` | Recibe paquete JSON; **exige Basic Auth** (401 si falla) |
-| `POST` | `/api/v1/space/simulation/step` | Avanza la simulación según `ticks` |
+| `POST` | `/api/v1/space/config` | Carga configuración XML al sistema |
 
-#### Ejemplo de payload — config
+### Relay (comunicación entre hemisferios)
 
-```json
-{
-  "xml_data": "<?xml version=\"1.0\"?><orbitnet>...</orbitnet>"
-}
-```
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| `POST` | `/api/v1/space/relay` | Envía un paquete (requiere Basic Auth) |
 
-#### Ejemplo de payload — relay
+### Simulación
 
-```json
-{
-  "codigo_hex": "A19F",
-  "emisor_id": "SAT-ECU-0012",
-  "destino_ip": "10.0.0.50",
-  "prioridad": 5,
-  "contenido": "Alerta de tsunami detectada."
-}
-```
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| `POST` | `/api/v1/space/simulation/step` | Avanza la simulación N ticks |
+| `POST` | `/Simulation/TickResult` | Ejecuta 1 tick (vista) |
+| `POST` | `/Simulation/ExecuteTicks` | Ejecuta N ticks (10, 100) |
+| `POST` | `/Simulation/StopSimulation` | Detiene la simulación |
 
-#### Ejemplo de payload — simulation/step
+### Datos
 
-```json
-{
-  "ticks": 1
-}
-```
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| `GET` | `/api/v1/space/data/matrix` | Datos de la matriz dispersa |
+| `GET` | `/api/v1/space/data/memory-report` | Reporte de memoria (AVL) |
+| `GET` | `/api/v1/space/data/live-simulation` | Datos en vivo de simulación |
 
----
+### Relay Dashboard
 
-### 3. Motor de comunicación (HttpClient + Basic Auth)
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| `GET` | `/Relay` | Dashboard de relays |
+| `GET` | `/Relay/Refresh` | Datos actualizados (JSON) |
+| `POST` | `/Relay/ForceSend` | Reenviar paquete manualmente |
+| `POST` | `/Relay/ClearBuffer` | Vaciar un buffer |
+| `GET` | `/Relay/TestConnectivity` | Probar conexión con hemisferio hermano |
+| `GET` | `/Relay/ExportBuffersCsv` | Exportar buffers a CSV |
 
-| Archivo | Qué hace |
-|---------|----------|
-| `Services/Communication/BasicAuthService.cs` | Crea y valida cabecera `Authorization: Basic Base64(...)` |
-| `Services/Communication/RelayHttpService.cs` | Envía POST al puerto hermano usando `IHttpClientFactory` |
-| `Services/Validation/XmlIngestService.cs` | Parseo XML con `XmlDocument` + validación RegEx |
-| `Services/SimulationEngine/TickProcessor.cs` | Avance de ticks y lógica de relay cross-port |
-| `Models/Entities/OrbitNetStore.cs` | Estado en memoria RAM (singleton simple) |
-| `Models/Entities/MessagePacket.cs` | Entidad del paquete (renombrada desde archivo sin extensión) |
-
-#### Credenciales HTTP Basic (según PDF del proyecto)
+### Credenciales HTTP Basic
 
 | Campo | Valor |
 |-------|-------|
 | Usuario | `orbitnet_admin` |
 | Contraseña | `USAC_ECYS_2026` |
-| Base64 | `b3JiaXRuZXRfYWRtaW46VVNBQ19FQ1lTXzIwMjY=` |
-
-#### Flujo cross-port
-
-```
-Instancia Norte (5000)  ──POST /relay + Basic Auth──►  Instancia Sur (5001)
-Instancia Sur (5001)    ──POST /relay + Basic Auth──►  Instancia Norte (5000)
-```
-
-El `RelayHttpService` apunta a `http://localhost:{SiblingPort}/api/v1/space/relay`.
 
 ---
 
-## Archivos que NO se tocaron en esta rama
+## 🖥️ Vistas del Frontend
 
-- `DataStructures/` (TDAs manuales)
-- `Graphviz/`
-- `Views/` y controladores MVC de UI (`HomeController`, etc.)
-- `OrbitNet.Tests/`
-- `Documentacion/`
-- `Middleware/ExceptionMiddleware.cs`
+| Ruta | Vista | Descripción |
+|------|-------|-------------|
+| `/` | `Home/Index` | Dashboard principal con métricas, mapa del planeta y acciones rápidas |
+| `/Satellites` | `Satellites/Index` | Lista de satélites con detalle |
+| `/Satellites/Details/{id}` | `Satellites/Details` | Detalle individual de satélite |
+| `/Matrix` | `Matrix/Index` | Visualización de la matriz dispersa en SVG |
+| `/Reports` | `Reports/Index` | Reportes del sistema (memoria, rutas, buffers, matriz) |
+| `/Simulation/Dashboard` | `Simulation/Dashboard` | Panel de control de simulación |
+| `/Upload` | `Upload/Index` | Carga de archivos XML de configuración |
+| `/Logs` | `Logs/Index` | Bitácora de eventos del sistema |
+| `/Relay` | `Relay/Index` | Dashboard de relays con gráficas y auto-refresh |
+| `/Configuration` | `Configuration/Index` | Configuración del sistema |
+
+### Componentes CSS disponibles
+
+| Archivo | Propósito |
+|---------|-----------|
+| `site.css` | Tokens de diseño (colores, sombras, radii) |
+| `layout.css` | Layout app-shell con sidebar |
+| `sidebar.css` | Barra lateral de navegación |
+| `topbar.css` | Barra superior |
+| `cards.css` | Tarjetas métricas, stats, reportes, mapa del planeta |
+| `buttons.css` | Botones y badges |
+| `badges.css` | Badges de estado |
+| `tables.css` | Tablas de datos |
+| `relay.css` | Dashboard de relays |
+| `reports.css` | Reportes del sistema |
+| `upload.css` | Página de carga XML |
 
 ---
 
-## Estructura de carpetas relevante para API
+## ⚙️ Motor de Simulación
+
+El motor de simulación se encuentra en `Services/SimulationEngine/`:
+
+| Componente | Descripción |
+|------------|-------------|
+| `TickProcessor` | Procesa cada tick: rotación orbital, enrutamiento, despacho |
+| `OrbitalRotator` | Calcula la rotación de satélites en sus órbitas |
+| `RoutingService` | Encuentra rutas óptimas entre satélites y antenas |
+| `PriorityDispatcher` | Despacha mensajes según prioridad |
+| `SimulationCoordinator` | Coordina todos los componentes del motor |
+| `State/SatelliteStateIndex` | Índice de estados de satélites |
+| `State/SatelliteRuntimeIndex` | Índice runtime de satélites |
+
+### Generación de SVGs y Graphviz
+
+Los reportes visuales se generan en `Graphviz/`:
+
+| Generador | Descripción |
+|-----------|-------------|
+| `MatrixGraphGenerator` | Genera DOT de la matriz dispersa |
+| `AvlGraphGenerator` | Genera DOT del árbol AVL |
+| `BufferGraphGenerator` | Genera DOT del buffer ABB |
+| `RouteGraphGenerator` | Genera DOT de rutas |
+| `SvgBuilder` | Construye SVGs a partir de datos |
+
+---
+
+## 🌐 Internacionalización
+
+El proyecto soporta **español** e **inglés** usando `IStringLocalizer<T>`.
+
+- Archivos de recursos: `Resources/OrbitNet/Web/Controllers/`
+- `SharedResource.resx` — Textos en inglés (default)
+- `SharedResource.es.resx` — Textos en español
+
+**Cambio de idioma:**
+```
+GET /Home/SetLanguage?culture=es&returnUrl=/ 
+GET /Home/SetLanguage?culture=en&returnUrl=/
+```
+
+---
+
+## 📁 Estructura del Proyecto
 
 ```
 OrbitNet.Web/
+├── ArchivosPrueba/           # XML de prueba para carga
+├── Configuration/            # Configuración de la instancia
 ├── Controllers/
-│   └── SpaceController.cs          ← Endpoints REST
-├── Configuration/
-│   └── AppInstanceSettings.cs      ← Config por hemisferio
-├── Models/
+│   ├── API/                  # Controladores REST
+│   │   ├── ConfigController.cs
+│   │   ├── DataController.cs
+│   │   ├── RelayController.cs
+│   │   └── SimulationApiController.cs
+│   ├── HomeController.cs
+│   ├── SatelliteController.cs
+│   ├── SimulationController.cs
+│   ├── RelayDashboardController.cs
+│   ├── ReportsController.cs
+│   ├── MatrixController.cs
+│   ├── LogsController.cs
+│   ├── UploadController.cs
+│   ├── ConfigurationController.cs
+│   ├── SpaceController.cs
+│   └── SharedResource.cs
+├── DataStructures/           # TDAs personalizados
+│   ├── Antenas/
+│   ├── AVL/
+│   ├── Buffer/
+│   ├── Interfaces/
+│   ├── Listas/
+│   ├── Logs/
+│   └── Matrix/
+├── Graphviz/                 # Generadores DOT/SVG
+├── Middleware/                # Filtros globales
+├── Models/                   # Entidades, DTOs, ViewModels, Enums
 │   ├── DTOs/
-│   │   ├── ApiDtos.cs              ← Request/Response JSON
-│   │   └── RelayRequestDto.cs
-│   └── Entities/
-│       ├── GroundAntenna.cs
-│       ├── MessagePacket.cs
-│       ├── OrbitNetStore.cs        ← Memoria RAM simple
-│       ├── PolarOrbit.cs
-│       ├── Satellite.cs
-│       └── SimulationState.cs
-├── Properties/
-│   └── launchSettings.json         ← Perfiles 5000 / 5001
-├── Services/
-│   ├── Communication/
-│   │   ├── BasicAuthService.cs
-│   │   └── RelayHttpService.cs
-│   ├── SimulationEngine/
-│   │   └── TickProcessor.cs
-│   └── Validation/
-│       └── XmlIngestService.cs
-├── Utils/
-│   └── Constants.cs
-├── Program.cs
-├── appsettings.json
-├── appsettings.North.json
-├── appsettings.South.json
-└── OrbitNet.Web.csproj
+│   ├── Entities/
+│   ├── Enums/
+│   ├── Mappers/
+│   └── ViewModels/
+├── Resources/                # Archivos de localización
+├── Services/                 # Lógica de negocio
+│   ├── Communication/        # HTTP Basic Auth, Relay HTTP
+│   ├── SimulationEngine/     # Motor de simulación
+│   │   └── State/            # Índices de estado runtime
+│   └── Validation/           # Validación XML
+├── Utils/                    # Constantes
+├── Views/                    # Vistas Razor
+│   ├── Home/
+│   ├── Satellites/
+│   ├── Simulation/
+│   ├── Relay/
+│   ├── Reports/
+│   ├── Matrix/
+│   ├── Logs/
+│   ├── Upload/
+│   ├── Configuration/
+│   └── Shared/
+├── wwwroot/                  # Archivos estáticos (CSS)
+│   ├── cards.css
+│   ├── site.css
+│   ├── relay.css
+│   └── ... (10 archivos CSS)
+├── Program.cs                # Punto de entrada
+└── appsettings*.json         # Configuración
 ```
 
 ---
 
-## Próximos pasos (otros compañeros de equipo)
+## 🧪 Pruebas
 
-- Conectar `XmlIngestService` con la matriz dispersa real (`RedSatelitalPlano`)
-- Conectar `/relay` con el buffer ABB de mensajes
-- Conectar `/simulation/step` con el motor orbital completo
-- Integrar `LogAuditoria` para registrar eventos de la API
+El proyecto incluye pruebas unitarias en `OrbitNet.Tests/`:
+
+| Categoría | Archivo | Descripción |
+|-----------|---------|-------------|
+| AVL | `AVLTests/AVLTest.cs` | Pruebas del árbol AVL |
+| Antenas | `AntenasTests/ListaAntenasTests.cs` | Pruebas de lista de antenas |
+| Buffer | `BufferTests/BufferMensajesTests.cs` | Pruebas del buffer ABB |
+| Matriz | `MatrixTests/HeaderNodeTests.cs` | Pruebas de nodos cabecera |
+| Matriz | `MatrixTests/MatrixNodeTests.cs` | Pruebas de nodos de matriz |
+| Matriz | `MatrixTests/RedSatelitalPlanoTests.cs` | Pruebas de la matriz dispersa |
+| Integración | `IntegrationTests/BasicAuthTests.cs` | Pruebas de autenticación |
+| Integración | `IntegrationTests/RelayTests.cs` | Pruebas de relay |
+| Integración | `IntegrationTests/XmlIngestTests.cs` | Pruebas de carga XML |
+| Logs | `LogTests/LogAuditoriaTests.cs` | Pruebas de bitácora |
+
+```bash
+# Ejecutar todas las pruebas
+dotnet test
+
+# Ejecutar pruebas de una categoría específica
+dotnet test --filter "FullyQualifiedName~AVLTests"
+```
 
 ---
 
-## Nota sobre compilación
+## 🗺️ Mapa del Planeta
 
-Se corrigió `Resources/SharedResource.es.resx` porque estaba vacío y el build fallaba. Ese archivo pertenece al módulo de internacionalización (otro compañero); solo se dejó con la estructura XML mínima válida para que la API compile sin errores.
+El dashboard principal (`Home/Index`) muestra un **SVG inline** interactivo del planeta Tierra con:
+- Océanos con gradiente y estrellas de fondo
+- Continentes estilizados (Norteamérica, Sudamérica, Europa, África, Asia, Australia)
+- Línea del ecuador punteada
+- Resaltado del hemisferio activo (Norte o Sur)
+- Satélites animados con efecto pulso
+- Badge de estado de la simulación
+- Tick actual de la simulación
+
+---
+
+## 🤝 Contribución
+
+1. Haz fork del repositorio
+2. Crea una rama desde `develop`: `git checkout -b feature/nueva-funcionalidad`
+3. Haz tus cambios
+4. Ejecuta `dotnet build` y `dotnet test` para verificar
+5. Envía un Pull Request a `develop`
+
+---
+
+## 📄 Licencia
+
+Proyecto académico — **Universidad de San Carlos de Guatemala (USAC)**  
+Facultad de Ingeniería — Escuela de Ciencias y Sistemas  
+*IPC2 — Proyecto 2026 — Grupo Uno*
