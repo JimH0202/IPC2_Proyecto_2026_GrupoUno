@@ -158,7 +158,7 @@
                     {
                         <div class="event-item event-@evt.Level.ToLower()">
                             <div class="event-item-header">
-                                <span class="status-tag status-@evt.Level.ToLower()">@evt.Level</span>
+                                <span class="status-tag status-@evt.Level.ToLower()">@(!string.IsNullOrWhiteSpace(evt.DisplayLevel) ? evt.DisplayLevel : evt.Level)</span>
                                 <span class="event-time">@evt.Timestamp.ToString("HH:mm:ss")</span>
                             </div>
                             <div class="event-message">@evt.Message</div>
@@ -494,9 +494,28 @@
         function renderEvents(events) {
             recentEventsList.innerHTML = '';
             events.forEach(evt => {
-                const item = document.createElement('li');
-                item.className = `event-item event-${evt.level.toLowerCase()}`;
-                item.innerHTML = `<span class="event-time">${new Date(evt.timestamp).toLocaleTimeString()}</span> <strong>${evt.level}</strong> - ${evt.message}`;
+                const item = document.createElement('div');
+                item.className = `event-item event-${(evt.level || 'info').toLowerCase()}`;
+
+                const header = document.createElement('div');
+                header.className = 'event-item-header';
+
+                const levelTag = document.createElement('span');
+                levelTag.className = `status-tag status-${(evt.level || 'info').toLowerCase()}`;
+                levelTag.textContent = evt.displayLevel || evt.level || 'Info';
+
+                const time = document.createElement('span');
+                time.className = 'event-time';
+                time.textContent = new Date(evt.timestamp).toLocaleTimeString();
+
+                const message = document.createElement('div');
+                message.className = 'event-message';
+                message.textContent = evt.message || '';
+
+                header.appendChild(levelTag);
+                header.appendChild(time);
+                item.appendChild(header);
+                item.appendChild(message);
                 recentEventsList.appendChild(item);
             });
         }

@@ -45,5 +45,6 @@ public class EventDto
 {
     public DateTime Timestamp { get; set; } = DateTime.Now;
     public string Level { get; set; } = "Info";
+    public string DisplayLevel { get; set; } = string.Empty;
     public string Message { get; set; } = string.Empty;
 }

@@ -695,6 +695,18 @@
   <data name="Information">
     <value>Information</value>
   </data>
+  <data name="Warning">
+    <value>Warning</value>
+  </data>
+  <data name="RelayEventProcessed">
+    <value>Relay packet processed successfully.</value>
+  </data>
+  <data name="RelayEventCongestion">
+    <value>Light congestion detected in the main buffer.</value>
+  </data>
+  <data name="RelayEventConnection">
+    <value>Connection with the sibling hemisphere established.</value>
+  </data>
   <data name="Metadata">
     <value>Metadata</value>
   </data>

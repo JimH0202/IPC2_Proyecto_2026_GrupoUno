@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using OrbitNet.Web.Configuration;
 using OrbitNet.Web.Models.ViewModels;
@@ -14,19 +15,22 @@ public class RelayDashboardController : Controller
     private readonly BasicAuthService _basicAuthService;
     private readonly OrbitNetStore _store;
     private readonly ILogger<RelayDashboardController> _logger;
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
     public RelayDashboardController(
         IOptions<AppInstanceSettings> settings,
         RelayHttpService relayHttpService,
         BasicAuthService basicAuthService,
         OrbitNetStore store,
-        ILogger<RelayDashboardController> logger)
+        ILogger<RelayDashboardController> logger,
+        IStringLocalizer<SharedResource> localizer)
     {
         _settings = settings.Value;
         _relayHttpService = relayHttpService;
         _basicAuthService = basicAuthService;
         _store = store;
         _logger = logger;
+        _localizer = localizer;
     }
 
     [HttpGet]
@@ -236,9 +240,9 @@ public class RelayDashboardController : Controller
             Buffers = _store.Buffers,
             RecentEvents = new List<EventDto>
             {
-                new() { Timestamp = DateTime.Now.AddMinutes(-2), Level = "Info", Message = "Paquete relay procesado correctamente." },
-                new() { Timestamp = DateTime.Now.AddMinutes(-5), Level = "Warning", Message = "Se detectó congestión leve en el buffer principal." },
-                new() { Timestamp = DateTime.Now.AddMinutes(-8), Level = "Info", Message = "Conexión con el hemisferio hermano establecida." }
+                new() { Timestamp = DateTime.Now.AddMinutes(-2), Level = "Info", DisplayLevel = _localizer["Information"].Value, Message = _localizer["RelayEventProcessed"].Value },
+                new() { Timestamp = DateTime.Now.AddMinutes(-5), Level = "Warning", DisplayLevel = _localizer["Warning"].Value, Message = _localizer["RelayEventCongestion"].Value },
+                new() { Timestamp = DateTime.Now.AddMinutes(-8), Level = "Info", DisplayLevel = _localizer["Information"].Value, Message = _localizer["RelayEventConnection"].Value }
             },
             ActionMessage = "Snapshot cargado correctamente."
         };

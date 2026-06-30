@@ -230,6 +230,8 @@ body {
     gap: 12px;
     max-height: 420px;
     overflow-y: auto;
+    padding-right: 4px;
+    margin: 0;
 }
 
 .event-item {
@@ -240,6 +242,21 @@ body {
     background: #fff;
     border: 1px solid rgba(15, 23, 42, .08);
     box-shadow: var(--shadow);
+    min-height: 84px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.event-item.event-info {
+    border-left: 4px solid var(--primary);
+}
+
+.event-item.event-warning {
+    border-left: 4px solid var(--warning);
+}
+
+.event-item.event-error {
+    border-left: 4px solid var(--danger);
 }
 
 .event-item-header {
@@ -252,11 +269,14 @@ body {
 .event-time {
     color: var(--muted);
     font-size: 12px;
+    white-space: nowrap;
 }
 
 .event-message {
     color: var(--text);
     font-size: 13px;
+    line-height: 1.45;
+    white-space: normal;
 }
 
 .btn-link {
@@ -843,6 +863,7 @@ body {
     max-height: 380px;
     overflow-y: auto;
     padding-right: 4px;
+    margin: 0;
 }
 
 .event-item p {

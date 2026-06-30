@@ -47,4 +47,4 @@ C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\b8chfr7bwm-{0}-zfyuw920s7-zfyuw920s7.gz
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\gt22icqshe-{0}-8ttyrvlfge-8ttyrvlfge.gz
 C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\kneccg3vyz-{0}-bur9rww5kj-bur9rww5kj.gz
-C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\1b50e30v50-{0}-xqs6noegcw-xqs6noegcw.gz
+C:\Users\jimhu\Desktop\IPC2_Proyecto_2026_GrupoUno\Orbinet.Web\obj\Debug\net10.0\compressed\1b50e30v50-{0}-e35vq7hnt3-e35vq7hnt3.gz
