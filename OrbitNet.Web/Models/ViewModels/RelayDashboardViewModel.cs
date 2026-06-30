@@ -18,6 +18,8 @@ public class RelayStatusDto
     public int InactiveRelays { get; set; }
     public int TotalPacketsProcessed { get; set; }
     public double AvgQueueOccupancy { get; set; }
+    public double NorthQueueOccupancy { get; set; }
+    public double SouthQueueOccupancy { get; set; }
 }
 
 public class RouteDto
@@ -43,5 +45,6 @@ public class EventDto
 {
     public DateTime Timestamp { get; set; } = DateTime.Now;
     public string Level { get; set; } = "Info";
+    public string DisplayLevel { get; set; } = "Info";
     public string Message { get; set; } = string.Empty;
 }
