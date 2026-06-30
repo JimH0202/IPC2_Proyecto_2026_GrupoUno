@@ -1,7 +1,5 @@
 using System.Text.RegularExpressions;
 using System.Xml;
-using OrbitNet.Web.DataStructures.Buffer;
-using OrbitNet.Web.DataStructures.Interfaces;
 using OrbitNet.Web.Models.Entities;
 
 public class XmlIngestResult
@@ -60,56 +58,59 @@ public class XmlIngestService
         int antenasCargadas = 0;
         int orbitasCargadas = 0;
 
-        XmlNodeList? orbitasPolares = doc.SelectNodes("//orbitas_polares/orbita");
+        XmlNodeList? orbitasPolares = doc.SelectNodes("//orbitas_polares/polar");
         if (orbitasPolares != null)
         {
             foreach (XmlNode orbita in orbitasPolares)
             {
-                string? orbitaId = orbita.Attributes?["id"]?.Value ?? $"ORB-{orbitasCargadas + 1}";
-                string? orbitaName = orbita.Attributes?["nombre"]?.Value ?? "";
+                string orbitaId = orbita.Attributes?["id"]?.Value ?? $"POLAR-{orbitasCargadas + 1}";
 
                 var polarOrbit = new PolarOrbit
                 {
                     Id = orbitaId,
-                    Name = orbitaName
+                    Name = orbitaId
                 };
+
                 _store.PolarOrbits.Add(polarOrbit);
 
                 XmlNodeList? satelites = orbita.SelectNodes("satelite");
                 if (satelites != null)
                 {
+                    int satelliteIndexEnOrbita = 1;
+
                     foreach (XmlNode satelite in satelites)
                     {
                         string? id = satelite.Attributes?["id"]?.Value;
-                        string? ip = satelite.SelectSingleNode("enlace_ip")?.InnerText;
+                        string name = satelite.SelectSingleNode("nombre")?.InnerText ?? id ?? string.Empty;
 
                         if (!RegexSatelliteId.IsMatch(id ?? ""))
                         {
                             return CrearError("XML_SCHEMA_VIOLATION", "El ID de Satelite '" + id + "' no cumple con el formato RegEx exigido.");
                         }
 
-                        if (!RegexIpv4.IsMatch(ip ?? ""))
-                        {
-                            return CrearError("XML_SCHEMA_VIOLATION", "La IP '" + ip + "' no cumple con el formato RegEx exigido.");
-                        }
+                        string ip = $"10.250.{orbitasCargadas + 1}.{satelliteIndexEnOrbita}";
 
                         var satellite = new Satellite
                         {
                             Id = id!,
-                            Name = satelite.Attributes?["nombre"]?.Value ?? id!,
-                            Ip = ip!,
-                            AnomaliaOrbital = 0,
-                            PaquetesABordo = new BufferMensajes()
+                            Name = name,
+                            Ip = ip,
+                            AnomaliaOrbital = 0
                         };
+
                         _store.Satellites.Add(satellite);
                         _store.SatelliteRuntime.Register(satellite);
                         satelitesCargados++;
 
-                        int rowIndex = _store.PolarOrbits.Count;
-                        int colIndex = satelitesCargados;
+                        int rowIndex = satelliteIndexEnOrbita;
+                        int colIndex = _store.PolarOrbits.Count;
+
                         _store.RedSatellites.Insert(rowIndex, colIndex, satellite.Id, satellite.Ip);
+
+                        satelliteIndexEnOrbita++;
                     }
                 }
+
                 orbitasCargadas++;
             }
         }
@@ -135,10 +136,9 @@ public class XmlIngestService
                 var satellite = new Satellite
                 {
                     Id = id!,
-                    Name = satelite.Attributes?["nombre"]?.Value ?? id!,
+                    Name = satelite.SelectSingleNode("nombre")?.InnerText ?? id!,
                     Ip = ip!,
-                    AnomaliaOrbital = 0,
-                    PaquetesABordo = new BufferMensajes()
+                    AnomaliaOrbital = 0
                 };
                 _store.Satellites.Add(satellite);
                 _store.SatelliteRuntime.Register(satellite);
@@ -169,12 +169,10 @@ public class XmlIngestService
                 var groundAntenna = new GroundAntenna
                 {
                     Id = antena.Attributes?["id"]?.Value ?? $"ANT-{antenasCargadas + 1}",
-                    Name = antena.Attributes?["nombre"]?.Value ?? "",
+                    Name = antena.SelectSingleNode("nombre")?.InnerText ?? "",
                     Coords = coords!,
                     Ip = ip!,
-                    PosicionAngular = 0,
-                    PaquetesEnEspera = new BufferMensajes(),
-                    PaquetesRecibidos = new BufferMensajes()
+                    PosicionAngular = 0
                 };
                 _store.Antenas.Add(groundAntenna);
                 antenasCargadas++;
