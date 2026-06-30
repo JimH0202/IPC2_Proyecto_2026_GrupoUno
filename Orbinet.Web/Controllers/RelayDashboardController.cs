@@ -202,6 +202,7 @@ public class RelayDashboardController : Controller
         }
     }
 
+    [HttpGet("ExportBuffersCsv")]
     [HttpGet("exportbuffercsv")]
     public IActionResult ExportBuffersCsv([FromQuery] string? bufferId)
     {
@@ -220,9 +221,10 @@ public class RelayDashboardController : Controller
             $"{buffer.BufferId},{buffer.Type},{buffer.ItemsInQueue},{buffer.CapacityPercentage}"));
 
         var csvBytes = System.Text.Encoding.UTF8.GetBytes(string.Join("\n", csvLines));
+        var safeBufferId = string.IsNullOrWhiteSpace(bufferId) ? "all-buffers" : bufferId.Replace(" ", "-").Replace("/", "-");
         var fileName = string.IsNullOrWhiteSpace(bufferId)
             ? "relay-buffers.csv"
-            : $"relay-buffer-{bufferId}.csv";
+            : $"relay-{safeBufferId}.csv";
 
         return File(csvBytes, "text/csv", fileName);
     }
