@@ -1,0 +1,63 @@
+@model OrbitNet.Web.Models.ViewModels.UploadViewModel
+
+<div class="page-header-row">
+    <div>
+        <h1>@Localizer["UploadResultTitle"]</h1>
+        <p>@Localizer["UploadResultDescription"]</p>
+    </div>
+    <div class="page-actions">
+        <a asp-controller="Upload" asp-action="Index" class="btn btn-primary">@Localizer["UploadAnotherFile"]</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">@Localizer["BackToDashboard"]</a>
+    </div>
+</div>
+
+<div class="metrics">
+    <div class="mcard">
+        <div class="mtitle">@Localizer["UploadResultStatus"]</div>
+        <div class="mval @(Model.Success ? "green" : "red")">@(Model.Success ? Localizer["Success"] : Localizer["Error"])</div>
+        <div class="msub">@Localizer["UploadResultStatusSubtext"]</div>
+    </div>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["UploadResultFile"]</div>
+        <div class="mval blue">@Model.FileName</div>
+        <div class="msub">@Localizer["UploadResultFileSummary"]</div>
+    </div>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["UploadResultSatellitesLoaded"]</div>
+        <div class="mval green">@Model.SatellitesLoaded</div>
+        <div class="msub">@Localizer["UploadResultSatellitesLoadedDesc"]</div>
+    </div>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["UploadResultAntennasLoaded"]</div>
+        <div class="mval orange">@Model.AntennasLoaded</div>
+        <div class="msub">@Localizer["UploadResultAntennasLoadedDesc"]</div>
+    </div>
+</div>
+
+<div class="stats2">
+    <div class="scard">
+        <div class="slabel">@Localizer["UploadResultPolarOrbitsLoaded"]</div>
+        <div class="sval primary">@Model.PolarOrbitsLoaded</div>
+    </div>
+    <div class="scard">
+        <div class="slabel">@Localizer["UploadResultMessage"]</div>
+        <div class="sval">@Model.Message</div>
+    </div>
+    <div class="scard">
+        <div class="slabel">@Localizer["UploadResultFileName"]</div>
+        <div class="sval">@Model.FileName</div>
+    </div>
+</div>
+
+@if (Model.Errors?.Any() == true)
+{
+    <div class="sec">
+        <h3>@Localizer["UploadErrorsFound"]</h3>
+        <ul>
+            @foreach (var error in Model.Errors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}

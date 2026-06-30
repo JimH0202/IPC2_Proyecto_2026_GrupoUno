@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet>
+    <constelaciones_ecuatoriales>
+        <satelite id="SAT-ECU-001" nombre="ID-muy-corto">
+            <enlace_ip>10.0.0.1</enlace_ip>
+        </satelite>
+        <satelite id="SAT-XXX-0001" nombre="Prefijo-invalido">
+            <enlace_ip>10.0.0.2</enlace_ip>
+        </satelite>
+        <satelite id="SAT-ECU-ABCD" nombre="ID-con-letras">
+            <enlace_ip>10.0.0.3</enlace_ip>
+        </satelite>
+        <satelite id="INVALIDO" nombre="Formato-incorrecto">
+            <enlace_ip>10.0.0.4</enlace_ip>
+        </satelite>
+    </constelaciones_ecuatoriales>
+</orbitnet>

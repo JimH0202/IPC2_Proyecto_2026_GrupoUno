@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet>
+    <constelaciones_ecuatoriales>
+        <satelite id="SAT-ECU-0001" nombre="Mal-formado">
+            <enlace_ip>10.0.0.1</enlace_ip>
+        </satelite>
+    </constelaciones_ecuatoriales>
+    <orbitas_polares>
+        <orbita id="ORB-1" nombre="Polar A">
+            <satelite id="SAT-POL-1001" nombre="Falta-cierre">
+                <enlace_ip>10.0.0.2</enlace_ip>
+            <!-- FALTA </satelite> -->
+        </orbita>
+    </orbitas_polares>
+</orbitnet>

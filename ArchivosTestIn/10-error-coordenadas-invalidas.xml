@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet>
+    <antenas_terrestres>
+        <antena id="ANT-GTM-001" nombre="Coord-sin-decimales">
+            <coordenadas>14,-90</coordenadas>
+            <ip_nodo>10.0.0.1</ip_nodo>
+        </antena>
+        <antena id="ANT-GTM-002" nombre="Coord-con-formato-mal">
+            <coordenadas>14.5891 -90.5514</coordenadas>
+            <ip_nodo>10.0.0.2</ip_nodo>
+        </antena>
+        <antena id="ANT-GTM-003" nombre="Coord-vacia">
+            <coordenadas></coordenadas>
+            <ip_nodo>10.0.0.3</ip_nodo>
+        </antena>
+    </antenas_terrestres>
+</orbitnet>

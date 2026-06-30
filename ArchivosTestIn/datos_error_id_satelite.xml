@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet> 
+    <constelaciones_ecuatoriales> 
+        <satelite id="SAT-ECU-0001"> 
+            <nombre>Starlink-Norte-A</nombre> 
+            <enlace_ip>127.0.0.1</enlace_ip> 
+        </satelite> 
+        <!-- ERROR: ID malformado (falta un dígito, tiene 3 en vez de 4) -->
+        <satelite id="SAT-ECU-999"> 
+            <nombre>Starlink-Norte-Invalido</nombre> 
+            <enlace_ip>127.0.0.1</enlace_ip> 
+        </satelite> 
+    </constelaciones_ecuatoriales> 
+</orbitnet>

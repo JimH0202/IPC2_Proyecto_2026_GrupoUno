@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet> 
+    <antenas_terrestres> 
+        <!-- ERROR: Coordenada de latitud fuera de rango (-90 a 90) -->
+        <antena id="ANT-USA-1010"> 
+            <nombre>Estacion Terrestre Invalida</nombre> 
+            <coordenadas>95.5891,-90.5514</coordenadas> 
+            <ip_nodo>10.0.0.50</ip_nodo> 
+        </antena> 
+    </antenas_terrestres>
+</orbitnet>

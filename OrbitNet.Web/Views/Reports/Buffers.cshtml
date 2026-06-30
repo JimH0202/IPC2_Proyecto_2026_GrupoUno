@@ -1,0 +1,39 @@
+@model OrbitNet.Web.Models.ViewModels.ReportViewModel
+@{
+    var reportKey = ViewContext.RouteData.Values["action"]?.ToString() ?? "Buffers";
+}
+
+<div class="page-header-row">
+    <div>
+        <h1>@Model.Title</h1>
+        <p>@Model.Description</p>
+    </div>
+    <a asp-controller="Reports" asp-action="ExportSvg" asp-route-report="@reportKey"
+       class="btn btn-primary btn-sm">@Localizer["DownloadSvg"]</a>
+</div>
+
+<div class="report-wrap">
+    <div class="report-svg-area">
+        @if (!string.IsNullOrWhiteSpace(Model.SvgContent))
+        {
+            @Html.Raw(Model.SvgContent)
+        }
+        else
+        {
+            <span style="color:var(--muted);font-size:13px">@Localizer["NoSvgContent"]</span>
+        }
+    </div>
+
+    @if (Model.Metadata?.Count > 0)
+    {
+        <div class="buf-stats">
+            @foreach (var item in Model.Metadata)
+            {
+                <div class="bstat">
+                    <div class="bstat-t">@item.Key</div>
+                    <div class="bstat-v">@item.Value</div>
+                </div>
+            }
+        </div>
+    }
+</div>

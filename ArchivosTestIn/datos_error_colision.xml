@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet> 
+    <antenas_terrestres> 
+        <antena id="ANT-USA-1010"> 
+            <nombre>Estacion Terrestre A (10, 10)</nombre> 
+            <coordenadas>10.1234,10.4321</coordenadas> 
+            <ip_nodo>10.0.0.50</ip_nodo> 
+        </antena> 
+        <!-- ERROR: Ambas antenas redondean a (10, 10), provocando colision de celda -->
+        <antena id="ANT-USA-1011"> 
+            <nombre>Estacion Terrestre B (10, 10)</nombre> 
+            <coordenadas>10.4567,10.2222</coordenadas> 
+            <ip_nodo>10.0.0.60</ip_nodo> 
+        </antena> 
+    </antenas_terrestres>
+</orbitnet>

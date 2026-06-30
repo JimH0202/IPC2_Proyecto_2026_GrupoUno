@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet>
+    <constelaciones_ecuatoriales>
+        <satelite id="SAT-ECU-0010">
+            <nombre>Starlink-Ecuatorial-10</nombre>
+            <enlace_ip>10.0.0.10</enlace_ip>
+        </satelite>
+        <satelite id="SAT-ECU-0020">
+            <nombre>Starlink-Ecuatorial-20</nombre>
+            <enlace_ip>10.0.0.20</enlace_ip>
+        </satelite>
+        <satelite id="SAT-ECU-0030">
+            <nombre>Starlink-Ecuatorial-30</nombre>
+            <enlace_ip>10.0.0.30</enlace_ip>
+        </satelite>
+        <satelite id="SAT-ECU-0040">
+            <nombre>Starlink-Ecuatorial-40</nombre>
+            <enlace_ip>10.0.0.40</enlace_ip>
+        </satelite>
+        <satelite id="SAT-ECU-0050">
+            <nombre>Starlink-Ecuatorial-50</nombre>
+            <enlace_ip>10.0.0.50</enlace_ip>
+        </satelite>
+    </constelaciones_ecuatoriales>
+    <orbitas_polares>
+        <polar id="POLAR-NORTE-A">
+            <satelite id="SAT-POL-1001">
+                <nombre>Polar-Alfa-1</nombre>
+                <frecuencia>450.15</frecuencia>
+            </satelite>
+            <satelite id="SAT-POL-1002">
+                <nombre>Polar-Alfa-2</nombre>
+                <frecuencia>450.30</frecuencia>
+            </satelite>
+            <satelite id="SAT-POL-1003">
+                <nombre>Polar-Alfa-3</nombre>
+                <frecuencia>450.45</frecuencia>
+            </satelite>
+        </polar>
+        <polar id="POLAR-SUR-B">
+            <satelite id="SAT-POL-1004">
+                <nombre>Polar-Beta-4</nombre>
+                <frecuencia>450.60</frecuencia>
+            </satelite>
+            <satelite id="SAT-POL-1005">
+                <nombre>Polar-Beta-5</nombre>
+                <frecuencia>450.75</frecuencia>
+            </satelite>
+            <satelite id="SAT-POL-1006">
+                <nombre>Polar-Beta-6</nombre>
+                <frecuencia>450.90</frecuencia>
+            </satelite>
+        </polar>
+    </orbitas_polares>
+    <antenas_terrestres>
+        <!-- Fila 10 -->
+        <antena id="ANT-GTM-1010">
+            <nombre>Estacion Terrestre Peten (10, 10)</nombre>
+            <coordenadas>10.0000,10.0000</coordenadas>
+            <ip_nodo>10.0.1.10</ip_nodo>
+        </antena>
+        <antena id="ANT-GTM-1020">
+            <nombre>Estacion Terrestre Izabal (10, 20)</nombre>
+            <coordenadas>10.0000,20.0000</coordenadas>
+            <ip_nodo>10.0.1.20</ip_nodo>
+        </antena>
+        <antena id="ANT-GTM-1030">
+            <nombre>Estacion Terrestre Zacapa (10, 30)</nombre>
+            <coordenadas>10.0000,30.0000</coordenadas>
+            <ip_nodo>10.0.1.30</ip_nodo>
+        </antena>
+        <antena id="ANT-GTM-1040">
+            <nombre>Estacion Terrestre Chiquimula (10, 40)</nombre>
+            <coordenadas>10.0000,40.0000</coordenadas>
+            <ip_nodo>10.0.1.40</ip_nodo>
+        </antena>
+        <antena id="ANT-GTM-1050">
+            <nombre>Estacion Terrestre Jutiapa (10, 50)</nombre>
+            <coordenadas>10.0000,50.0000</coordenadas>
+            <ip_nodo>10.0.1.50</ip_nodo>
+        </antena>
+
+        <!-- Fila 20 -->
+        <antena id="ANT-SLV-2010">
+            <nombre>Estacion Terrestre Santa Ana (20, 10)</nombre>
+            <coordenadas>20.0000,10.0000</coordenadas>
+            <ip_nodo>10.0.2.10</ip_nodo>
+        </antena>
+        <antena id="ANT-SLV-2020">
+            <nombre>Estacion Terrestre San Salvador (20, 20)</nombre>
+            <coordenadas>20.0000,20.0000</coordenadas>
+            <ip_nodo>10.0.2.20</ip_nodo>
+        </antena>
+        <antena id="ANT-SLV-2030">
+            <nombre>Estacion Terrestre San Miguel (20, 30)</nombre>
+            <coordenadas>20.0000,30.0000</coordenadas>
+            <ip_nodo>10.0.2.30</ip_nodo>
+        </antena>
+        <antena id="ANT-SLV-2040">
+            <nombre>Estacion Terrestre Usulutan (20, 40)</nombre>
+            <coordenadas>20.0000,40.0000</coordenadas>
+            <ip_nodo>10.0.2.40</ip_nodo>
+        </antena>
+        <antena id="ANT-SLV-2050">
+            <nombre>Estacion Terrestre La Union (20, 50)</nombre>
+            <coordenadas>20.0000,50.0000</coordenadas>
+            <ip_nodo>10.0.2.50</ip_nodo>
+        </antena>
+
+        <!-- Fila -10 -->
+        <antena id="ANT-HND-9010">
+            <nombre>Estacion Terrestre Tegucigalpa (-10, 10)</nombre>
+            <coordenadas>-10.0000,10.0000</coordenadas>
+            <ip_nodo>10.0.9.10</ip_nodo>
+        </antena>
+        <antena id="ANT-HND-9020">
+            <nombre>Estacion Terrestre San Pedro Sula (-10, 20)</nombre>
+            <coordenadas>-10.0000,20.0000</coordenadas>
+            <ip_nodo>10.0.9.20</ip_nodo>
+        </antena>
+        <antena id="ANT-HND-9030">
+            <nombre>Estacion Terrestre La Ceiba (-10, 30)</nombre>
+            <coordenadas>-10.0000,30.0000</coordenadas>
+            <ip_nodo>10.0.9.30</ip_nodo>
+        </antena>
+        <antena id="ANT-HND-9040">
+            <nombre>Estacion Terrestre Choluteca (-10, 40)</nombre>
+            <coordenadas>-10.0000,40.0000</coordenadas>
+            <ip_nodo>10.0.9.40</ip_nodo>
+        </antena>
+        <antena id="ANT-HND-9050">
+            <nombre>Estacion Terrestre Copan (-10, 50)</nombre>
+            <coordenadas>-10.0000,50.0000</coordenadas>
+            <ip_nodo>10.0.9.50</ip_nodo>
+        </antena>
+    </antenas_terrestres>
+</orbitnet>

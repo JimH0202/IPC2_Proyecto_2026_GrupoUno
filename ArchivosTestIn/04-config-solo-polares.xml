@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orbitnet>
+    <orbitas_polares>
+        <orbita id="ORB-1" nombre="Polar Norte">
+            <satelite id="SAT-POL-1001" nombre="Norte-1">
+                <enlace_ip>10.0.0.1</enlace_ip>
+            </satelite>
+            <satelite id="SAT-POL-1002" nombre="Norte-2">
+                <enlace_ip>10.0.0.2</enlace_ip>
+            </satelite>
+        </orbita>
+        <orbita id="ORB-2" nombre="Polar Sur">
+            <satelite id="SAT-POL-2001" nombre="Sur-1">
+                <enlace_ip>10.0.0.3</enlace_ip>
+            </satelite>
+            <satelite id="SAT-POL-2002" nombre="Sur-2">
+                <enlace_ip>10.0.0.4</enlace_ip>
+            </satelite>
+        </orbita>
+        <orbita id="ORB-3" nombre="Polar Central">
+            <satelite id="SAT-POL-3001" nombre="Central-1">
+                <enlace_ip>10.0.0.5</enlace_ip>
+            </satelite>
+        </orbita>
+    </orbitas_polares>
+</orbitnet>

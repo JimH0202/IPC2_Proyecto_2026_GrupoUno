@@ -1,0 +1,194 @@
+@model OrbitNet.Web.Models.ViewModels.DashboardViewModel
+
+<div class="page-header">
+    <h1>@Localizer["SimulationDashboardTitle"]</h1>
+    <p>@Localizer["HomeDescription"]</p>
+</div>
+
+<div class="metrics">
+    <div class="mcard">
+        <div class="mtitle">@Localizer["CurrentTick"]</div>
+        <div class="mval blue">@Model.CurrentTick</div>
+        <div class="msub">@Localizer["HomeLastUpdated"] @DateTime.Now.ToString("dd/MM/yyyy")</div>
+    </div>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["ActiveSatellites"]</div>
+        <div class="mval green">@Model.ActiveSatellites</div>
+        <div class="msub">@string.Format(Localizer["HomeTotalSatellites"], Model.Satellites.Count)</div>
+    </div>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["PendingMessages"]</div>
+        <div class="mval orange">@Model.PendingMessages</div>
+        <div class="msub">@Localizer["HomeQueueStatus"]</div>
+    </div>
+    <div class="mcard">
+        <div class="mtitle">@Localizer["ProcessedMessages"]</div>
+        <div class="mval red">@Model.ProcessedMessages</div>
+        <div class="msub">@Localizer["HomeTotalProcessed"]</div>
+    </div>
+</div>
+
+<div class="stats2">
+    <div class="scard">
+        <div class="slabel">@Localizer["Antennas"]</div>
+        <div class="sval primary">@Model.TotalAntennas</div>
+    </div>
+    <div class="scard">
+        <div class="slabel">@Localizer["HomeCurrentHemisphere"]</div>
+        <div class="sval primary">@(Model.Hemisphere == "North" ? Localizer["HemisphereNorth"] : Localizer["HemisphereSouth"])</div>
+    </div>
+    <div class="scard">
+        <div class="slabel">@Localizer["HomeSimulationStatus"]</div>
+        <div style="margin-top:4px">
+            <span class="badge badge-sim @(Model.IsSimulationRunning ? "" : "badge-inactive")">
+                @(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="hemisphere-image-card">
+    <svg viewBox="0 0 1535 510" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;border-radius:8px;">
+        <defs>
+            <linearGradient id="ocean" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#0c4a6e" />
+                <stop offset="50%" stop-color="#1e3a5f" />
+                <stop offset="100%" stop-color="#0c4a6e" />
+            </linearGradient>
+            <linearGradient id="landGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#2d7d46" />
+                <stop offset="100%" stop-color="#1a5c32" />
+            </linearGradient>
+            <clipPath id="earthClip">
+                <ellipse cx="767" cy="255" rx="440" ry="240" />
+            </clipPath>
+        </defs>
+
+        <!-- Fondo oscuro -->
+        <rect width="1535" height="510" fill="#0f172a" rx="10" />
+
+        <!-- Grid de estrellas de fondo -->
+        <g fill="#ffffff" opacity="0.3">
+            <circle cx="50" cy="30" r="1.2"/><circle cx="150" cy="80" r="0.8"/>
+            <circle cx="280" cy="45" r="1.5"/><circle cx="400" cy="100" r="1"/>
+            <circle cx="520" cy="25" r="0.7"/><circle cx="650" cy="90" r="1.3"/>
+            <circle cx="800" cy="40" r="0.9"/><circle cx="950" cy="75" r="1.1"/>
+            <circle cx="1100" cy="30" r="0.6"/><circle cx="1250" cy="95" r="1.4"/>
+            <circle cx="1380" cy="50" r="1"/><circle cx="1480" cy="70" r="0.8"/>
+            <circle cx="100" cy="150" r="0.5"/><circle cx="300" cy="200" r="0.9"/>
+            <circle cx="500" cy="180" r="1.1"/><circle cx="700" cy="140" r="0.7"/>
+            <circle cx="900" cy="170" r="1"/><circle cx="1100" cy="130" r="0.6"/>
+            <circle cx="1300" cy="190" r="0.8"/><circle cx="1450" cy="160" r="1.2"/>
+            <circle cx="60" cy="400" r="0.7"/><circle cx="200" cy="450" r="1"/>
+            <circle cx="350" cy="420" r="0.6"/><circle cx="550" cy="460" r="0.9"/>
+            <circle cx="750" cy="430" r="1.1"/><circle cx="950" cy="470" r="0.8"/>
+            <circle cx="1150" cy="410" r="0.7"/><circle cx="1350" cy="450" r="1.3"/>
+            <circle cx="1500" cy="420" r="0.9"/>
+        </g>
+
+        <!-- Océano -->
+        <ellipse cx="767" cy="255" rx="440" ry="240" fill="url(#ocean)" />
+
+        <!-- Continentes estilizados (mapa simplificado) -->
+        <g clip-path="url(#earthClip)" fill="url(#landGrad)" opacity="0.85">
+            <!-- Norteamérica -->
+            <path d="M520,120 Q550,100 600,95 Q650,90 680,110 Q710,130 690,160 Q670,190 640,200 Q610,210 580,195 Q550,180 530,160 Q510,140 520,120Z"/>
+            <!-- Centroamérica -->
+            <path d="M580,195 Q600,205 590,220 Q580,235 570,225 Q560,215 580,195Z"/>
+            <!-- Sudamérica -->
+            <path d="M590,230 Q620,235 630,260 Q640,290 620,320 Q600,350 580,340 Q560,330 570,300 Q580,270 580,240 Q585,230 590,230Z"/>
+            <!-- Europa -->
+            <path d="M680,130 Q700,115 730,110 Q760,115 770,130 Q780,145 760,155 Q740,165 720,160 Q700,155 690,145 Q680,140 680,130Z"/>
+            <!-- África -->
+            <path d="M700,165 Q730,160 760,175 Q790,190 780,220 Q770,250 750,270 Q730,290 710,280 Q690,270 690,240 Q690,210 695,190 Q700,175 700,165Z"/>
+            <!-- Asia -->
+            <path d="M770,125 Q810,115 860,120 Q910,125 940,145 Q970,165 950,190 Q930,215 900,225 Q870,235 840,220 Q810,205 790,185 Q770,165 770,140 Q770,130 770,125Z"/>
+            <!-- Australia -->
+            <path d="M920,280 Q950,270 970,290 Q990,310 970,330 Q950,350 930,340 Q910,330 910,310 Q910,290 920,280Z"/>
+            <!-- Groenlandia -->
+            <path d="M660,90 Q680,75 700,80 Q720,85 710,105 Q700,120 680,115 Q660,110 660,90Z"/>
+        </g>
+
+        <!-- Línea ecuador (línea punteada) -->
+        <line x1="327" y1="255" x2="1207" y2="255" stroke="#fbbf24" stroke-width="2" stroke-dasharray="8,6" opacity="0.7"/>
+        <text x="310" y="250" fill="#fbbf24" font-size="10" font-family="monospace" opacity="0.7">Ecuador</text>
+
+        @if (Model.Hemisphere == "North")
+        {
+            <!-- Resaltado hemisferio norte -->
+            <rect x="327" y="15" width="880" height="240" fill="#2563eb" opacity="0.08" clip-path="url(#earthClip)" />
+            <text x="767" y="45" fill="#60a5fa" font-size="18" font-weight="bold" font-family="sans-serif" text-anchor="middle">
+                HEMISFERIO NORTE
+            </text>
+            <text x="767" y="68" fill="#93c5fd" font-size="12" font-family="sans-serif" text-anchor="middle">
+                Satélites polares y ecuatoriales activos
+            </text>
+        }
+        else
+        {
+            <!-- Resaltado hemisferio sur -->
+            <rect x="327" y="255" width="880" height="240" fill="#2563eb" opacity="0.08" clip-path="url(#earthClip)" />
+            <text x="767" y="490" fill="#60a5fa" font-size="18" font-weight="bold" font-family="sans-serif" text-anchor="middle">
+                HEMISFERIO SUR
+            </text>
+            <text x="767" y="470" fill="#93c5fd" font-size="12" font-family="sans-serif" text-anchor="middle">
+                Satélites polares y ecuatoriales activos
+            </text>
+        }
+
+        <!-- Satélites (puntos brillantes) -->
+        @{
+            var positions = new (int x, int y)[]
+            {
+                (450, 150), (520, 180), (580, 140), (650, 170),
+                (720, 130), (780, 160), (840, 145), (900, 175),
+                (960, 140), (1020, 165), (550, 290), (630, 310),
+                (710, 280), (790, 300), (870, 275), (950, 295)
+            };
+        }
+        @foreach (var pos in positions)
+        {
+            <circle cx="@pos.x" cy="@pos.y" r="3" fill="#34d399" opacity="0.9">
+                <animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.9;0.4;0.9" dur="2s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="@pos.x" cy="@pos.y" r="7" fill="#34d399" opacity="0.2">
+                <animate attributeName="r" values="7;12;7" dur="2s" repeatCount="indefinite" />
+            </circle>
+        }
+
+        <!-- Badge de estado abajo a la derecha -->
+        <rect x="1270" y="440" width="240" height="55" rx="8" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <text x="1290" y="462" fill="#94a3b8" font-size="10" font-family="sans-serif">Estado de red</text>
+        <circle cx="1305" cy="480" r="4" fill="@(Model.IsSimulationRunning ? "#34d399" : "#ef4444")" />
+        <text x="1320" y="484" fill="#e2e8f0" font-size="12" font-family="sans-serif" font-weight="bold">
+            @(Model.IsSimulationRunning ? Localizer["Active"] : Localizer["Stopped"])
+        </text>
+        <text x="1420" y="484" fill="#94a3b8" font-size="11" font-family="sans-serif">Tick @Model.CurrentTick</text>
+
+        <!-- Logo/Texto del sistema -->
+        <text x="767" y="260" fill="rgba(255,255,255,0.04)" font-size="40" font-weight="bold" font-family="sans-serif" text-anchor="middle" letter-spacing="4">
+            ORBITNET
+        </text>
+    </svg>
+</div>
+
+<div class="sec">
+    <h3>@Localizer["HomeQuickActions"]</h3>
+    <div class="actions">
+        <form asp-controller="Simulation" asp-action="TickResult" method="post" style="display:inline">
+            <button type="submit" class="btn btn-secondary">@Localizer["ExecuteTick"]</button>
+        </form>
+        <form asp-controller="Simulation" asp-action="ExecuteTicks" method="post" style="display:inline">
+            <input type="hidden" name="count" value="10" />
+            <button type="submit" class="btn btn-secondary">@Localizer["Execute10Ticks"]</button>
+        </form>
+        <form asp-controller="Simulation" asp-action="ExecuteTicks" method="post" style="display:inline">
+            <input type="hidden" name="count" value="100" />
+            <button type="submit" class="btn btn-secondary">@Localizer["Execute100Ticks"]</button>
+        </form>
+        <form asp-controller="Simulation" asp-action="StopSimulation" method="post" style="display:inline">
+            <button type="submit" class="btn btn-danger">@Localizer["StopSimulation"]</button>
+        </form>
+    </div>
+</div>
